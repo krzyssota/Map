@@ -9,18 +9,6 @@ typedef struct RouteSegment RouteSegment;
 typedef struct RouteList RouteList;
 typedef struct RoadList RoadList;
 
-typedef struct VectorRoutes{
-    int* IDs;
-    int filled;
-    int size;
-} RouteV;
-
-typedef struct VectorCities{
-    City** cities;
-    int filled;
-    int size;
-} CityV;
-
 typedef struct RouteSegment{
 
     RouteSegment* nextSegment;
@@ -36,25 +24,10 @@ typedef struct RouteList{
     RouteList* prevRoute;
     RouteList* nextRoute;
     RouteSegment* start;
+    unsigned routeId;
 
 } RouteList;
 
-struct Road{
-
-    City* from;
-    City* to;
-
-    unsigned length;
-    int year;
-
-    Vector* routes;
-
-    /*unsigned routeId;
-    City* routeFrom;
-    City* routeTo;
-    struct Road* nextRoadInRoute;*/
-
-};
 
 typedef struct RoadList{
 
@@ -64,31 +37,40 @@ typedef struct RoadList{
 
 } RoadList;
 
-struct City{ // city vector? binsearch? czy to nie jest i tak taka sama zlozonosc jak musimy wczesniej wstawiac rosnaco te miasta?
+struct Road{
 
-    char* name;
-    RoadList* firstRoad;
-    int proximity;
+    City* from;
+    City* to;
 
-    /*City* prevCity;
-    City* nextCity;*/
+    unsigned length;
+    int year;
 
-
+    RouteSegment** routes;
 };
-bool findCity(City* city, const char *city1, City* cityFrom);
 
-
-/*typedef struct CityList{
+typedef struct CityList{
 
     City* city;
     struct CityList* next;
+    struct CityList* prev;
 
-} CityList;*/
+} CityList;
+
+struct City{ // city vector? binsearch? czy to nie jest i tak taka sama zlozonosc jak musimy wczesniej wstawiac rosnaco te miasta?
+
+    char* name;
+    RoadList* roadList;
+    int proximity;
+
+};
+
+
+
 
 typedef struct Map{
 
-    CityV cities;
-    RouteList* firstRoute;
+    CityList* cityList;
+    RouteList* routeList;
 
 } Map;
 
@@ -101,8 +83,10 @@ typedef struct Map{
  */
 Map* newMap(void){
     Map* newMap = malloc(sizeof(Map));
-    newMap->firstCity = NULL;
+    newMap->cityList = NULL;
+    newMap->routeList = NULL;
 }
+
 
 /** @brief Usuwa strukturę.
  * Usuwa strukturę wskazywaną przez @p map.
@@ -110,9 +94,35 @@ Map* newMap(void){
  * @param[in] map        – wskaźnik na usuwaną strukturę.
  */
 void deleteMap(Map *map){
-    deleteCities(map->firstCity);
-    deleteRoutes(map->firstRoute);
+    deleteCityList(map->cityList);
+    deleteRouteList(map->routeList);
     free(map);
+}
+
+// ------------------------------------------------------------------------------
+bool findCity(CityList* clist, const char* cityString, City* result) {
+
+    while(clist != NULL && strcmp(clist->city->name, cityString) != 0){
+        clist = clist->next;
+    }
+    result = clist->city;
+
+    if(result == NULL) return false;
+    return true;
+}
+// ------------------------------------------------------------------------------
+bool roadToList(RoadList* rlist, Road* newRoad){
+
+    while(rlist->next != NULL && rlist->road != newRoad) rlist = rlist->next;
+
+    if(rlist->road == newRoad) return false;
+
+    rlist->next = malloc(sizeof(RoadList));
+    (rlist->next)->next = NULL;
+    (rlist->next)->prev = rlist;
+    (rlist->next)->road = newRoad;
+
+    return true;
 }
 
 /** @brief Dodaje do mapy odcinek drogi między dwoma różnymi miastami.
@@ -130,29 +140,16 @@ void deleteMap(Map *map){
  */
 bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, int builtYear){
 
-    Road* newRoad = malloc(sizeof(Road));
-    if(!newRoad) return false;
+    if(strcmp(city1, city2) == 0){
+        return false;
+    }
 
     City* cityFrom;
-    if(strcmp(city1, city2) == 0){
-        free(newRoad);
-        return false;
-    }
-    if(!findCity(map, city1, cityFrom)){
-        free(newRoad);
-        return false;
-    }
-
     City* cityTo;
-    if(!findCity(map, city2, cityTo)){
-        free(newRoad);
-        return false;
-    }
+    if(!findCity(map->cityList, city1, cityFrom) && !findCity(map->cityList, city2, cityTo)) return false; //
 
-    if(cityFrom == cityTo) {
-        free(newRoad);
-        return false;
-    }
+    Road* newRoad = malloc(sizeof(Road));
+    if(!newRoad) return false;
 
     newRoad->from = cityFrom;
     newRoad->to = cityTo;
@@ -160,11 +157,25 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
     newRoad->length = length;
     newRoad->year = builtYear;
 
-    if(!roadToList(cityFrom->firstRoad, newRoad)){
+    if(!roadToList(cityFrom->roadList, newRoad)){
         free(newRoad);
         return false;
     }
+    roadToList(cityTo->roadList, newRoad);
+
     return true;
+}
+// ----------------------------------------------------------------------------------
+bool findRoad(RoadList* rlist, City* city, Road* rfound){
+
+    while(rlist->next != NULL && rlist->road->to != city) rlist = rlist->next;
+
+    if(rlist->road->to == city){
+        rfound = rlist->road;
+        return true;
+    }
+    return false;
+
 }
 
 /** @brief Modyfikuje rok ostatniego remontu odcinka drogi.
@@ -183,15 +194,15 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
 bool repairRoad(Map *map, const char *city1, const char *city2, int repairYear) {
 
     City *cityFrom;
-    if(!findCity(map->firstCity, city1, cityFrom)){
+    if(!findCity(map->cityList, city1, cityFrom)){
         return false;
     }
     City *cityTo;
-    if(!findCity(map->firstCity, city2, cityTo)){
+    if(!findCity(map->cityList, city2, cityTo)){
         return false;
     }
     Road* road;
-    if(!findRoad(cityFrom->firstRoad, cityTo, road)){
+    if(!findRoad(cityFrom->roadList, cityTo, road)){
         return false;
     }
     if(repairYear >= road->year){
@@ -275,13 +286,3 @@ bool removeRoad(Map *map, const char *city1, const char *city2);
  */
 char const* getRouteDescription(Map *map, unsigned routeId);
 
-bool findCity(City* city, const char* city1, City* result) {
-
-    while(city != NULL && strcmp(city->name, city1) != 0){
-        city = city->nextCity;
-    }
-    result = city;
-
-    if(result == NULL) return false;
-    return true;
-}
