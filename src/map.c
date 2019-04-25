@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdint.h>
+#define INF // TODO unsigned
 
 // lista miast, kazde ma liste dróg, miasto ma wskaznik na poczatek (i koniec ? ) drogi krajowej na ktorej sie znajduje
 
@@ -15,7 +16,7 @@ typedef struct Route{
 
     CityList* cities;
     unsigned routeId;
-
+    RoadList* roads;
 
 } Route;
 
@@ -69,7 +70,9 @@ struct City{
 typedef struct Map{
 
     CityList* cityList;
+    int noCities;
     RouteList* routeList;
+    int noRoutes;
 
 } Map;
 
@@ -98,9 +101,27 @@ void deleteMap(Map *map){
     deleteRouteList(map->routeList);
     free(map);
 }
+// -------------------------------------------------------------------------------
+bool correctName(char* cityName){
+
+    uint32_t counter = 0;
+    char* tmp = cityName;
+
+    while((int)(*tmp) > 31 && (int)(*tmp) != 59){
+        tmp++;
+        counter++;
+    }
+    return (counter == strlen(cityName) && (int)(*tmp) == 0);
+
+}
+bool correctId(unsigned id){
+    return (1 <= id && id <= 999);
+}
 
 // ------------------------------------------------------------------------------
 bool findCity(CityList* clist, const char* cityString, City* result) {
+
+    if(!correctName(cityString)) return false;
 
     while(clist != NULL && strcmp(clist->city->name, cityString) != 0){
         clist = clist->next;
@@ -140,12 +161,14 @@ bool roadToList(RoadList* rlist, Road* newRoad){
  */
 bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, int builtYear){
 
+    if(!correctName(city1) || !correctName(city2)) return false;
+
     if(strcmp(city1, city2) == 0){
         return false;
     }
 
-    City* cityA;
-    City* cityB;
+    City* cityA = NULL;
+    City* cityB = NULL;
     if(!findCity(map->cityList, city1, cityA) && !findCity(map->cityList, city2, cityB)) return false;
 
     Road* newRoad = malloc(sizeof(Road));
@@ -194,24 +217,46 @@ bool findRoad(RoadList* rlist, City* city, Road* rfound){
  */
 bool repairRoad(Map *map, const char *city1, const char *city2, int repairYear) {
 
-    City *cityA;
+    if(!correctName(city1) || !correctName(city2)) return false;
+
+    City *cityA = NULL;
     if(!findCity(map->cityList, city1, cityA)){
         return false;
     }
-    City *cityB;
+    City *cityB = NULL;
     if(!findCity(map->cityList, city2, cityB)){
         return false;
     }
-    Road* road;
+    Road* road = NULL;
     if(!findRoad(cityA->roadList, cityB, road)){
         return false;
     }
-    if(repairYear >= road->year){
+    if(repairYear != 0 && repairYear >= road->year){
         road->year = repairYear;
         return true;
     }
     return false;
 }
+// --------------------------------------------------------------------------------
+/*Dijkstra(G,w,s):
+dla każdego wierzchołka v w V[G] wykonaj
+        d[v] := nieskończoność
+        poprzednik[v] := niezdefiniowane
+        d[s] := 0
+Q := V
+        dopóki Q niepuste wykonaj
+        u := Zdejmij_Min(Q)
+dla każdego wierzchołka v – sąsiada u wykonaj
+        jeżeli d[v] > d[u] + w(u, v) to
+        d[v] := d[u] + w(u, v)
+poprzednik[v] :=u;*/
+
+RouteList* shortestPath(Map* map, City* cityA, City* cityB){
+
+    int d[map->noCities] = {INF};
+
+}
+// --------------------------------------
 
 /** @brief Łączy dwa różne miasta drogą krajową.
  * Tworzy drogę krajową pomiędzy dwoma miastami i nadaje jej podany numer.
@@ -232,7 +277,16 @@ bool repairRoad(Map *map, const char *city1, const char *city2, int repairYear) 
  */
 bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
 
+    if(!correctName(city1) || !correctName(city2)) return false;
+    if(!correctId(routeId)) return false;
+
     if(strcmp(city1, city2) == 0) return false;
+
+    City* cityA = NULL;
+    City* cityB = NULL;
+    if(!findCity(map->cityList, city1, cityA) && !findCity(map->cityList, city2, cityB)) return false;
+
+
 
 
     return false;
@@ -299,15 +353,3 @@ char const* getRouteDescription(Map *map, unsigned routeId){
     return "elo";
 }
 
-bool correctName(char* cityName){
-
-    uint32_t counter = 0;
-    char* tmp = cityName;
-
-    while((int)(*tmp) > 31 && (int)(*tmp) != 59){
-        tmp++;
-        counter++;
-    }
-    return (counter == strlen(cityName) && (int)(*tmp) == 0);
-
-}
