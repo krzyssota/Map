@@ -2,69 +2,9 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdint.h>
-#define INF // TODO unsigned
-
-// lista miast, kazde ma liste dróg, miasto ma wskaznik na poczatek (i koniec ? ) drogi krajowej na ktorej sie znajduje
-
-typedef struct City City; // kazde miasto ma liste drog
-typedef struct Road Road; // miastA miastoB
-typedef struct CityList CityList; // lista miast
-typedef struct RouteList RouteList; // kazda route ma liste miast
-typedef struct RoadList RoadList;
-
-typedef struct Route{
-
-    CityList* cities;
-    unsigned routeId;
-    RoadList* roads;
-
-} Route;
-
-typedef struct RouteList{
-
-    RouteList* prevRoute;
-    RouteList* nextRoute;
-    Route* route;
-
-} RouteList;
-
-
-typedef struct RoadList{
-
-    RoadList* prev;
-    RoadList* next;
-    Road* road;
-
-} RoadList;
-
-struct Road{
-
-    City* cityA;
-    City* cityB;
-
-    unsigned length;
-    int year;
-
-    Route** routes; // TODO maybe delete
-};
-
-typedef struct CityList{
-
-    struct CityList* next;
-    struct CityList* prev;
-    City* city;
-
-} CityList;
-
-struct City{
-
-    char* name;
-    RoadList* roadList;
-    int proximity;
-
-};
-
-
+#include "structures.h"
+#include "additionalFunctions.h"
+#include "roadsRelated.h"
 
 
 typedef struct Map{
@@ -73,6 +13,7 @@ typedef struct Map{
     int noCities;
     RouteList* routeList;
     int noRoutes;
+
 
 } Map;
 
@@ -97,53 +38,11 @@ Map* newMap(void){
  * @param[in] map        – wskaźnik na usuwaną strukturę.
  */
 void deleteMap(Map *map){
-    deleteCityList(map->cityList);
-    deleteRouteList(map->routeList);
-    free(map);
-}
-// -------------------------------------------------------------------------------
-bool correctName(char* cityName){
-
-    uint32_t counter = 0;
-    char* tmp = cityName;
-
-    while((int)(*tmp) > 31 && (int)(*tmp) != 59){
-        tmp++;
-        counter++;
+    if(map != NULL) {
+       /* deleteCityList(map->cityList);
+        deleteRouteList(map->routeList);*/
+        free(map);
     }
-    return (counter == strlen(cityName) && (int)(*tmp) == 0);
-
-}
-bool correctId(unsigned id){
-    return (1 <= id && id <= 999);
-}
-
-// ------------------------------------------------------------------------------
-bool findCity(CityList* clist, const char* cityString, City* result) {
-
-    if(!correctName(cityString)) return false;
-
-    while(clist != NULL && strcmp(clist->city->name, cityString) != 0){
-        clist = clist->next;
-    }
-    result = clist->city;
-
-    if(result == NULL) return false;
-    return true;
-}
-// ------------------------------------------------------------------------------
-bool roadToList(RoadList* rlist, Road* newRoad){
-
-    while(rlist->next != NULL && rlist->road != newRoad) rlist = rlist->next;
-
-    if(rlist->road == newRoad) return false;
-
-    rlist->next = malloc(sizeof(RoadList));
-    (rlist->next)->next = NULL;
-    (rlist->next)->prev = rlist;
-    (rlist->next)->road = newRoad;
-
-    return true;
 }
 
 /** @brief Dodaje do mapy odcinek drogi między dwoma różnymi miastami.
@@ -167,12 +66,28 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
         return false;
     }
 
-    City* cityA = NULL;
-    City* cityB = NULL;
-    if(!findCity(map->cityList, city1, cityA) && !findCity(map->cityList, city2, cityB)) return false;
-
     Road* newRoad = malloc(sizeof(Road));
     if(!newRoad) return false;
+
+    City* cityA = findCity(map->cityList, city1);
+    if(cityA == NULL){
+        cityA = newCity(city1);
+
+        cityA->roadList = newRoadList();
+        cityA->roadList->road = newRoad;
+
+        addCity(map, cityA);
+    }
+
+    City* cityB = findCity(map->cityList, city2);
+    if(cityB == NULL){
+        cityB = newCity(city2);
+
+        cityB->roadList = newRoadList();
+        cityB->roadList->road = newRoad;
+
+        addCity(map, cityB);
+    }
 
     newRoad->cityA = cityA;
     newRoad->cityB = cityB;
@@ -188,19 +103,7 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
 
     return true;
 }
-// ----------------------------------------------------------------------------------
-bool findRoad(RoadList* rlist, City* city, Road* rfound){
 
-    while(rlist->next != NULL && rlist->road->cityB != city) rlist = rlist->next;
-
-    rfound = rlist->road;
-
-    if(rlist->road->cityB == city){
-        return true;
-    }
-    return false;
-
-}
 
 /** @brief Modyfikuje rok ostatniego remontu odcinka drogi.
  * Dla odcinka drogi między dwoma miastami zmienia rok jego ostatniego remontu
@@ -252,8 +155,8 @@ dla każdego wierzchołka v – sąsiada u wykonaj
 poprzednik[v] :=u;*/
 
 RouteList* shortestPath(Map* map, City* cityA, City* cityB){
-
-    int d[map->noCities] = {INF};
+    /*int size = map->noCities;
+    int d[size] = {INF};*/
 
 }
 // --------------------------------------
