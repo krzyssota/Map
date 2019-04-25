@@ -96,7 +96,7 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
     newRoad->year = builtYear;
 
     if(!roadToList(cityA->roadList, newRoad)){
-        RoadList* rlist = findRoadList(newRoad); // TODO tutaj coś źle
+        RoadList* rlist = findRoadList(newRoad); // TODO tutaj chyba juz nie moze sie wywrócić
         free(newRoad);
         return false;
     }
