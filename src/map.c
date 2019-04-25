@@ -1,30 +1,29 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdint.h>
 
 // lista miast, kazde ma liste dróg, miasto ma wskaznik na poczatek (i koniec ? ) drogi krajowej na ktorej sie znajduje
-typedef struct City City;
-typedef struct Road Road;
-typedef struct RouteSegment RouteSegment;
-typedef struct RouteList RouteList;
+
+typedef struct City City; // kazde miasto ma liste drog
+typedef struct Road Road; // miastA miastoB
+typedef struct CityList CityList; // lista miast
+typedef struct RouteList RouteList; // kazda route ma liste miast
 typedef struct RoadList RoadList;
 
-typedef struct RouteSegment{
+typedef struct Route{
 
-    RouteSegment* nextSegment;
-    RouteSegment* prevSegment;
-    Road* road;
+    CityList* cities;
     unsigned routeId;
 
 
-} RouteSegment;
+} Route;
 
 typedef struct RouteList{
 
     RouteList* prevRoute;
     RouteList* nextRoute;
-    RouteSegment* start;
-    unsigned routeId;
+    Route* route;
 
 } RouteList;
 
@@ -39,24 +38,24 @@ typedef struct RoadList{
 
 struct Road{
 
-    City* from;
-    City* to;
+    City* cityA;
+    City* cityB;
 
     unsigned length;
     int year;
 
-    RouteSegment** routes;
+    Route** routes; // TODO maybe delete
 };
 
 typedef struct CityList{
 
-    City* city;
     struct CityList* next;
     struct CityList* prev;
+    City* city;
 
 } CityList;
 
-struct City{ // city vector? binsearch? czy to nie jest i tak taka sama zlozonosc jak musimy wczesniej wstawiac rosnaco te miasta?
+struct City{
 
     char* name;
     RoadList* roadList;
@@ -85,6 +84,7 @@ Map* newMap(void){
     Map* newMap = malloc(sizeof(Map));
     newMap->cityList = NULL;
     newMap->routeList = NULL;
+    return newMap;
 }
 
 
@@ -144,34 +144,35 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
         return false;
     }
 
-    City* cityFrom;
-    City* cityTo;
-    if(!findCity(map->cityList, city1, cityFrom) && !findCity(map->cityList, city2, cityTo)) return false; //
+    City* cityA;
+    City* cityB;
+    if(!findCity(map->cityList, city1, cityA) && !findCity(map->cityList, city2, cityB)) return false;
 
     Road* newRoad = malloc(sizeof(Road));
     if(!newRoad) return false;
 
-    newRoad->from = cityFrom;
-    newRoad->to = cityTo;
+    newRoad->cityA = cityA;
+    newRoad->cityB = cityB;
 
     newRoad->length = length;
     newRoad->year = builtYear;
 
-    if(!roadToList(cityFrom->roadList, newRoad)){
+    if(!roadToList(cityA->roadList, newRoad)){
         free(newRoad);
         return false;
     }
-    roadToList(cityTo->roadList, newRoad);
+    roadToList(cityB->roadList, newRoad);
 
     return true;
 }
 // ----------------------------------------------------------------------------------
 bool findRoad(RoadList* rlist, City* city, Road* rfound){
 
-    while(rlist->next != NULL && rlist->road->to != city) rlist = rlist->next;
+    while(rlist->next != NULL && rlist->road->cityB != city) rlist = rlist->next;
 
-    if(rlist->road->to == city){
-        rfound = rlist->road;
+    rfound = rlist->road;
+
+    if(rlist->road->cityB == city){
         return true;
     }
     return false;
@@ -193,16 +194,16 @@ bool findRoad(RoadList* rlist, City* city, Road* rfound){
  */
 bool repairRoad(Map *map, const char *city1, const char *city2, int repairYear) {
 
-    City *cityFrom;
-    if(!findCity(map->cityList, city1, cityFrom)){
+    City *cityA;
+    if(!findCity(map->cityList, city1, cityA)){
         return false;
     }
-    City *cityTo;
-    if(!findCity(map->cityList, city2, cityTo)){
+    City *cityB;
+    if(!findCity(map->cityList, city2, cityB)){
         return false;
     }
     Road* road;
-    if(!findRoad(cityFrom->roadList, cityTo, road)){
+    if(!findRoad(cityA->roadList, cityB, road)){
         return false;
     }
     if(repairYear >= road->year){
@@ -229,7 +230,13 @@ bool repairRoad(Map *map, const char *city1, const char *city2, int repairYear) 
  * jednoznacznie wyznaczyć drogi krajowej między podanymi miastami lub nie udało
  * się zaalokować pamięci.
  */
-bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2);
+bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
+
+    if(strcmp(city1, city2) == 0) return false;
+
+
+    return false;
+}
 
 /** @brief Wydłuża drogę krajową do podanego miasta.
  * Dodaje do drogi krajowej nowe odcinki dróg do podanego miasta w taki sposób,
@@ -248,7 +255,9 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2);
  * wyznaczyć nowego fragmentu drogi krajowej lub nie udało się zaalokować
  * pamięci.
  */
-bool extendRoute(Map *map, unsigned routeId, const char *city);
+bool extendRoute(Map *map, unsigned routeId, const char *city){
+    return false;
+}
 
 /** @brief Usuwa odcinek drogi między dwoma różnymi miastami.
  * Usuwa odcinek drogi między dwoma miastami. Jeśli usunięcie tego odcinka drogi
@@ -267,7 +276,9 @@ bool extendRoute(Map *map, unsigned routeId, const char *city);
  * uzupełnić przerwanego ciągu drogi krajowej lub nie udało się zaalokować
  * pamięci.
  */
-bool removeRoad(Map *map, const char *city1, const char *city2);
+bool removeRoad(Map *map, const char *city1, const char *city2){
+    return false;
+}
 
 /** @brief Udostępnia informacje o drodze krajowej.
  * Zwraca wskaźnik na napis, który zawiera informacje o drodze krajowej. Alokuje
@@ -284,5 +295,19 @@ bool removeRoad(Map *map, const char *city1, const char *city2);
  * @param[in] routeId    – numer drogi krajowej.
  * @return Wskaźnik na napis lub NULL, gdy nie udało się zaalokować pamięci.
  */
-char const* getRouteDescription(Map *map, unsigned routeId);
+char const* getRouteDescription(Map *map, unsigned routeId){
+    return "elo";
+}
 
+bool correctName(char* cityName){
+
+    uint32_t counter = 0;
+    char* tmp = cityName;
+
+    while((int)(*tmp) > 31 && (int)(*tmp) != 59){
+        tmp++;
+        counter++;
+    }
+    return (counter == strlen(cityName) && (int)(*tmp) == 0);
+
+}
