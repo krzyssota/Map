@@ -11,7 +11,7 @@
 #include "stdbool.h"
 
 City* findCityByFirstRoadList(Map* map, RoadList* roadList);
-RoadList* findRoadList(RoadList* roadList, Road* road);
+RoadList* findRoadListElement(RoadList *roadList, Road *road);
 City* findCityByName(CityList *clist, const char *cityString) ;
 RoadList* newRoadList();
 bool addRoadToCity(City *city, Road *newRoad);

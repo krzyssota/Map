@@ -160,8 +160,8 @@ dla każdego wierzchołka v – sąsiada u wykonaj
 poprzednik[v] :=u;*/
 
 RouteList* shortestPath(Map* map, City* cityA, City* cityB){
-    /*int size = map->noCities;
-    int d[size] = {INF};*/
+    /*const int size = map->noCities;
+    int d[size]  = {UINT16_MAX};*/ // TODO rząd wielkosci wiecej niż typ odległosci
 
 }
 // --------------------------------------

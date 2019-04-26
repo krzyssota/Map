@@ -11,9 +11,10 @@
 #include "stdlib.h"
 #include "stdbool.h"
 
-
+// TODO miasto bez nazwy, citylist wskazuje na null miasto, niepoprawne prev w liscie
 City* findCityByFirstRoadList(Map *map, RoadList *roadList){
     CityList* tmp = map->cityList;
+
     while(tmp != NULL && tmp->city->roadList != roadList){
         tmp = tmp->next;
     }
@@ -23,7 +24,7 @@ City* findCityByFirstRoadList(Map *map, RoadList *roadList){
     return NULL;
 }
 
-RoadList* findRoadList(RoadList* roadList, Road* road){
+RoadList* findRoadListElement(RoadList *roadList, Road *road){
 
     while(roadList != NULL && roadList->road != road){
         roadList = roadList->next;
