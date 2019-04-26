@@ -31,7 +31,9 @@ set(SOURCE_FILES
         src/roadsRelated.h
         src/additionalFunctions.c
         src/additionalFunctions.h
-        src/structures.h)
+        src/structures.h
+        src/deleteStructure.c
+        src/deleteStructure.h)
 
 # Wskazujemy plik wykonywalny.
 add_executable(map ${SOURCE_FILES})

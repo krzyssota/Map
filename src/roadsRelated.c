@@ -11,7 +11,28 @@
 #include "stdlib.h"
 #include "stdbool.h"
 
-City* findCity(CityList* clist, const char* cityString) {
+
+City* findCityByFirstRoadList(Map *map, RoadList *roadList){
+    CityList* tmp = map->cityList;
+    while(tmp != NULL && tmp->city->roadList != roadList){
+        tmp = tmp->next;
+    }
+    if(tmp != NULL) {
+        return tmp->city;
+    }
+    return NULL;
+}
+
+RoadList* findRoadList(RoadList* roadList, Road* road){
+
+    while(roadList != NULL && roadList->road != road){
+        roadList = roadList->next;
+    }
+    return roadList;
+
+}
+
+City* findCityByName(CityList *clist, const char *cityString) {
 
     while(clist != NULL && strcmp(clist->city->name, cityString) != 0){
         clist = clist->next;

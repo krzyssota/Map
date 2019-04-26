@@ -5,6 +5,7 @@
 #include "structures.h"
 #include "additionalFunctions.h"
 #include "roadsRelated.h"
+#include "deleteStructure.h"
 
 
 /** @brief Tworzy nową strukturę.
@@ -28,9 +29,9 @@ Map* newMap(void){
  */
 void deleteMap(Map *map){
     if(map != NULL) {
-       /* deleteCityList(map->cityList);
-        deleteRouteList(map->routeList);*/
-        /*free(map);*/
+        deleteCityList(map, map->cityList);
+        /*deleteRouteList(map->routeList);*/
+        free(map);
     }
 }
 
@@ -65,7 +66,7 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
         return false; //nie udało się zaalokować pamięci.
     }
 
-    City* cityA = findCity(map->cityList, city1);
+    City* cityA = findCityByName(map->cityList, city1);
     if(cityA == NULL){
         cityA = newCity(city1);
         if(cityA == NULL){
@@ -78,7 +79,7 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
     }
     newRoad->cityA = cityA;
 
-    City* cityB = findCity(map->cityList, city2);
+    City* cityB = findCityByName(map->cityList, city2);
     if(cityB == NULL){
         cityB = newCity(city2);
         if(cityB == NULL){
@@ -125,11 +126,11 @@ bool repairRoad(Map *map, const char *city1, const char *city2, int repairYear) 
         return false; // któryś z parametrów ma niepoprawną wartość
     }
 
-    City* cityA = findCity(map->cityList, city1); //któreś z podanych miast nie istnieje,
+    City* cityA = findCityByName(map->cityList, city1); //któreś z podanych miast nie istnieje,
     if(cityA == NULL){
         return false;
     }
-    City* cityB = findCity(map->cityList, city2);
+    City* cityB = findCityByName(map->cityList, city2);
     if(cityB == NULL){
         return false;
     }

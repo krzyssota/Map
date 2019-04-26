@@ -10,7 +10,9 @@
 #include "stdlib.h"
 #include "stdbool.h"
 
-City* findCity(CityList* clist, const char* cityString) ;
+City* findCityByFirstRoadList(Map* map, RoadList* roadList);
+RoadList* findRoadList(RoadList* roadList, Road* road);
+City* findCityByName(CityList *clist, const char *cityString) ;
 RoadList* newRoadList();
 bool addRoadToCity(City *city, Road *newRoad);
 City* newCity(const char *name);
