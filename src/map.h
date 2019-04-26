@@ -10,11 +10,20 @@
 #define __MAP_H__
 
 #include <stdbool.h>
+#include "structures.h"
 
 /**
  * Struktura przechowująca mapę dróg krajowych.
  */
-typedef struct Map Map;
+typedef struct Map{
+
+    CityList* cityList;
+    int noCities;
+    RouteList* routeList;
+    int noRoutes;
+
+
+} Map;
 
 /** @brief Tworzy nową strukturę.
  * Tworzy nową, pustą strukturę niezawierającą żadnych miast, odcinków dróg ani

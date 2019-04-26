@@ -7,17 +7,6 @@
 #include "roadsRelated.h"
 
 
-typedef struct Map{
-
-    CityList* cityList;
-    int noCities;
-    RouteList* routeList;
-    int noRoutes;
-
-
-} Map;
-
-
 /** @brief Tworzy nową strukturę.
  * Tworzy nową, pustą strukturę niezawierającą żadnych miast, odcinków dróg ani
  * dróg krajowych.
@@ -41,7 +30,7 @@ void deleteMap(Map *map){
     if(map != NULL) {
        /* deleteCityList(map->cityList);
         deleteRouteList(map->routeList);*/
-        free(map);
+        /*free(map);*/
     }
 }
 
@@ -60,47 +49,58 @@ void deleteMap(Map *map){
  */
 bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, int builtYear){
 
-    if(!correctName(city1) || !correctName(city2)) return false;
+    if(!correctName(city1) || !correctName(city2)){
+        return false; //któryś z parametrów ma niepoprawną wartość,
+    }
+    if(builtYear == 0){
+        return false;
+    }
 
-    if(strcmp(city1, city2) == 0){
+    if(strcmp(city1, city2) == 0){ //obie podane nazwy miast są identyczne
         return false;
     }
 
     Road* newRoad = malloc(sizeof(Road));
-    if(!newRoad) return false;
+    if(newRoad == NULL) return false; //nie udało się zaalokować pamięci.
 
     City* cityA = findCity(map->cityList, city1);
     if(cityA == NULL){
         cityA = newCity(city1);
+        if(cityA == NULL){
+            return false;
+        }
 
-        cityA->roadList = newRoadList();
-        cityA->roadList->road = newRoad;
+        newRoad->cityA = cityA;
 
-        addCity(map, cityA);
+        if(!addCity(map, cityA)){
+            return false;
+        }
     }
 
     City* cityB = findCity(map->cityList, city2);
     if(cityB == NULL){
         cityB = newCity(city2);
+        if(cityB == NULL){
+            return false;
+        }
 
-        cityB->roadList = newRoadList();
-        cityB->roadList->road = newRoad;
+        newRoad->cityB = cityB;
 
-        addCity(map, cityB);
+        if(!addCity(map, cityB)){
+            return false;
+        }
     }
-
-    newRoad->cityA = cityA;
-    newRoad->cityB = cityB;
 
     newRoad->length = length;
     newRoad->year = builtYear;
 
-    if(!roadToList(cityA->roadList, newRoad)){
-        RoadList* rlist = findRoadList(newRoad); // TODO tutaj chyba juz nie moze sie wywrócić
+
+
+    if(!addRoadToCity(cityA, newRoad)){ // (miasta istnialy) odcinek drogi między tymi miastami już istnieje
         free(newRoad);
         return false;
     }
-    roadToList(cityB->roadList, newRoad);
+    addRoadToCity(cityB, newRoad);
 
     return true;
 }
@@ -121,21 +121,22 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
  */
 bool repairRoad(Map *map, const char *city1, const char *city2, int repairYear) {
 
-    if(!correctName(city1) || !correctName(city2)) return false;
+    if(!correctName(city1) || !correctName(city2) || repairYear == 0) return false; // któryś z parametrów ma niepoprawną wartość
 
-    City *cityA = NULL;
-    if(!findCity(map->cityList, city1, cityA)){
+    City* cityA = findCity(map->cityList, city1); //któreś z podanych miast nie istnieje,
+    if(cityA == NULL){
         return false;
     }
-    City *cityB = NULL;
-    if(!findCity(map->cityList, city2, cityB)){
+    City* cityB = findCity(map->cityList, city2);
+    if(cityB == NULL){
         return false;
     }
+
     Road* road = NULL;
-    if(!findRoad(cityA->roadList, cityB, road)){
+    if(!findRoad(cityA->roadList, cityB, road)){ //nie ma odcinka drogi między podanymi miastami,
         return false;
     }
-    if(repairYear != 0 && repairYear >= road->year){
+    if(repairYear >= road->year){ // podany rok jest wcześniejszy niz zapisany dla tego odcinka rok
         road->year = repairYear;
         return true;
     }
@@ -181,14 +182,14 @@ RouteList* shortestPath(Map* map, City* cityA, City* cityB){
  */
 bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
 
-    if(!correctName(city1) || !correctName(city2)) return false;
+    /*if(!correctName(city1) || !correctName(city2)) return false;
     if(!correctId(routeId)) return false;
 
     if(strcmp(city1, city2) == 0) return false;
 
     City* cityA = NULL;
     City* cityB = NULL;
-    if(!findCity(map->cityList, city1, cityA) && !findCity(map->cityList, city2, cityB)) return false;
+    if(!findCity(map->cityList, city1, cityA) && !findCity(map->cityList, city2, cityB)) return false;*/
 
 
 

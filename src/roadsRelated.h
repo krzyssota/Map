@@ -6,12 +6,15 @@
 #define DROGI_ROADSRELATED_H
 
 #include "map.h"
+#include "structures.h"
+#include "stdlib.h"
+#include "stdbool.h"
 
 City* findCity(CityList* clist, const char* cityString) ;
 RoadList* newRoadList();
-bool roadToList(RoadList* rlist, Road* newRoad);
+bool addRoadToCity(City *city, Road *newRoad);
 City* newCity(const char *name);
-void addCity(Map* map, City* city);
+bool addCity(Map* map, City* city);
 bool findRoad(RoadList* rlist, City* city, Road* rfound);
 
 #endif //DROGI_ROADSRELATED_H
