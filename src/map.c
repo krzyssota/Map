@@ -61,7 +61,9 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
     }
 
     Road* newRoad = malloc(sizeof(Road));
-    if(newRoad == NULL) return false; //nie udało się zaalokować pamięci.
+    if(newRoad == NULL){
+        return false; //nie udało się zaalokować pamięci.
+    }
 
     City* cityA = findCity(map->cityList, city1);
     if(cityA == NULL){
@@ -70,12 +72,11 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
             return false;
         }
 
-        newRoad->cityA = cityA;
-
         if(!addCity(map, cityA)){
             return false;
         }
     }
+    newRoad->cityA = cityA;
 
     City* cityB = findCity(map->cityList, city2);
     if(cityB == NULL){
@@ -84,12 +85,11 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
             return false;
         }
 
-        newRoad->cityB = cityB;
-
         if(!addCity(map, cityB)){
             return false;
         }
     }
+    newRoad->cityB = cityB;
 
     newRoad->length = length;
     newRoad->year = builtYear;
@@ -97,7 +97,7 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
 
 
     if(!addRoadToCity(cityA, newRoad)){ // (miasta istnialy) odcinek drogi między tymi miastami już istnieje
-        free(newRoad);
+        free(newRoad); //todo pewnie tutaj
         return false;
     }
     addRoadToCity(cityB, newRoad);
@@ -121,7 +121,9 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
  */
 bool repairRoad(Map *map, const char *city1, const char *city2, int repairYear) {
 
-    if(!correctName(city1) || !correctName(city2) || repairYear == 0) return false; // któryś z parametrów ma niepoprawną wartość
+    if(!correctName(city1) || !correctName(city2) || repairYear == 0){
+        return false; // któryś z parametrów ma niepoprawną wartość
+    }
 
     City* cityA = findCity(map->cityList, city1); //któreś z podanych miast nie istnieje,
     if(cityA == NULL){
@@ -132,8 +134,8 @@ bool repairRoad(Map *map, const char *city1, const char *city2, int repairYear) 
         return false;
     }
 
-    Road* road = NULL;
-    if(!findRoad(cityA->roadList, cityB, road)){ //nie ma odcinka drogi między podanymi miastami,
+    Road* road = findRoad(cityA->roadList, cityB);
+    if(road == NULL){ //nie ma odcinka drogi między podanymi miastami,
         return false;
     }
     if(repairYear >= road->year){ // podany rok jest wcześniejszy niz zapisany dla tego odcinka rok

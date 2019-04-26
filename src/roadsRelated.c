@@ -30,6 +30,14 @@ RoadList* newRoadList(){
     return newRoadList;
 }
 
+bool sameRoad(Road* roadA, Road* roadB){
+    if((roadA->cityA == roadB->cityA && roadA->cityB == roadB->cityB)
+        || (roadA->cityA == roadB->cityB && roadA->cityB == roadB->cityA)){
+        return true;
+    }
+    return false;
+}
+
 bool addRoadToCity(City *city, Road *newRoad){
     RoadList* rlist = city->roadList;
     if(rlist == NULL){ // city has got no roads yet
@@ -42,16 +50,18 @@ bool addRoadToCity(City *city, Road *newRoad){
         return true;
 
     } else {
-        while (rlist->next != NULL && rlist->road != newRoad){
+        while (rlist->next != NULL && !sameRoad(rlist->road, newRoad)){
             rlist = rlist->next;
         }
 
-        if (rlist->road == newRoad){
+        if (sameRoad(rlist->road, newRoad)){
             return false;
         }
 
         rlist->next = newRoadList();
-        if (rlist->next == NULL) return false; // nieudana alokacja
+        if (rlist->next == NULL){
+            return false; // nieudana alokacja
+        }
 
         (rlist->next)->prev = rlist;
         (rlist->next)->road = newRoad;
@@ -103,15 +113,15 @@ bool addCity(Map* map, City* city){
     return true;
 }
 
-bool findRoad(RoadList* rlist, City* city, Road* rfound){
+Road* findRoad(RoadList* rlist, City* city){
 
-    while(rlist->next != NULL && (rlist->road->cityA != city && rlist->road->cityB != city)) rlist = rlist->next;
-
-    rfound = rlist->road;
+    while(rlist->next != NULL && (rlist->road->cityA != city && rlist->road->cityB != city)){
+        rlist = rlist->next;
+    }
 
     if(rlist->road->cityA == city || rlist->road->cityB == city){
-        return true;
+        return rlist->road;
     }
-    return false;
+    return NULL;
 
 }

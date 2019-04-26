@@ -15,6 +15,6 @@ RoadList* newRoadList();
 bool addRoadToCity(City *city, Road *newRoad);
 City* newCity(const char *name);
 bool addCity(Map* map, City* city);
-bool findRoad(RoadList* rlist, City* city, Road* rfound);
+Road* findRoad(RoadList* rlist, City* city);
 
 #endif //DROGI_ROADSRELATED_H
