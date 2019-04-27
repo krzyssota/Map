@@ -33,7 +33,7 @@ set(SOURCE_FILES
         src/additionalFunctions.h
         src/deleteStructure.c
         src/deleteStructure.h
-        src/structures.h)
+        src/structures.h src/structures.c)
 
 # Wskazujemy plik wykonywalny.
 add_executable(map ${SOURCE_FILES})

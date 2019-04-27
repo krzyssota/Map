@@ -8,39 +8,48 @@
 #include "structures.h"
 #include "roadsRelated.h"
 
-void deleteRoadListElement(Map* map, RoadList* roadList){
+void deleteRoadListElement(Map* map, City* city, RoadList* roadList){
+
     if(roadList->prev != NULL){ // not first element in the list
+
         (roadList->prev)->next = roadList->next;
         if(roadList->next != NULL){
             (roadList->next)->prev = roadList->prev;
         }
+
         free(roadList);
+
     } else {
-        City* city = findCityByFirstRoadList(map, roadList);
+
+        /*City* city = findCityByFirstRoadList(map, roadList);*/
+
         city->roadList = roadList->next;
         if(roadList->next != NULL) {
             (roadList->next)->prev = NULL;
         }
+
         free(roadList);
     }
 }
 
 
 
-void deleteRoad(Map* map, Road* road){
+void deleteRoadAndTwoRoadLists(Map *map, Road *road){
     RoadList* roadListA = findRoadListElement(road->cityA->roadList, road);
     RoadList* roadListB = findRoadListElement(road->cityB->roadList, road);
-    deleteRoadListElement(map, roadListA);
-    deleteRoadListElement(map, roadListB);
+    deleteRoadListElement(map, road->cityA, roadListA);
+    deleteRoadListElement(map, road->cityB, roadListB);
     free(road);
 }
 
 void deleteRoadsList(Map* map, RoadList* roadList, City* city){
     while(roadList != NULL){
-        deleteRoad(map, roadList->road);
         RoadList* tmp = roadList;
         roadList = roadList->next;
-        free(tmp);
+        deleteRoadAndTwoRoadLists(map, tmp->road);
+        if(roadList != NULL) {
+            roadList->prev = NULL;
+        }
     }
 }
 
@@ -55,6 +64,9 @@ void deleteCityList(Map* map, CityList* cityList){
         deleteCity(map, cityList->city);
         CityList* tmp = cityList;
         cityList = cityList->next;
+        if(cityList != NULL) {
+            cityList->prev = NULL;
+        }
         free(tmp);
     }
 }

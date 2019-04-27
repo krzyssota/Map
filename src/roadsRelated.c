@@ -11,19 +11,6 @@
 #include "stdlib.h"
 #include "stdbool.h"
 
-// TODO miasto bez nazwy, citylist wskazuje na null miasto, niepoprawne prev w liscie
-City* findCityByFirstRoadList(Map *map, RoadList *roadList){
-    CityList* tmp = map->cityList;
-
-    while(tmp != NULL && tmp->city->roadList != roadList){
-        tmp = tmp->next;
-    }
-    if(tmp != NULL) {
-        return tmp->city;
-    }
-    return NULL;
-}
-
 RoadList* findRoadListElement(RoadList *roadList, Road *road){
 
     while(roadList != NULL && roadList->road != road){
@@ -44,13 +31,6 @@ City* findCityByName(CityList *clist, const char *cityString) {
     return clist->city;
 }
 
-RoadList* newRoadList(){
-    RoadList* newRoadList = malloc(sizeof(RoadList));
-    if(newRoadList != NULL) {
-        newRoadList->prev = newRoadList->next = NULL;
-    }
-    return newRoadList;
-}
 
 bool sameRoad(Road* roadA, Road* roadB){
     if((roadA->cityA == roadB->cityA && roadA->cityB == roadB->cityB)
@@ -92,33 +72,17 @@ bool addRoadToCity(City *city, Road *newRoad){
     }
 }
 
-City* newCity(const char *name){
-    City* newCity = malloc(sizeof(City));
-    if(newCity != NULL) {
-        newCity->name = getName(name);
-    }
-    return newCity;
-}
-CityList* newCityList(){
-    CityList* newCityList = malloc(sizeof(newCityList));
-    if(newCityList == NULL){
-        return newCityList;
-    }
-    newCityList->next = newCityList->prev = NULL;
-    newCityList->city = NULL;
-    return newCityList;
-}
+
+
 
 bool addCity(Map* map, City* city){
 
     CityList* tmp = map->cityList;
-    if(tmp == NULL){
+    if(tmp == NULL){ // adding first city to the structure
         tmp = map->cityList = newCityList();
         if(tmp == NULL){
             return false;
         }
-    }
-    if(tmp->city == NULL){
         tmp->city = city;
         return true;
     }

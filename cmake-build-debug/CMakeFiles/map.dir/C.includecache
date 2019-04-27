@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.c
+stddef.h
+-
+stdbool.h
+-
+string.h
+-
+stdint.h
+-
+stdlib.h
+-
+additionalFunctions.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.h
+
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.h
+stdbool.h
+-
+

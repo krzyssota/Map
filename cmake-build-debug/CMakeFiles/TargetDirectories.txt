@@ -1,0 +1,3 @@
+/home/krzubuntu/CLionProjects/IPP-ks406362/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/krzubuntu/CLionProjects/IPP-ks406362/cmake-build-debug/CMakeFiles/map.dir
+/home/krzubuntu/CLionProjects/IPP-ks406362/cmake-build-debug/CMakeFiles/edit_cache.dir
