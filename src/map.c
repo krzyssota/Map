@@ -97,11 +97,11 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
 
 
 
-    if(!addRoadToCity(cityA, newRoad)){ // (miasta istnialy) odcinek drogi między tymi miastami już istnieje
+    if(!addRoadToCity(cityA, cityA->roadList, newRoad)){ // (miasta istnialy) odcinek drogi między tymi miastami już istnieje
         free(newRoad); //todo pewnie tutaj
         return false;
     }
-    addRoadToCity(cityB, newRoad);
+    addRoadToCity(cityB, cityB->roadList, newRoad);
 
     return true;
 }

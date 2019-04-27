@@ -14,7 +14,7 @@ City* findCityByFirstRoadList(Map* map, RoadList* roadList);
 RoadList* findRoadListElement(RoadList *roadList, Road *road);
 City* findCityByName(CityList *clist, const char *cityString) ;
 RoadList* newRoadList();
-bool addRoadToCity(City *city, Road *newRoad);
+bool addRoadToCity(City *city,RoadList* rlist, Road *newRoad);
 City* newCity(const char *name);
 bool addCity(Map* map, City* city);
 Road* findRoad(RoadList* rlist, City* city);

@@ -40,8 +40,10 @@ bool sameRoad(Road* roadA, Road* roadB){
     return false;
 }
 
-bool addRoadToCity(City *city, Road *newRoad){
-    RoadList* rlist = city->roadList;
+bool addRoadToCity(City *city, RoadList* rlist, Road *newRoad){
+
+    /*RoadList* rlist = city->roadList;*/
+
     if(rlist == NULL){ // city has got no roads yet
         rlist = newRoadList();
         if(rlist == NULL){

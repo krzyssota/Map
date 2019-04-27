@@ -10,7 +10,9 @@
 #include "additionalFunctions.h"
 
 char* getName(const char *name){
-    char *result = malloc(sizeof(char));
+    /*char *result = NULL;
+    result =  malloc(sizeof(*result));*/
+    char *result = malloc(strlen(name)*sizeof(char) + 1);
     strcpy(result, name);
     return result;
 }
