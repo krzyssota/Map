@@ -17,7 +17,9 @@
 Map* newMap(void){
     Map* newMap = malloc(sizeof(Map));
     newMap->cityList = NULL;
-    newMap->routeList = NULL;
+    for(int i = 0; i <= 999; i++) {
+        newMap->routes[i] = NULL;
+    }
     return newMap;
 }
 
@@ -161,7 +163,7 @@ poprzednik[v] :=u;*/
 
 RouteList* shortestPath(Map* map, City* cityA, City* cityB){
     /*const int size = map->noCities;
-    int d[size]  = {UINT16_MAX};*/ // TODO rząd wielkosci wiecej niż typ odległosci
+    int d[size]  = {UINT32_MAX};*/ // TODO rząd wielkosci wiecej niż typ odległosci
 
 }
 // --------------------------------------
@@ -185,14 +187,43 @@ RouteList* shortestPath(Map* map, City* cityA, City* cityB){
  */
 bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
 
-    /*if(!correctName(city1) || !correctName(city2)) return false;
-    if(!correctId(routeId)) return false;
+    if(!correctName(city1) || !correctName(city2) || !correctId(routeId)){
+        return false;
+    }
 
-    if(strcmp(city1, city2) == 0) return false;
+    if(strcmp(city1, city2) == 0){
+        return false;
+    }
 
-    City* cityA = NULL;
-    City* cityB = NULL;
-    if(!findCity(map->cityList, city1, cityA) && !findCity(map->cityList, city2, cityB)) return false;*/
+    if(map->routes[routeId] != NULL){
+        return false;
+    }
+
+    City* cityA = findCityByName(map->cityList, city1);
+    City* cityB = findCityByName(map->cityList, city2);
+
+    if(cityA == NULL || cityB == NULL){
+        return false;
+    }
+
+    Route* newRoute = createNewRoute(routeId);
+
+    newRoute->cityList = newCityList();
+    if(newRoute->cityList == NULL){
+        return false;
+    }
+    newRoute->cityList->city = cityA;
+
+    newRoute->cityList->next = newCityList();
+    if(newRoute->cityList->next == NULL){
+        return false;
+    }
+    (newRoute->cityList->next)->prev = newRoute->cityList;
+    (newRoute->cityList->next)->city = cityB;
+
+    CityList* shortestPath = findShortestPath(map, cityA, cityB);
+
+
 
 
 

@@ -2,6 +2,11 @@
 #ifndef DROGI_STRUCTURES_H
 #define DROGI_STRUCTURES_H
 
+#import <limits.h>
+#include <stdint.h>
+
+#define INF LONG_MAX
+
 typedef struct City City; // kazde miasto ma liste drog
 typedef struct Road Road; // miastA miastoB
 typedef struct CityList CityList; // lista miast
@@ -10,20 +15,10 @@ typedef struct RoadList RoadList;
 
 typedef struct Route{
 
-
-    CityList* cities;
+    CityList* cityList;
     unsigned routeId;
-    RoadList* roads;
 
 } Route;
-
-typedef struct RouteList{
-
-    RouteList* prevRoute;
-    RouteList* nextRoute;
-    Route* route;
-
-} RouteList;
 
 
 typedef struct RoadList{
@@ -42,7 +37,7 @@ struct Road{
     unsigned length;
     int year;
 
-    RouteList routeList;
+    Route* routesBelonging[];
 };
 
 typedef struct CityList{
@@ -57,13 +52,33 @@ struct City{
 
     char* name;
     RoadList* roadList;
-    int proximity;
 
 };
+
+typedef struct QueueElement{
+
+    City* city;
+    long int distance;
+    struct QueueElement* predecessor;
+    Road* oldestRoad;
+    struct QueueElement* next;
+    struct QueueElement* prev;
+
+} QueueElement;
+
+typedef struct Queue{
+
+    QueueElement* head;
+    City* destination;
+
+} Queue;
 
 RoadList* newRoadList();
 City* newCity(const char *name);
 CityList* newCityList();
+Route* createNewRoute(unsigned id);
+Queue* newQueue(City* destination);
+QueueElement* newQueueElement(City* city, long int distance, QueueElement* predecessor, Road* road);
 
 
 #endif //DROGI_STRUCTURES_H

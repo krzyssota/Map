@@ -180,6 +180,33 @@ src/deleteStructure.c.s:
 	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/deleteStructure.c.s
 .PHONY : src/deleteStructure.c.s
 
+src/dijkstra.o: src/dijkstra.c.o
+
+.PHONY : src/dijkstra.o
+
+# target to build an object file
+src/dijkstra.c.o:
+	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/dijkstra.c.o
+.PHONY : src/dijkstra.c.o
+
+src/dijkstra.i: src/dijkstra.c.i
+
+.PHONY : src/dijkstra.i
+
+# target to preprocess a source file
+src/dijkstra.c.i:
+	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/dijkstra.c.i
+.PHONY : src/dijkstra.c.i
+
+src/dijkstra.s: src/dijkstra.c.s
+
+.PHONY : src/dijkstra.s
+
+# target to generate assembly for a file
+src/dijkstra.c.s:
+	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/dijkstra.c.s
+.PHONY : src/dijkstra.c.s
+
 src/map.o: src/map.c.o
 
 .PHONY : src/map.o
@@ -261,6 +288,33 @@ src/roadsRelated.c.s:
 	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/roadsRelated.c.s
 .PHONY : src/roadsRelated.c.s
 
+src/routeRelated.o: src/routeRelated.c.o
+
+.PHONY : src/routeRelated.o
+
+# target to build an object file
+src/routeRelated.c.o:
+	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/routeRelated.c.o
+.PHONY : src/routeRelated.c.o
+
+src/routeRelated.i: src/routeRelated.c.i
+
+.PHONY : src/routeRelated.i
+
+# target to preprocess a source file
+src/routeRelated.c.i:
+	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/routeRelated.c.i
+.PHONY : src/routeRelated.c.i
+
+src/routeRelated.s: src/routeRelated.c.s
+
+.PHONY : src/routeRelated.s
+
+# target to generate assembly for a file
+src/routeRelated.c.s:
+	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/routeRelated.c.s
+.PHONY : src/routeRelated.c.s
+
 src/structures.o: src/structures.c.o
 
 .PHONY : src/structures.o
@@ -303,6 +357,9 @@ help:
 	@echo "... src/deleteStructure.o"
 	@echo "... src/deleteStructure.i"
 	@echo "... src/deleteStructure.s"
+	@echo "... src/dijkstra.o"
+	@echo "... src/dijkstra.i"
+	@echo "... src/dijkstra.s"
 	@echo "... src/map.o"
 	@echo "... src/map.i"
 	@echo "... src/map.s"
@@ -312,6 +369,9 @@ help:
 	@echo "... src/roadsRelated.o"
 	@echo "... src/roadsRelated.i"
 	@echo "... src/roadsRelated.s"
+	@echo "... src/routeRelated.o"
+	@echo "... src/routeRelated.i"
+	@echo "... src/routeRelated.s"
 	@echo "... src/structures.o"
 	@echo "... src/structures.i"
 	@echo "... src/structures.s"

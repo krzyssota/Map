@@ -21,7 +21,6 @@ City* newCity(const char *name){
     if(newCity != NULL) {
         newCity->name = getName(name);
         newCity->roadList = NULL;
-        newCity->proximity = 0;
     }
     return newCity;
 }
@@ -34,3 +33,59 @@ CityList* newCityList(){
     }
     return newCityList;
 }
+
+Route* createNewRoute(unsigned id){
+    Route* newRoute = malloc(sizeof(Route));
+    if(newRoute != NULL){
+        newRoute->cityList = NULL;
+        newRoute->routeId = id;
+    }
+    return newRoute;
+}
+
+Queue* newQueue(City* destination){
+    Queue* newQueue = malloc(sizeof(Queue));
+    if(newQueue != NULL){
+        newQueue->head = NULL;
+        newQueue->destination = destination;
+    }
+    return newQueue;
+}
+
+QueueElement* newQueueElement(City* city, long int distance, QueueElement* predecessor, Road* road){
+    QueueElement* newElement = malloc(sizeof(QueueElement));
+    if(newElement != NULL){
+        newElement->city = city;
+        newElement->distance = distance;
+        newElement->predecessor = predecessor;
+        newElement->oldestRoad = road;
+        newElement->prev = newElement->next = NULL;
+    }
+    return newElement;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

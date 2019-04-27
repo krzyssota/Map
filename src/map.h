@@ -19,9 +19,7 @@ typedef struct Map{
 
     CityList* cityList;
     int noCities;
-    RouteList* routeList;
-    int noRoutes;
-
+    Route* routes[1000];
 
 } Map;
 

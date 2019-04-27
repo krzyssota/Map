@@ -11,6 +11,18 @@
 #include "stdlib.h"
 #include "stdbool.h"
 
+/*CityList* findCityList(Map* map, City* city){
+
+    CityList* tmp = map->cityList;
+    while(tmp != NULL && tmp->city != city){
+        tmp = tmp->next;
+    }
+
+    return tmp;
+
+
+}*/
+
 RoadList* findRoadListElement(RoadList *roadList, Road *road){
 
     while(roadList != NULL && roadList->road != road){
@@ -20,15 +32,15 @@ RoadList* findRoadListElement(RoadList *roadList, Road *road){
 
 }
 
-City* findCityByName(CityList *clist, const char *cityString) {
+City* findCityByName(CityList *cityList, const char *cityName) {
 
-    while(clist != NULL && strcmp(clist->city->name, cityString) != 0){
-        clist = clist->next;
+    while(cityList != NULL && strcmp(cityList->city->name, cityName) != 0){
+        cityList = cityList->next;
     }
-    if(clist == NULL){
+    if(cityList == NULL){
         return NULL;
     }
-    return clist->city;
+    return cityList->city;
 }
 
 
@@ -40,35 +52,35 @@ bool sameRoad(Road* roadA, Road* roadB){
     return false;
 }
 
-bool addRoadToCity(City *city, RoadList* rlist, Road *newRoad){
+bool addRoadToCity(City *city, RoadList* roadList, Road *newRoad){
 
-    /*RoadList* rlist = city->roadList;*/
+    /*RoadList* roadList = city->roadList;*/
 
-    if(rlist == NULL){ // city has got no roads yet
-        rlist = newRoadList();
-        if(rlist == NULL){
+    if(roadList == NULL){ // city has got no roads yet
+        roadList = newRoadList();
+        if(roadList == NULL){
             return false;
         }
-        city->roadList = rlist;
+        city->roadList = roadList;
         city->roadList->road = newRoad;
         return true;
 
     } else {
-        while (rlist->next != NULL && !sameRoad(rlist->road, newRoad)){
-            rlist = rlist->next;
+        while (roadList->next != NULL && !sameRoad(roadList->road, newRoad)){
+            roadList = roadList->next;
         }
 
-        if (sameRoad(rlist->road, newRoad)){
+        if (sameRoad(roadList->road, newRoad)){
             return false;
         }
 
-        rlist->next = newRoadList();
-        if (rlist->next == NULL){
+        roadList->next = newRoadList();
+        if (roadList->next == NULL){
             return false; // nieudana alokacja
         }
 
-        (rlist->next)->prev = rlist;
-        (rlist->next)->road = newRoad;
+        (roadList->next)->prev = roadList;
+        (roadList->next)->road = newRoad;
 
         return true;
     }
@@ -101,14 +113,14 @@ bool addCity(Map* map, City* city){
     return true;
 }
 
-Road* findRoad(RoadList* rlist, City* city){
+Road* findRoad(RoadList* roadList, City* city){
 
-    while(rlist->next != NULL && (rlist->road->cityA != city && rlist->road->cityB != city)){
-        rlist = rlist->next;
+    while(roadList->next != NULL && (roadList->road->cityA != city && roadList->road->cityB != city)){
+        roadList = roadList->next;
     }
 
-    if(rlist->road->cityA == city || rlist->road->cityB == city){
-        return rlist->road;
+    if(roadList->road->cityA == city || roadList->road->cityB == city){
+        return roadList->road;
     }
     return NULL;
 

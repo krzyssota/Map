@@ -129,6 +129,30 @@ CMakeFiles/map.dir/src/structures.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/map.dir/src/structures.c.s"
 	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.c -o CMakeFiles/map.dir/src/structures.c.s
 
+CMakeFiles/map.dir/src/routeRelated.c.o: CMakeFiles/map.dir/flags.make
+CMakeFiles/map.dir/src/routeRelated.c.o: ../src/routeRelated.c
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/map.dir/src/routeRelated.c.o   -c /home/krzubuntu/CLionProjects/IPP-ks406362/src/routeRelated.c
+
+CMakeFiles/map.dir/src/routeRelated.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/map.dir/src/routeRelated.c.i"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/krzubuntu/CLionProjects/IPP-ks406362/src/routeRelated.c > CMakeFiles/map.dir/src/routeRelated.c.i
+
+CMakeFiles/map.dir/src/routeRelated.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/map.dir/src/routeRelated.c.s"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/krzubuntu/CLionProjects/IPP-ks406362/src/routeRelated.c -o CMakeFiles/map.dir/src/routeRelated.c.s
+
+CMakeFiles/map.dir/src/dijkstra.c.o: CMakeFiles/map.dir/flags.make
+CMakeFiles/map.dir/src/dijkstra.c.o: ../src/dijkstra.c
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/map.dir/src/dijkstra.c.o   -c /home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.c
+
+CMakeFiles/map.dir/src/dijkstra.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/map.dir/src/dijkstra.c.i"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.c > CMakeFiles/map.dir/src/dijkstra.c.i
+
+CMakeFiles/map.dir/src/dijkstra.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/map.dir/src/dijkstra.c.s"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.c -o CMakeFiles/map.dir/src/dijkstra.c.s
+
 # Object files for target map
 map_OBJECTS = \
 "CMakeFiles/map.dir/src/map.c.o" \
@@ -136,7 +160,9 @@ map_OBJECTS = \
 "CMakeFiles/map.dir/src/roadsRelated.c.o" \
 "CMakeFiles/map.dir/src/additionalFunctions.c.o" \
 "CMakeFiles/map.dir/src/deleteStructure.c.o" \
-"CMakeFiles/map.dir/src/structures.c.o"
+"CMakeFiles/map.dir/src/structures.c.o" \
+"CMakeFiles/map.dir/src/routeRelated.c.o" \
+"CMakeFiles/map.dir/src/dijkstra.c.o"
 
 # External object files for target map
 map_EXTERNAL_OBJECTS =
@@ -147,6 +173,8 @@ map: CMakeFiles/map.dir/src/roadsRelated.c.o
 map: CMakeFiles/map.dir/src/additionalFunctions.c.o
 map: CMakeFiles/map.dir/src/deleteStructure.c.o
 map: CMakeFiles/map.dir/src/structures.c.o
+map: CMakeFiles/map.dir/src/routeRelated.c.o
+map: CMakeFiles/map.dir/src/dijkstra.c.o
 map: CMakeFiles/map.dir/build.make
 map: CMakeFiles/map.dir/link.txt
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/map.dir/link.txt --verbose=$(VERBOSE)

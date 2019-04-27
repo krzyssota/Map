@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/map.dir/src/additionalFunctions.c.o"
   "CMakeFiles/map.dir/src/deleteStructure.c.o"
   "CMakeFiles/map.dir/src/structures.c.o"
+  "CMakeFiles/map.dir/src/routeRelated.c.o"
+  "CMakeFiles/map.dir/src/dijkstra.c.o"
   "map.pdb"
   "map"
 )
