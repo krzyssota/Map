@@ -6,6 +6,7 @@
 #include "additionalFunctions.h"
 #include "roadsRelated.h"
 #include "deleteStructure.h"
+#include "routeRelated.h"
 
 
 /** @brief Tworzy nową strukturę.
@@ -52,18 +53,15 @@ void deleteMap(Map *map){
  */
 bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, int builtYear){
 
-    if(!correctName(city1) || !correctName(city2)){
+    if(!correctName(city1) || !correctName(city2) || builtYear == 0){
         return false; //któryś z parametrów ma niepoprawną wartość,
-    }
-    if(builtYear == 0){
-        return false;
     }
 
     if(strcmp(city1, city2) == 0){ //obie podane nazwy miast są identyczne
         return false;
     }
 
-    Road* newRoad = malloc(sizeof(Road));
+    Road* newRoad = createNewRoad();
     if(newRoad == NULL){
         return false; //nie udało się zaalokować pamięci.
     }
@@ -207,28 +205,41 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
     }
 
     Route* newRoute = createNewRoute(routeId);
-
-    newRoute->cityList = newCityList();
-    if(newRoute->cityList == NULL){
+    if(newRoute == NULL){
         return false;
     }
-    newRoute->cityList->city = cityA;
 
-    newRoute->cityList->next = newCityList();
-    if(newRoute->cityList->next == NULL){
+    CityList* start = newCityList();
+    if(start == NULL){
         return false;
     }
-    (newRoute->cityList->next)->prev = newRoute->cityList;
-    (newRoute->cityList->next)->city = cityB;
+    start->city = cityA;
+
+    CityList* end = newCityList();
+    if(end == NULL){
+        return false;
+    }
+    end->city = cityB;
 
     CityList* shortestPath = findShortestPath(map, cityA, cityB);
+    if(shortestPath == NULL){
+        return false;
+    }
+    start->next = shortestPath;
+    shortestPath->prev = start;
 
+    CityList* tmp = shortestPath;
+    while(tmp->next != NULL){
+        tmp = tmp->next;
+    }
+    tmp->next = end;
+    end->prev = tmp;
 
+    newRoute->cityList = start;
 
+    addRouteInfoToRoads(newRoute);
 
-
-
-    return false;
+    return true;
 }
 
 /** @brief Wydłuża drogę krajową do podanego miasta.
@@ -248,7 +259,7 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
  * wyznaczyć nowego fragmentu drogi krajowej lub nie udało się zaalokować
  * pamięci.
  */
-bool extendRoute(Map *map, unsigned routeId, const char *city){
+bool extendRoute(Map *map, unsigned routeId, const char *city){ // TODO dla route A-B, extend C, wybiera min(C-A-B, A-B-C)
     return false;
 }
 

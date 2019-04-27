@@ -79,6 +79,7 @@ CityList* newCityList();
 Route* createNewRoute(unsigned id);
 Queue* newQueue(City* destination);
 QueueElement* newQueueElement(City* city, long int distance, QueueElement* predecessor, Road* road);
+Road* createNewRoad();
 
 
 #endif //DROGI_STRUCTURES_H

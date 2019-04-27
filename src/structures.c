@@ -63,6 +63,36 @@ QueueElement* newQueueElement(City* city, long int distance, QueueElement* prede
     }
     return newElement;
 }
+Road* createNewRoad(){
+
+    Road* newRoad = malloc(sizeof(Road));
+    if(newRoad != NULL){
+
+        newRoad->cityA = newRoad->cityB = NULL;
+        newRoad->year = 0;
+        newRoad->length = 0;
+
+        for (int i = 0; i < 1000; ++i) {
+            newRoad->routesBelonging[i] = NULL;
+        }
+    }
+    return newRoad;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
