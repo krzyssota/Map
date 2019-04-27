@@ -152,22 +152,23 @@ void processNeighbours(Queue* queue, QueueElement* element){
 QueueElement* Dijkstra(Map* map,City* cityA, City* cityB){
 
     Queue* queue = prepareQueue(map, cityA, cityB);
+
+    QueueElement* destinationElement = findQueueElement(queue, queue->destination)
+
     QueueElement* currElement = NULL;
-    while(!isEmpty(queue)) {
+    while(findQueueElement(queue, queue->destination) != NULL) { // destination is still in the queue
+
+        destinationElement = findQueueElement(queue, queue->destination);
 
         currElement = pop(&queue);
         processNeighbours(queue, currElement);
     }
 
-    QueueElement* destinyElement = currElement; /*findQueueElement(queue, queue->destination);*/
-    if(destinyElement->distance == INF){
+    if(destinationElement->distance == INF){
         return NULL;
     }
 
-
-    return destinyElement;
-
-
+    return destinationElement;
 }
 
 

@@ -18,7 +18,7 @@
 Map* newMap(void){
     Map* newMap = malloc(sizeof(Map));
     newMap->cityList = NULL;
-    newMap->routes = malloc(sizeof(Route*)*1000);
+    /*newMap->routes = malloc(sizeof(Route*)*1000);*/
     for(int i = 0; i <= 999; i++) {
         newMap->routes[i] = NULL;
     }
@@ -147,24 +147,6 @@ bool repairRoad(Map *map, const char *city1, const char *city2, int repairYear) 
     return false;
 }
 // --------------------------------------------------------------------------------
-/*Dijkstra(G,w,s):
-dla każdego wierzchołka v w V[G] wykonaj
-        d[v] := nieskończoność
-        poprzednik[v] := niezdefiniowane
-        d[s] := 0
-Q := V
-        dopóki Q niepuste wykonaj
-        u := Zdejmij_Min(Q)
-dla każdego wierzchołka v – sąsiada u wykonaj
-        jeżeli d[v] > d[u] + w(u, v) to
-        d[v] := d[u] + w(u, v)
-poprzednik[v] :=u;*/
-
-RouteList* shortestPath(Map* map, City* cityA, City* cityB){
-    /*const int size = map->noCities;
-    int d[size]  = {UINT32_MAX};*/ // TODO rząd wielkosci wiecej niż typ odległosci
-
-}
 // --------------------------------------
 
 /** @brief Łączy dwa różne miasta drogą krajową.
@@ -240,6 +222,10 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
 
     //addRouteInfoToRoads(newRoute);
 
+    map->routes[newRoute->routeId] = malloc(sizeof(Route));
+    if(map->routes[newRoute->routeId] == NULL){
+        //TODO delete shortestPath
+    }
     map->routes[newRoute->routeId] = newRoute;
 
     return true;
