@@ -12,6 +12,7 @@
 
 /*CityList* findCityList(Map* map, City* city);*/
 /*City* findCityByFirstRoadList(Map* map, RoadList* roadList);*/
+Road* olderRoad(Road* roadA, Road* roadB);
 RoadList* findRoadListElement(RoadList *roadList, Road *road);
 City* findCityByName(CityList *cityList, const char *cityName) ;
 RoadList* newRoadList();

@@ -10,12 +10,20 @@ CMakeFiles/map.dir/src/deleteStructure.c.o
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.h
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
+CMakeFiles/map.dir/src/dijkstra.c.o
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.c
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.h
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.h
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/routeRelated.h
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
 CMakeFiles/map.dir/src/map.c.o
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.h
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/deleteStructure.h
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.c
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.h
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/routeRelated.h
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
 CMakeFiles/map.dir/src/map_main.c.o
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
@@ -26,6 +34,12 @@ CMakeFiles/map.dir/src/roadsRelated.c.o
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.c
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.h
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
+CMakeFiles/map.dir/src/routeRelated.c.o
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.h
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/routeRelated.c
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/routeRelated.h
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
 CMakeFiles/map.dir/src/structures.c.o
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.h

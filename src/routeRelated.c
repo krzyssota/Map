@@ -10,11 +10,25 @@
 #include "map.h"
 #include "dijkstra.h"
 
+Road* olderRoad(Road* roadA, Road* roadB){
+
+    int a = INT16_MAX;
+    if(roadA != NULL) {
+        a = roadA->year;
+    }
+    int b = INT16_MAX;
+    if(roadB != NULL) {
+        b = roadB->year;
+    }
+
+    if(a > b) return roadB;
+    return roadA;
+}
 
 void addRouteInfoToRoads(Route* route){
     CityList* tmp = route->cityList;
     while(tmp->next != NULL){
-
+        //TODO tutaj skonczylem
     }
 }
 
@@ -22,25 +36,31 @@ CityList* findShortestPath(Map* map, City* cityA, City* cityB){
 
     QueueElement* destination = Dijkstra(map, cityA, cityB);
 
-    if(destination == NULL){ // no optimal route found
+    if(destination == NULL){ // no optimal path found
         return NULL;
     }
 
     QueueElement* tmp = destination;
-    CityList* cityList = newCityList();
+    CityList* cityList = NULL;
 
     while(tmp != NULL) {
 
-        CityList* newCityListElement = newCityList();
-        newCityListElement->city = tmp->predecessor->city;
 
-        newCityListElement->next = cityList;
-        cityList->prev = newCityListElement;
+        CityList* newStartingElement = newCityList();
+
+        newStartingElement->city = tmp->city;
+
+        newStartingElement->next = cityList;
+        if(cityList != NULL) {
+            cityList->prev = newStartingElement;
+        }
+
+        cityList = newStartingElement;
 
         tmp = tmp->predecessor;
-        cityList = cityList->prev;
-    }
 
+    }
+    //TODO free queue
     return cityList;
 
 

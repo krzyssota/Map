@@ -71,7 +71,7 @@ Road* createNewRoad(){
         newRoad->cityA = newRoad->cityB = NULL;
         newRoad->year = 0;
         newRoad->length = 0;
-
+        newRoad->routesBelonging = malloc(sizeof(Route*)*1000);
         for (int i = 0; i < 1000; ++i) {
             newRoad->routesBelonging[i] = NULL;
         }

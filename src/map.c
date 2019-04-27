@@ -18,6 +18,7 @@
 Map* newMap(void){
     Map* newMap = malloc(sizeof(Map));
     newMap->cityList = NULL;
+    newMap->routes = malloc(sizeof(Route*)*1000);
     for(int i = 0; i <= 999; i++) {
         newMap->routes[i] = NULL;
     }
@@ -209,7 +210,7 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
         return false;
     }
 
-    CityList* start = newCityList();
+    /*CityList* start = newCityList();
     if(start == NULL){
         return false;
     }
@@ -219,13 +220,13 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
     if(end == NULL){
         return false;
     }
-    end->city = cityB;
+    end->city = cityB;*/
 
     CityList* shortestPath = findShortestPath(map, cityA, cityB);
     if(shortestPath == NULL){
         return false;
     }
-    start->next = shortestPath;
+   /* start->next = shortestPath;
     shortestPath->prev = start;
 
     CityList* tmp = shortestPath;
@@ -233,11 +234,13 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
         tmp = tmp->next;
     }
     tmp->next = end;
-    end->prev = tmp;
+    end->prev = tmp;*/
 
-    newRoute->cityList = start;
+    newRoute->cityList = shortestPath;
 
-    addRouteInfoToRoads(newRoute);
+    //addRouteInfoToRoads(newRoute);
+
+    map->routes[newRoute->routeId] = newRoute;
 
     return true;
 }

@@ -37,7 +37,7 @@ struct Road{
     unsigned length;
     int year;
 
-    Route* routesBelonging[];
+    Route** routesBelonging;
 };
 
 typedef struct CityList{

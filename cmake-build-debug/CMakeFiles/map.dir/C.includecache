@@ -6,43 +6,27 @@
 
 #IncludeRegexTransform: 
 
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.h
-stdbool.h
--
-
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
 stdbool.h
 -
 structures.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
 
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.c
-roadsRelated.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/map_main.c
 map.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
-map.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
-structures.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
-additionalFunctions.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.h
+stdlib.h
+-
 string.h
 -
-stdlib.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/stdlib.h
-stdbool.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/stdbool.h
-
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.h
-map.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
-structures.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
-stdlib.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/stdlib.h
-stdbool.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/stdbool.h
+assert.h
+-
+stdio.h
+-
 
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
+limits.h
+-
+stdint.h
+-
 
