@@ -18,7 +18,7 @@
 Map* newMap(void){
     Map* newMap = malloc(sizeof(Map));
     newMap->cityList = NULL;
-    /*newMap->routes = malloc(sizeof(Route*)*1000);*/
+    newMap->routes = malloc(sizeof(Route*) * 1000);
     for(int i = 0; i <= 999; i++) {
         newMap->routes[i] = NULL;
     }
@@ -33,8 +33,8 @@ Map* newMap(void){
  */
 void deleteMap(Map *map){
     if(map != NULL) {
-        deleteCityList(map, map->cityList);
-        /*deleteRouteList(map->routeList);*/
+        deleteCitiesRoads(map, map->cityList);
+        deleteRouteList(map->routes);
         free(map);
     }
 }
@@ -208,23 +208,19 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
     if(shortestPath == NULL){
         return false;
     }
-   /* start->next = shortestPath;
-    shortestPath->prev = start;
-
-    CityList* tmp = shortestPath;
-    while(tmp->next != NULL){
-        tmp = tmp->next;
-    }
-    tmp->next = end;
-    end->prev = tmp;*/
 
     newRoute->cityList = shortestPath;
 
-    //addRouteInfoToRoads(newRoute);
+    addRouteInfoToRoads(newRoute);
 
     map->routes[newRoute->routeId] = malloc(sizeof(Route));
-    if(map->routes[newRoute->routeId] == NULL){
-        //TODO delete shortestPath
+
+    if(map->routes[newRoute->routeId] == NULL) {
+        while (shortestPath != NULL){
+            CityList* tmp = shortestPath;
+            shortestPath = shortestPath->next;
+            free(tmp);
+        }
     }
     map->routes[newRoute->routeId] = newRoute;
 

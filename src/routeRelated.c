@@ -26,9 +26,20 @@ Road* olderRoad(Road* roadA, Road* roadB){
 }
 
 void addRouteInfoToRoads(Route* route){
-    CityList* tmp = route->cityList;
-    while(tmp->next != NULL){
-        //TODO tutaj skonczylem
+
+    CityList* cityList = route->cityList;
+
+    while(cityList != NULL){
+
+        RoadList* roadList = cityList->city->roadList;
+
+        while(roadList != NULL){
+
+            roadList->road->routesBelonging[route->routeId] = route;
+            roadList = roadList->next;
+        }
+
+        cityList = cityList->next;
     }
 }
 

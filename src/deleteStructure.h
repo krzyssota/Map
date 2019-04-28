@@ -9,7 +9,9 @@
 #include "map.h"
 
 
-void deleteCityList(Map* map, CityList* cityList);
+void deleteCitiesRoads(Map *map, CityList *cityList);
+void cleanQueue(Queue **queue);
+void deleteRouteList(Route** routeList);
 
 
 

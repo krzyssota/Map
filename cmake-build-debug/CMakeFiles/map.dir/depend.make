@@ -6,10 +6,12 @@ CMakeFiles/map.dir/src/additionalFunctions.c.o: ../src/additionalFunctions.h
 
 CMakeFiles/map.dir/src/deleteStructure.c.o: ../src/deleteStructure.c
 CMakeFiles/map.dir/src/deleteStructure.c.o: ../src/deleteStructure.h
+CMakeFiles/map.dir/src/deleteStructure.c.o: ../src/dijkstra.h
 CMakeFiles/map.dir/src/deleteStructure.c.o: ../src/map.h
 CMakeFiles/map.dir/src/deleteStructure.c.o: ../src/roadsRelated.h
 CMakeFiles/map.dir/src/deleteStructure.c.o: ../src/structures.h
 
+CMakeFiles/map.dir/src/dijkstra.c.o: ../src/deleteStructure.h
 CMakeFiles/map.dir/src/dijkstra.c.o: ../src/dijkstra.c
 CMakeFiles/map.dir/src/dijkstra.c.o: ../src/dijkstra.h
 CMakeFiles/map.dir/src/dijkstra.c.o: ../src/map.h

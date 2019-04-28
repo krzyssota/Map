@@ -8,6 +8,7 @@
 #include "map.h"
 #include "roadsRelated.h"
 #include "routeRelated.h"
+#include "deleteStructure.h"
 
 void push(Queue** queue, QueueElement* element){
 
@@ -57,10 +58,6 @@ QueueElement* pop(Queue** queue){
     return result;
 }
 
-bool isEmpty(Queue* queue){
-    return queue->head == NULL;
-}
-
 Queue* prepareQueue(Map* map,City* cityA, City* cityB) {
 
     Queue* queue = newQueue(cityB);
@@ -90,12 +87,8 @@ QueueElement* findQueueElement(Queue* queue, City* city){
     return tmp;
 }
 
-void popElement(Queue **queue, QueueElement* element){
+QueueElement* popElement(Queue **queue, QueueElement* element){
 
-    /*QueueElement* tmp = (*queue)->head;
-    while(tmp != NULL && tmp != element){
-        tmp = tmp->next;
-    }*/
     if(element == (*queue)->head){
         (*queue)->head = element->next;
     }
@@ -106,6 +99,7 @@ void popElement(Queue **queue, QueueElement* element){
     if(element->next != NULL) {
         (element->next)->prev = element->prev;
     }
+    return element;
 }
 
 
@@ -115,25 +109,26 @@ void updateElement(Queue **queue, QueueElement* faux){
 
     if(original->distance > faux->distance){
 
-        popElement(queue, original);
+        free(popElement(queue, original));
         push(queue, faux);
 
     } else if(original->distance == faux->distance){
 
         if(original->oldestRoad->year < faux->oldestRoad->year){
 
-            popElement(queue, original);
+            free(popElement(queue, original));
             push(queue, faux);
         }
+    } else {
+        free(faux);
     }
-    //TODO free original or faux
 }
 
 void processNeighbours(Queue* queue, QueueElement* element){
 
     RoadList* tmp = element->city->roadList;
 
-    while(tmp != NULL) {
+    while(tmp != NULL) { // TODO jak route ma sie nie petelkowac to nie rozwazac drog nalezacych juz do wlasnie budowanej route
 
         City* neighbour = getOtherCity(tmp->road, element->city);
 
@@ -149,11 +144,12 @@ void processNeighbours(Queue* queue, QueueElement* element){
     }
 }
 
-QueueElement* Dijkstra(Map* map,City* cityA, City* cityB){
+
+QueueElement* Dijkstra(Map* map, City* cityA, City* cityB){
 
     Queue* queue = prepareQueue(map, cityA, cityB);
 
-    QueueElement* destinationElement = findQueueElement(queue, queue->destination)
+    QueueElement* destinationElement = findQueueElement(queue, queue->destination);
 
     QueueElement* currElement = NULL;
     while(findQueueElement(queue, queue->destination) != NULL) { // destination is still in the queue
@@ -163,6 +159,8 @@ QueueElement* Dijkstra(Map* map,City* cityA, City* cityB){
         currElement = pop(&queue);
         processNeighbours(queue, currElement);
     }
+    cleanQueue(&queue);
+    free(queue);
 
     if(destinationElement->distance == INF){
         return NULL;
