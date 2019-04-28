@@ -9,7 +9,9 @@
 #define DROGI_ROUTERELATED_H
 
 City* getOtherCity(Road *road, City *city);
-CityList* findShortestPath(Map* map, City* cityA, City* cityB);
+CityList* findShortestPath(Map* map, Route* route, City* cityA, City* cityB, Road* oldestRoad);
 void addRouteInfoToRoads(Route* Route);
+bool routeContainsRoad(Route* route, Road* road);
+unsigned calculateLength(CityList* path);
 
 #endif //DROGI_ROUTERELATED_H

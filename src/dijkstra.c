@@ -103,41 +103,45 @@ QueueElement* popElement(Queue **queue, QueueElement* element){
 }
 
 
-void updateElement(Queue **queue, QueueElement* faux){
+void updateElement(Queue **queue, QueueElement* alternative){
 
-    QueueElement* original = findQueueElement((*queue), faux->city);
+    QueueElement* original = findQueueElement((*queue), alternative->city);
 
-    if(original->distance > faux->distance){
+    if(original->distance > alternative->distance){
 
         free(popElement(queue, original));
-        push(queue, faux);
+        push(queue, alternative);
 
-    } else if(original->distance == faux->distance){
+    } else if(original->distance == alternative->distance){
 
-        if(original->oldestRoad->year < faux->oldestRoad->year){
+        if(original->oldestRoad->year < alternative->oldestRoad->year){
 
             free(popElement(queue, original));
-            push(queue, faux);
+            push(queue, alternative);
         }
     } else {
-        free(faux);
+        free(alternative);
     }
 }
 
-void processNeighbours(Queue* queue, QueueElement* element){
+void processNeighbours(Queue* queue, Route* route, QueueElement* element){
 
     RoadList* tmp = element->city->roadList;
 
-    while(tmp != NULL) { // TODO jak route ma sie nie petelkowac to nie rozwazac drog nalezacych juz do wlasnie budowanej route
+    while(tmp != NULL) {
 
-        City* neighbour = getOtherCity(tmp->road, element->city);
+        if(!routeContainsRoad(route, tmp->road)) {
 
-        if(findQueueElement(queue, neighbour) != NULL) { // neighbour still in the queue
+            City* neighbour = getOtherCity(tmp->road, element->city);
 
-            long int fauxDistance = element->distance + (long int) findRoad(neighbour->roadList, element->city)->length;
-            QueueElement* fauxNeighbour = newQueueElement(neighbour, fauxDistance, element, olderRoad(element->oldestRoad, tmp->road));
+            if (findQueueElement(queue, neighbour) != NULL) { // neighbour still in the queue
 
-            updateElement(&queue, fauxNeighbour);
+                long int alternativeDistance = element->distance + (long int) findRoad(neighbour, element->city)->length;
+                QueueElement* alternativeNeighbour = newQueueElement(neighbour, alternativeDistance, element,
+                                                              olderRoad(element->oldestRoad, tmp->road));
+
+                updateElement(&queue, alternativeNeighbour);
+            }
         }
 
         tmp = tmp->next;
@@ -145,7 +149,7 @@ void processNeighbours(Queue* queue, QueueElement* element){
 }
 
 
-QueueElement* Dijkstra(Map* map, City* cityA, City* cityB){
+QueueElement* Dijkstra(Map* map, Route* route, City* cityA, City* cityB){
 
     Queue* queue = prepareQueue(map, cityA, cityB);
 
@@ -157,7 +161,7 @@ QueueElement* Dijkstra(Map* map, City* cityA, City* cityB){
         destinationElement = findQueueElement(queue, queue->destination);
 
         currElement = pop(&queue);
-        processNeighbours(queue, currElement);
+        processNeighbours(queue, route, currElement);
     }
     cleanQueue(&queue);
     free(queue);

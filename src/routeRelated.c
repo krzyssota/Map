@@ -5,10 +5,12 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "routeRelated.h"
 #include "structures.h"
 #include "map.h"
 #include "dijkstra.h"
+#include "roadsRelated.h"
 
 Road* olderRoad(Road* roadA, Road* roadB){
 
@@ -43,13 +45,15 @@ void addRouteInfoToRoads(Route* route){
     }
 }
 
-CityList* findShortestPath(Map* map, City* cityA, City* cityB){
+CityList* findShortestPath(Map* map, Route* route, City* cityA, City* cityB, Road* oldestRoad){
 
-    QueueElement* destination = Dijkstra(map, cityA, cityB);
+    QueueElement* destination = Dijkstra(map, route, cityA, cityB);
 
     if(destination == NULL){ // no optimal path found
         return NULL;
     }
+
+    oldestRoad = destination->oldestRoad;
 
     QueueElement* tmp = destination;
     CityList* cityList = NULL;
@@ -71,7 +75,6 @@ CityList* findShortestPath(Map* map, City* cityA, City* cityB){
         tmp = tmp->predecessor;
 
     }
-    //TODO free queue
     return cityList;
 
 
@@ -79,6 +82,61 @@ CityList* findShortestPath(Map* map, City* cityA, City* cityB){
 
 City* getOtherCity(Road *road, City *city){
 
-    if(road->cityA != city) return road->cityA;
-    return road->cityB;
+    if(city == road->cityA) return road->cityB;
+    if(city == road->cityB) return road->cityA;
+    return NULL;
 }
+
+bool routeContainsCity(Route* route, City* city){
+
+    CityList* cityList = route->cityList;
+    while(cityList != NULL && cityList->city != city){
+        cityList = cityList->next;
+    }
+
+    if(cityList != NULL){
+        return true;
+    }
+    return false;
+}
+
+bool routeContainsRoad(Route* route, Road* road){
+
+    CityList* cityList = route->cityList;
+    if(cityList == NULL){ // no route yet
+        return false;
+    }
+    // invoked during extendRoute
+    bool contains = false;
+
+    while(cityList->next != NULL && contains == false){
+
+        if((road->cityA == cityList->city && road->cityB == cityList->next->city)
+          ||(road->cityB == cityList->city && road->cityA == cityList->next->city)){
+            contains = true;
+        }
+
+        cityList = cityList->next;
+    }
+    return contains;
+}
+
+unsigned calculateLength(CityList* path){
+
+    unsigned length = 0;
+    while(path->next != NULL){
+        Road* road = findRoad(path->city, path->next->city)->length;
+        assert(road != NULL);
+        length += road->length;
+        path = path->next;
+    }
+    return length;
+}
+
+
+
+
+
+
+
+

@@ -17,8 +17,14 @@
  */
 Map* newMap(void){
     Map* newMap = malloc(sizeof(Map));
+    if(newMap == NULL){
+        return NULL;
+    }
     newMap->cityList = NULL;
     newMap->routes = malloc(sizeof(Route*) * 1000);
+    if(newMap->routes == NULL){
+        return NULL;
+    }
     for(int i = 0; i <= 999; i++) {
         newMap->routes[i] = NULL;
     }
@@ -136,7 +142,7 @@ bool repairRoad(Map *map, const char *city1, const char *city2, int repairYear) 
         return false;
     }
 
-    Road* road = findRoad(cityA->roadList, cityB);
+    Road* road = findRoad(cityA, cityB);
     if(road == NULL){ //nie ma odcinka drogi między podanymi miastami,
         return false;
     }
@@ -204,7 +210,8 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
     }
     end->city = cityB;*/
 
-    CityList* shortestPath = findShortestPath(map, cityA, cityB);
+    Road* dummy = NULL;
+    CityList* shortestPath = findShortestPath(map, newRoute, cityA, cityB, dummy);
     if(shortestPath == NULL){
         return false;
     }
@@ -213,15 +220,15 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
 
     addRouteInfoToRoads(newRoute);
 
-    map->routes[newRoute->routeId] = malloc(sizeof(Route));
+    /*map->routes[newRoute->routeId] = malloc(sizeof(Route*));*/
 
-    if(map->routes[newRoute->routeId] == NULL) {
+    /*if(map->routes[newRoute->routeId] == NULL) {
         while (shortestPath != NULL){
             CityList* tmp = shortestPath;
             shortestPath = shortestPath->next;
             free(tmp);
         }
-    }
+    }*/
     map->routes[newRoute->routeId] = newRoute;
 
     return true;
@@ -245,6 +252,79 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
  * pamięci.
  */
 bool extendRoute(Map *map, unsigned routeId, const char *city){ // TODO dla route A-B, extend C, wybiera min(C-A-B, A-B-C)
+
+    if(!correctName(city) || !correctId(routeId)){
+        return false;
+    }
+
+    if(map->routes[routeId] == NULL){
+        return false;
+    }
+
+    City* additionalCity = findCityByName(map->cityList, city); //nie ma miasta o podanej nazwie
+    if(additionalCity == NULL){
+        return false;
+    }
+
+    if(routeContainsCity(map->routes[routeId], additionalCity)){ //przez miasto już przechodzi droga krajowa o podanym numerze
+        return false;                                            // podana droga krajowa kończy się w podanym mieście,
+    }
+
+    CityList* tmp = map->routes[routeId]->cityList;
+
+    Road* firstOldestRoad = NULL;
+    CityList* firstPath = findShortestPath(map, map->routes[routeId], additionalCity, tmp->city, firstOldestRoad);
+    if(firstPath == NULL){
+        return false;
+    }
+    unsigned firstLength = calculateLength(firstPath);
+
+    while(tmp->next != NULL){
+        tmp = tmp->next;
+    }
+    Road* secondOldestRoad = NULL;
+    CityList* secondPath = findShortestPath(map, map->routes[routeId], tmp->city, additionalCity, secondOldestRoad);
+    if(secondPath == NULL){
+        return false;
+    }
+    unsigned secondLength = calculateLength(secondPath);
+
+
+    switch(betterPath(firstPath, firstOldestRoad, firstLength, secondLength, secondOldestRoad, secondLength)){
+        case 1:
+
+            CityList* tmp = firstPath;
+            while(tmp->next != NULL){
+                tmp = tmp->next;
+            }
+
+            tmp->next = map->routes[routeId]->cityList;
+            (map->routes[routeId]->cityList)->prev = tmp;
+
+            map->routes[routeId]->cityList = firstPath;
+            //TODO free secondPath
+            break;
+        case 2:
+
+            CityList* tmp = map->routes[routeId]->cityList;
+            while(tmp->next != NULL){
+                tmp = tmp->next;
+            }
+
+            tmp->next = secondPath;
+            secondPath->prev = tmp;
+            break;
+        case 0:
+            //free memory
+            return false;
+        default:
+            return false;
+    }
+
+
+
+
+
     return false;
 }
 
