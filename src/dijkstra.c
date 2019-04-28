@@ -58,15 +58,19 @@ QueueElement* pop(Queue** queue){
     return result;
 }
 
-Queue* prepareQueue(Map* map,City* cityA, City* cityB) {
+Queue* prepareQueue(Map* map, Route* route, City* cityA, City* cityB) {
 
     Queue* queue = newQueue(cityB);
     push(&queue, newQueueElement(cityA, 0, NULL, NULL)); // source
 
+    if(route->cityList != NULL && cityB == route->cityList->city){ // extending by adding prefix
+        push(&queue, newQueueElement(cityB, INF, NULL, NULL));
+    }
+
     CityList* tmp = map->cityList;
     while (tmp != NULL) {
 
-        if(tmp->city != cityA) {
+        if(tmp->city != cityA && !routeContainsCity(route, tmp->city)) {
             push(&queue, newQueueElement(tmp->city, INF, NULL, NULL));
         }
         tmp = tmp->next;
@@ -151,7 +155,7 @@ void processNeighbours(Queue* queue, Route* route, QueueElement* element){
 
 QueueElement* Dijkstra(Map* map, Route* route, City* cityA, City* cityB){
 
-    Queue* queue = prepareQueue(map, cityA, cityB);
+    Queue* queue = prepareQueue(map, route, cityA, cityB);
 
     QueueElement* destinationElement = findQueueElement(queue, queue->destination);
 

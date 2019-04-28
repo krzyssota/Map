@@ -39,6 +39,7 @@ CMakeFiles/map.dir/src/roadsRelated.c.o: ../src/structures.h
 
 CMakeFiles/map.dir/src/routeRelated.c.o: ../src/dijkstra.h
 CMakeFiles/map.dir/src/routeRelated.c.o: ../src/map.h
+CMakeFiles/map.dir/src/routeRelated.c.o: ../src/roadsRelated.h
 CMakeFiles/map.dir/src/routeRelated.c.o: ../src/routeRelated.c
 CMakeFiles/map.dir/src/routeRelated.c.o: ../src/routeRelated.h
 CMakeFiles/map.dir/src/routeRelated.c.o: ../src/structures.h

@@ -41,7 +41,7 @@ void deleteRoadAndTwoRoadLists(Map *map, Road *road){
     deleteRoadListElement(map, road->cityA, roadListA);
     deleteRoadListElement(map, road->cityB, roadListB);
 
-    free(road->routesBelonging);
+    /*free(road->routesBelonging);*/
     free(road);
 }
 
@@ -82,7 +82,7 @@ void cleanQueue(Queue **queue){
     (*queue)->head = NULL;
 }
 
-void deleteRouteList(Route** routeList){
+void deleteRouteList(Route* routeList[]){
 
     for (int i = 0; i <= 999 ; ++i) {
 
@@ -101,7 +101,14 @@ void deleteRouteList(Route** routeList){
         }
     }
 
-    free(routeList);
+    /*free(routeList);*/
+}
+void deleteCityList(CityList* cityList){
+    while(cityList != NULL) {
+        CityList *tmp = cityList;
+        cityList = cityList->next;
+        free(tmp);
+    }
 }
 
 

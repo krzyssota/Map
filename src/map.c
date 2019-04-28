@@ -16,19 +16,24 @@
  * zaalokować pamięci.
  */
 Map* newMap(void){
-    Map* newMap = malloc(sizeof(Map));
-    if(newMap == NULL){
+
+    Map* map = malloc(sizeof(Map));
+    if(map == NULL){
         return NULL;
     }
-    newMap->cityList = NULL;
-    newMap->routes = malloc(sizeof(Route*) * 1000);
-    if(newMap->routes == NULL){
+
+    map->cityList = NULL;
+
+    /*map->routes = malloc(sizeof(Route*) * 1000);*/
+    /*if(map->routes == NULL){
         return NULL;
-    }
+    }*/
+
     for(int i = 0; i <= 999; i++) {
-        newMap->routes[i] = NULL;
+        map->routes[i] = NULL;
     }
-    return newMap;
+
+    return map;
 }
 
 
@@ -210,8 +215,8 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
     }
     end->city = cityB;*/
 
-    Road* dummy = NULL;
-    CityList* shortestPath = findShortestPath(map, newRoute, cityA, cityB, dummy);
+    int dummy;
+    CityList* shortestPath = findShortestPath(map, newRoute, cityA, cityB, &dummy);
     if(shortestPath == NULL){
         return false;
     }
@@ -272,8 +277,8 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){ // TODO dla rout
 
     CityList* tmp = map->routes[routeId]->cityList;
 
-    Road* firstOldestRoad = NULL;
-    CityList* firstPath = findShortestPath(map, map->routes[routeId], additionalCity, tmp->city, firstOldestRoad);
+    int firstOldestRoadYear = INT_MIN;
+    CityList* firstPath = findShortestPath(map, map->routes[routeId], additionalCity, tmp->city, &firstOldestRoadYear);
     if(firstPath == NULL){
         return false;
     }
@@ -282,50 +287,55 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){ // TODO dla rout
     while(tmp->next != NULL){
         tmp = tmp->next;
     }
-    Road* secondOldestRoad = NULL;
-    CityList* secondPath = findShortestPath(map, map->routes[routeId], tmp->city, additionalCity, secondOldestRoad);
+    int secondOldestRoadYear = INT_MIN;
+    CityList* secondPath = findShortestPath(map, map->routes[routeId], tmp->city, additionalCity, &secondOldestRoadYear);
     if(secondPath == NULL){
         return false;
     }
     unsigned secondLength = calculateLength(secondPath);
 
 
-    switch(betterPath(firstPath, firstOldestRoad, firstLength, secondLength, secondOldestRoad, secondLength)){
-        case 1:
-
-            CityList* tmp = firstPath;
-            while(tmp->next != NULL){
-                tmp = tmp->next;
+    switch(betterPath(firstOldestRoadYear, firstLength, secondOldestRoadYear, secondLength)){
+        case 1: {
+            CityList *endOfPath = firstPath;
+            while (endOfPath->next != NULL) {
+                endOfPath = endOfPath->next;
             }
 
-            tmp->next = map->routes[routeId]->cityList;
-            (map->routes[routeId]->cityList)->prev = tmp;
+            endOfPath->next = map->routes[routeId]->cityList->next;
+            (map->routes[routeId]->cityList->next)->prev = endOfPath;
 
             map->routes[routeId]->cityList = firstPath;
             //TODO free secondPath
+            deleteCityList(secondPath);
             break;
-        case 2:
+        }
+        case 2: {
 
-            CityList* tmp = map->routes[routeId]->cityList;
-            while(tmp->next != NULL){
-                tmp = tmp->next;
+            CityList *endOfRoute = map->routes[routeId]->cityList;
+            while (endOfRoute->next != NULL) {
+                endOfRoute = endOfRoute->next;
             }
 
-            tmp->next = secondPath;
-            secondPath->prev = tmp;
+            endOfRoute->next = secondPath->next;
+            (secondPath->next)->prev = endOfRoute;
+            //TODO free firstpath
+            deleteCityList(firstPath);
+
             break;
-        case 0:
-            //free memory
+        }
+        case 0: {
+            //TODO free memory
+            deleteCityList(firstPath);
+            deleteCityList(secondPath);
             return false;
-        default:
+        }
+        default: {
             return false;
+        }
     }
 
-
-
-
-
-    return false;
+    return true;
 }
 
 /** @brief Usuwa odcinek drogi między dwoma różnymi miastami.

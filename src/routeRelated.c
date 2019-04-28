@@ -45,7 +45,7 @@ void addRouteInfoToRoads(Route* route){
     }
 }
 
-CityList* findShortestPath(Map* map, Route* route, City* cityA, City* cityB, Road* oldestRoad){
+CityList* findShortestPath(Map* map, Route* route, City* cityA, City* cityB, int* yearOfOldestRoad){
 
     QueueElement* destination = Dijkstra(map, route, cityA, cityB);
 
@@ -53,7 +53,7 @@ CityList* findShortestPath(Map* map, Route* route, City* cityA, City* cityB, Roa
         return NULL;
     }
 
-    oldestRoad = destination->oldestRoad;
+    (*yearOfOldestRoad) = destination->oldestRoad->year;
 
     QueueElement* tmp = destination;
     CityList* cityList = NULL;
@@ -125,13 +125,41 @@ unsigned calculateLength(CityList* path){
 
     unsigned length = 0;
     while(path->next != NULL){
-        Road* road = findRoad(path->city, path->next->city)->length;
+        Road* road = findRoad(path->city, path->next->city);
         assert(road != NULL);
         length += road->length;
         path = path->next;
     }
     return length;
 }
+
+int betterPath(int firstOldestRoadYear, unsigned firstLength, int secondOldestRoadYear, unsigned secondLength){
+
+    if(firstLength < secondLength) return 1;
+    if(firstLength > secondLength) return 2;
+    if(firstLength == secondLength){
+        if(firstOldestRoadYear > secondOldestRoadYear) return 1;
+        if(firstOldestRoadYear < secondOldestRoadYear) return 2;
+        return 0;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

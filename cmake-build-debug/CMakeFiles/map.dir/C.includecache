@@ -6,35 +6,33 @@
 
 #IncludeRegexTransform: 
 
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.h
-stdbool.h
--
-
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/deleteStructure.h
 structures.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
 map.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
 
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/map.c
-stdlib.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.c
+stddef.h
 -
-stdbool.h
--
-string.h
--
-stdint.h
--
+dijkstra.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.h
 structures.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
-additionalFunctions.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.h
+map.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
 roadsRelated.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.h
-deleteStructure.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/deleteStructure.h
 routeRelated.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/routeRelated.h
+deleteStructure.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/deleteStructure.h
+
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.h
+structures.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
+map.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
 
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
 stdbool.h
@@ -57,16 +55,6 @@ structures.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
 map.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
-
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.c
-stddef.h
--
-structures.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
-additionalFunctions.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.h
-stdlib.h
--
 
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
 limits.h
