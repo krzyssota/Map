@@ -215,8 +215,10 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
     }
     end->city = cityB;*/
 
-    int dummy;
-    CityList* shortestPath = findShortestPath(map, newRoute, cityA, cityB, &dummy);
+    int dummyYear;
+    Route* dummyRoute = NULL;
+    Road* dummyRoad = NULL;
+    CityList* shortestPath = findShortestPath(map, newRoute, dummyRoute, cityA, cityB, &dummyYear, dummyRoad);
     if(shortestPath == NULL){
         return false;
     }
@@ -278,7 +280,9 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){ // TODO dla rout
     CityList* tmp = map->routes[routeId]->cityList;
 
     int firstOldestRoadYear = INT_MIN;
-    CityList* firstPath = findShortestPath(map, map->routes[routeId], additionalCity, tmp->city, &firstOldestRoadYear);
+    Route* dummyRoute = NULL;
+    Road* dummyRoad = NULL;
+    CityList* firstPath = findShortestPath(map, map->routes[routeId], dummyRoute, additionalCity, tmp->city, &firstOldestRoadYear, dummyRoad);
     if(firstPath == NULL){
         return false;
     }
@@ -288,7 +292,7 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){ // TODO dla rout
         tmp = tmp->next;
     }
     int secondOldestRoadYear = INT_MIN;
-    CityList* secondPath = findShortestPath(map, map->routes[routeId], tmp->city, additionalCity, &secondOldestRoadYear);
+    CityList* secondPath = findShortestPath(map, map->routes[routeId], dummyRoute, tmp->city, additionalCity, &secondOldestRoadYear, dummyRoad);
     if(secondPath == NULL){
         return false;
     }
@@ -306,7 +310,7 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){ // TODO dla rout
             (map->routes[routeId]->cityList->next)->prev = endOfPath;
 
             map->routes[routeId]->cityList = firstPath;
-            //TODO free secondPath
+
             deleteCityList(secondPath);
             break;
         }
@@ -319,13 +323,13 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){ // TODO dla rout
 
             endOfRoute->next = secondPath->next;
             (secondPath->next)->prev = endOfRoute;
-            //TODO free firstpath
+
             deleteCityList(firstPath);
 
             break;
         }
         case 0: {
-            //TODO free memory
+
             deleteCityList(firstPath);
             deleteCityList(secondPath);
             return false;
@@ -334,6 +338,7 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){ // TODO dla rout
             return false;
         }
     }
+    addRouteInfoToRoads(map->routes[routeId]);
 
     return true;
 }
@@ -356,6 +361,115 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){ // TODO dla rout
  * pamięci.
  */
 bool removeRoad(Map *map, const char *city1, const char *city2){
+
+    if(!correctName(city1) || !correctName(city2)){
+        return false; // któryś z parametrów ma niepoprawną wartość
+    }
+
+    City* cityA = findCityByName(map->cityList, city1); //któreś z podanych miast nie istnieje,
+    if(cityA == NULL){
+        return false;
+    }
+    City* cityB = findCityByName(map->cityList, city2);
+    if(cityB == NULL){
+        return false;
+    }
+
+    Road* road = findRoad(cityA, cityB);
+    if(road == NULL){ //nie ma odcinka drogi między podanymi miastami,
+        return false;
+    }
+    for(int i = 1; i <= 999; ++i) {
+        if(road->routesBelonging[i] != NULL) {
+
+            Route* routeA = createNewRoute(1000);
+
+            CityList* firstCityList = NULL;
+            CityList* previous = NULL;
+
+            CityList* start = NULL;
+
+
+            CityList *cityListToCopy = road->routesBelonging[i]->cityList;
+
+            bool last = false;
+            while(!last){
+
+                firstCityList = newCityList();
+                if(firstCityList == NULL){
+                    return false;
+                }
+
+                firstCityList->city = cityListToCopy->city;
+                firstCityList->prev = previous;
+                if(previous != NULL){
+                    previous->next = firstCityList;
+                }
+
+                if(previous == NULL) { // first element
+                    start = firstCityList;
+                }
+
+                previous = firstCityList;
+                firstCityList = firstCityList->next;
+
+
+                if(cityListToCopy->city == road->cityA || cityListToCopy->city == road->cityB){
+                    last = true;
+                }
+
+                cityListToCopy = cityListToCopy->next;
+            }
+            routeA->cityList = start;
+
+            // second part
+
+            cityListToCopy = cityListToCopy->next; //skip second city and go to the next cityList
+
+            Route* routeB = createNewRoute(1000);
+
+            CityList* secondCityList = NULL;
+            CityList* previousB = NULL;
+            CityList* startB = NULL;
+
+
+
+            while(cityListToCopy != NULL){
+
+                secondCityList = newCityList();
+                if(secondCityList == NULL){
+                    return false;
+                }
+
+                secondCityList->city = cityListToCopy->city;
+                secondCityList->prev= previousB;
+                if(previousB != NULL) {
+                    previousB->next = secondCityList;
+                }
+
+                if(previousB == NULL) {
+                    startB = secondCityList;
+                }
+
+                previousB = secondCityList;
+                secondCityList = secondCityList->next;
+
+                cityListToCopy = cityListToCopy->next;
+            }
+            routeB->cityList = startB;
+
+
+            int dummyY;
+            CityList* shortestPath = findShortestPath(map, routeA, routeB, cityA, cityB, &dummyY, road);
+            if(shortestPath == NULL){
+                // free routeA, routeB
+                return false;
+            }
+
+            insertPathIntoRoute(shortestPath, road->routesBelonging[i], cityA, cityB);
+        }
+    }
+
     return false;
 }
 

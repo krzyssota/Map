@@ -58,19 +58,19 @@ QueueElement* pop(Queue** queue){
     return result;
 }
 
-Queue* prepareQueue(Map* map, Route* route, City* cityA, City* cityB) {
+Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB) {
 
     Queue* queue = newQueue(cityB);
     push(&queue, newQueueElement(cityA, 0, NULL, NULL)); // source
 
-    if(route->cityList != NULL && cityB == route->cityList->city){ // extending by adding prefix
+    if(routeA->cityList != NULL && cityB == routeA->cityList->city){ // extending by adding prefix
         push(&queue, newQueueElement(cityB, INF, NULL, NULL));
     }
 
     CityList* tmp = map->cityList;
     while (tmp != NULL) {
 
-        if(tmp->city != cityA && !routeContainsCity(route, tmp->city)) {
+        if(tmp->city != cityA && !routeContainsCity(routeA, tmp->city) && !routeContainsCity(routeB, tmp->city)) {
             push(&queue, newQueueElement(tmp->city, INF, NULL, NULL));
         }
         tmp = tmp->next;
@@ -128,13 +128,13 @@ void updateElement(Queue **queue, QueueElement* alternative){
     }
 }
 
-void processNeighbours(Queue* queue, Route* route, QueueElement* element){
+void processNeighbours(Queue* queue, Route* route, QueueElement* element, Road* roadRemoved){
 
     RoadList* tmp = element->city->roadList;
 
     while(tmp != NULL) {
 
-        if(!routeContainsRoad(route, tmp->road)) {
+        if(!routeContainsRoad(route, tmp->road) && tmp->road != roadRemoved) { // do not accept road that is removed
 
             City* neighbour = getOtherCity(tmp->road, element->city);
 
@@ -153,9 +153,9 @@ void processNeighbours(Queue* queue, Route* route, QueueElement* element){
 }
 
 
-QueueElement* Dijkstra(Map* map, Route* route, City* cityA, City* cityB){
+QueueElement* Dijkstra(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, Road* roadRemoved){
 
-    Queue* queue = prepareQueue(map, route, cityA, cityB);
+    Queue* queue = prepareQueue(map, routeA, routeB, cityA, cityB);
 
     QueueElement* destinationElement = findQueueElement(queue, queue->destination);
 
@@ -165,7 +165,7 @@ QueueElement* Dijkstra(Map* map, Route* route, City* cityA, City* cityB){
         destinationElement = findQueueElement(queue, queue->destination);
 
         currElement = pop(&queue);
-        processNeighbours(queue, route, currElement);
+        processNeighbours(queue, routeA, currElement, roadRemoved);
     }
     cleanQueue(&queue);
     free(queue);

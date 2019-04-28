@@ -45,9 +45,9 @@ void addRouteInfoToRoads(Route* route){
     }
 }
 
-CityList* findShortestPath(Map* map, Route* route, City* cityA, City* cityB, int* yearOfOldestRoad){
+CityList* findShortestPath(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, int* yearOfOldestRoad, Road* roadRemoved){
 
-    QueueElement* destination = Dijkstra(map, route, cityA, cityB);
+    QueueElement* destination = Dijkstra(map, routeA, routeB, cityA, cityB, roadRemoved);
 
     if(destination == NULL){ // no optimal path found
         return NULL;
@@ -88,7 +88,9 @@ City* getOtherCity(Road *road, City *city){
 }
 
 bool routeContainsCity(Route* route, City* city){
-
+    if(route == NULL){
+        return false;
+    }
     CityList* cityList = route->cityList;
     while(cityList != NULL && cityList->city != city){
         cityList = cityList->next;
@@ -143,6 +145,38 @@ int betterPath(int firstOldestRoadYear, unsigned firstLength, int secondOldestRo
         return 0;
     }
 
+}
+
+void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB){
+
+    CityList* cityList = route->cityList;
+
+    while(cityList != NULL && cityList->city != cityA){
+        cityList = cityList->next;
+    }
+    assert(cityList != NULL);
+
+    CityList* toDelete = path;
+
+    CityList* otherEnd = cityList->next;
+
+    cityList->next = path->next;
+    path->next->prev = cityList;
+
+    path = path->next;
+
+    while(path != NULL && path->city != cityB){
+        path = path->next;
+    }
+    assert(path != NULL);
+
+    CityList* toDelete2 = otherEnd;
+
+    path->next = otherEnd->next;
+    otherEnd->next->prev = path;
+
+    free(toDelete);
+    free(otherEnd);
 }
 
 
