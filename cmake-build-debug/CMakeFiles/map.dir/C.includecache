@@ -6,28 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/deleteStructure.h
-structures.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
-map.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
-
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.c
-stddef.h
--
-dijkstra.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.h
-structures.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
-map.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
-roadsRelated.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.h
-routeRelated.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/routeRelated.h
-deleteStructure.h
-/home/krzubuntu/CLionProjects/IPP-ks406362/src/deleteStructure.h
-
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.h
 structures.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
@@ -39,6 +17,18 @@ stdbool.h
 -
 structures.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
+
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/map_main.c
+map.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
+stdlib.h
+-
+string.h
+-
+assert.h
+-
+stdio.h
+-
 
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.h
 map.h
@@ -50,6 +40,26 @@ stdlib.h
 stdbool.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/stdbool.h
 
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/routeRelated.c
+stddef.h
+-
+stdint.h
+-
+stdlib.h
+-
+assert.h
+-
+routeRelated.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/routeRelated.h
+structures.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
+map.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
+dijkstra.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.h
+roadsRelated.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.h
+
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/routeRelated.h
 structures.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
@@ -57,8 +67,10 @@ map.h
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
 
 /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
-limits.h
+stdint.h
 -
+map.h
+/home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
 stdint.h
 -
 

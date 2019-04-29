@@ -14,7 +14,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # Ustawiamy wspólne opcje kompilowania dla wszystkich wariantów projektu.
 
-set(CMAKE_C_FLAGS "-std=c11 -Wall -Wextra") #TODO przywrócić
+set(CMAKE_C_FLAGS "-std=c11 -Wall -Wextra")
 #[[set(CMAKE_C_FLAGS "-std=c11")]]
 
 # Domyślne opcje dla wariantów Release i Debug są sensowne.
@@ -33,7 +33,12 @@ set(SOURCE_FILES
         src/additionalFunctions.h
         src/deleteStructure.c
         src/deleteStructure.h
-        src/structures.h src/structures.c src/routeRelated.c src/routeRelated.h src/dijkstra.c src/dijkstra.h)
+        src/structures.h
+        src/structures.c
+        src/routeRelated.c
+        src/routeRelated.h
+        src/dijkstra.c
+        src/dijkstra.h)
 
 # Wskazujemy plik wykonywalny.
 add_executable(map ${SOURCE_FILES})

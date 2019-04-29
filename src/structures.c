@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include "structures.h"
 #include "additionalFunctions.h"
+#include "map.h"
 #include <stdlib.h>
 
 RoadList* newRoadList(){
@@ -81,6 +82,31 @@ Road* createNewRoad(){
     }
     return newRoad;
 }
+/*
+StringList* newStringList(char* string){
+    StringList* stringList = malloc(sizeof(StringList));
+    if(stringList != NULL){
+        stringList->string = string;
+        stringList->prev = stringList->next = NULL;
+    }
+    return stringList;
+}
+
+void addStringList(Map* map, StringList* stringList){
+
+    StringList* tmp = map->stringList;
+    if(tmp == NULL){
+        map->stringList = stringList;
+    } else {
+        while (tmp->next != NULL) {
+
+            tmp = tmp->next;
+        }
+        tmp->next = stringList;
+        stringList->prev = tmp;
+    }
+
+}*/
 
 
 

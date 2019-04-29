@@ -71,8 +71,9 @@ CityList* findShortestPath(Map* map, Route* routeA, Route* routeB, City* cityA, 
         }
 
         cityList = newStartingElement;
-
+        QueueElement* toDelete = tmp;
         tmp = tmp->predecessor;
+        free(toDelete);
 
     }
     return cityList;
@@ -170,7 +171,7 @@ void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB)
     }
     assert(path != NULL);
 
-    CityList* toDelete2 = otherEnd;
+    /*CityList* toDelete2 = otherEnd;*/
 
     path->next = otherEnd->next;
     otherEnd->next->prev = path;

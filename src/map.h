@@ -12,6 +12,9 @@
 #include <stdbool.h>
 #include "structures.h"
 
+typedef struct Route Route;
+typedef struct CityList CityList;
+
 /**
  * Struktura przechowująca mapę dróg krajowych.
  */

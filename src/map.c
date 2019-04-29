@@ -7,6 +7,7 @@
 #include "roadsRelated.h"
 #include "deleteStructure.h"
 #include "routeRelated.h"
+#include <limits.h>
 
 
 /** @brief Tworzy nową strukturę.
@@ -33,6 +34,8 @@ Map* newMap(void){
         map->routes[i] = NULL;
     }
 
+   /* map->stringList = NULL;*/
+
     return map;
 }
 
@@ -46,6 +49,7 @@ void deleteMap(Map *map){
     if(map != NULL) {
         deleteCitiesRoads(map, map->cityList);
         deleteRouteList(map->routes);
+
         free(map);
     }
 }
@@ -462,9 +466,12 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
             int dummyY;
             CityList* shortestPath = findShortestPath(map, routeA, routeB, cityA, cityB, &dummyY, road);
             if(shortestPath == NULL){
-                // free routeA, routeB
+
                 return false;
             }
+            // free routeA, routeB
+            deleteRoute(routeA);
+            deleteRoute(routeB);
 
             insertPathIntoRoute(shortestPath, road->routesBelonging[i], cityA, cityB);
         }
@@ -489,6 +496,15 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
  * @return Wskaźnik na napis lub NULL, gdy nie udało się zaalokować pamięci.
  */
 char const* getRouteDescription(Map *map, unsigned routeId){
-    return "elo";
+
+    if(map->routes[routeId] == NULL){
+        char* str;
+        str = 0;
+        return str;
+    } else {
+        int length = count(map->routes[routeId]);
+        char* str = getDescription(map->routes[routeId], length);
+        return str;
+    }
 }
 

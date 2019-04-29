@@ -111,5 +111,19 @@ void deleteCityList(CityList* cityList){
     }
 }
 
+void deleteRoute(Route* route){
+
+    CityList* cityList = route->cityList;
+
+    while(cityList != NULL){
+
+        CityList* tmp = cityList;
+        cityList = cityList->next;
+        free(tmp);
+    }
+
+    free(route);
+}
+
 
 

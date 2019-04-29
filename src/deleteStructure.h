@@ -13,6 +13,7 @@ void deleteCitiesRoads(Map *map, CityList *cityList);
 void cleanQueue(Queue **queue);
 void deleteRouteList(Route* routeList[]);
 void deleteCityList(CityList* cityList);
+void deleteRoute(Route* route);
 
 
 

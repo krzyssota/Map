@@ -11,14 +11,24 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bd1d48c-e182-4ef4-8396-4267b666b999" name="Default Changelist" comment="">
+    <list default="true" id="1bd1d48c-e182-4ef4-8396-4267b666b999" name="Default Changelist" comment="all but valgrind and comments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dijkstra.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/dijkstra.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dijkstra.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/dijkstra.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/C.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/src/additionalFunctions.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/src/map_main.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/src/structures.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/additionalFunctions.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/additionalFunctions.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/additionalFunctions.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/additionalFunctions.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/deleteStructure.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/deleteStructure.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/deleteStructure.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/deleteStructure.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/map.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/map.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/map.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/map.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/map_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/map_main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routeRelated.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/routeRelated.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routeRelated.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/routeRelated.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/structures.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/structures.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/structures.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/structures.h" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,8 +48,8 @@
             <file pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/src/dijkstra.c">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="480">
-                    <caret line="119" lean-forward="true" selection-start-line="119" selection-end-line="119" />
+                  <state relative-caret-position="2505">
+                    <caret line="167" column="67" selection-start-line="167" selection-start-column="67" selection-end-line="167" selection-end-column="67" />
                     <folding>
                       <element signature="e#44#63#0" expanded="true" />
                     </folding>
@@ -47,11 +57,11 @@
                 </provider>
               </entry>
             </file>
-            <file pinned="false" current-in-tab="false">
+            <file pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/src/routeRelated.c">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="636">
-                    <caret line="178" column="19" selection-start-line="178" selection-start-column="19" selection-end-line="178" selection-end-column="19" />
+                  <state relative-caret-position="634">
+                    <caret line="173" column="6" selection-start-line="173" selection-start-column="4" selection-end-line="173" selection-end-column="39" />
                     <folding>
                       <element signature="e#44#63#0" expanded="true" />
                     </folding>
@@ -74,8 +84,11 @@
             <file pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/src/roadsRelated.h">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="315">
-                    <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+                  <state relative-caret-position="105">
+                    <caret line="7" column="9" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
+                    <folding>
+                      <element signature="e#103#119#0" expanded="true" />
+                    </folding>
                   </state>
                 </provider>
               </entry>
@@ -83,17 +96,8 @@
             <file pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/src/deleteStructure.c">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="1575">
-                    <caret line="105" selection-start-line="105" selection-end-line="105" selection-end-column="39" />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/src/structures.c">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="321">
-                    <caret line="37" column="6" lean-forward="true" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="6" />
+                  <state relative-caret-position="60">
+                    <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
                     <folding>
                       <element signature="e#44#63#0" expanded="true" />
                     </folding>
@@ -101,13 +105,37 @@
                 </provider>
               </entry>
             </file>
-            <file pinned="false" current-in-tab="true">
+            <file pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/structures.c">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="345">
+                    <caret line="23" column="33" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
+                    <folding>
+                      <element signature="e#44#63#0" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/src/map.c">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="306">
-                    <caret line="426" selection-start-line="426" selection-end-line="426" />
+                  <state relative-caret-position="7125">
+                    <caret line="475" column="22" selection-start-line="475" selection-start-column="22" selection-end-line="475" selection-end-column="22" />
                     <folding>
                       <element signature="e#0#19#0" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/additionalFunctions.c">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="1155">
+                    <caret line="77" column="42" selection-start-line="77" selection-start-column="42" selection-end-line="77" selection-end-column="42" />
+                    <folding>
+                      <element signature="e#44#63#0" expanded="true" />
                     </folding>
                   </state>
                 </provider>
@@ -121,13 +149,25 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/map_main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="90" selection-start-line="90" selection-end-line="90" />
+            <state relative-caret-position="1245">
+              <caret line="83" selection-start-line="83" selection-end-line="83" />
               <folding>
-                <element signature="e#74#93#0" expanded="true" />
+                <element signature="e#20#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/additionalFunctions.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
+              <folding>
+                <element signature="e#117#137#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -136,8 +176,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/deleteStructure.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="40" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
+            <state relative-caret-position="150">
+              <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -157,8 +197,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/map.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="22" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
+            <state relative-caret-position="375">
+              <caret line="25" column="6" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
+              <folding>
+                <element signature="e#253#273#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -166,7 +218,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routeRelated.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
+            <state relative-caret-position="330">
               <caret line="22" column="81" selection-start-line="22" selection-start-column="81" selection-end-line="22" selection-end-column="81" />
               <folding>
                 <element signature="e#44#67#0" expanded="true" />
@@ -175,11 +227,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/structures.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
+            <state relative-caret-position="90">
+              <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -205,20 +257,21 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/src/additionalFunctions.c" />
         <option value="$PROJECT_DIR$/src/roadsRelated.h" />
-        <option value="$PROJECT_DIR$/src/map.h" />
-        <option value="$PROJECT_DIR$/src/structures.c" />
-        <option value="$PROJECT_DIR$/src/structures.h" />
-        <option value="$PROJECT_DIR$/src/deleteStructure.c" />
-        <option value="$PROJECT_DIR$/src/deleteStructure.h" />
         <option value="$PROJECT_DIR$/src/roadsRelated.c" />
         <option value="$PROJECT_DIR$/src/dijkstra.h" />
-        <option value="$PROJECT_DIR$/src/dijkstra.c" />
         <option value="$PROJECT_DIR$/src/routeRelated.h" />
+        <option value="$PROJECT_DIR$/src/deleteStructure.c" />
+        <option value="$PROJECT_DIR$/src/deleteStructure.h" />
+        <option value="$PROJECT_DIR$/src/dijkstra.c" />
+        <option value="$PROJECT_DIR$/src/structures.c" />
+        <option value="$PROJECT_DIR$/src/additionalFunctions.h" />
+        <option value="$PROJECT_DIR$/src/map.h" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/map_main.c" />
         <option value="$PROJECT_DIR$/src/map.c" />
+        <option value="$PROJECT_DIR$/src/additionalFunctions.c" />
+        <option value="$PROJECT_DIR$/src/structures.h" />
         <option value="$PROJECT_DIR$/src/routeRelated.c" />
       </list>
     </option>
@@ -234,6 +287,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -250,7 +304,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -264,6 +317,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="dynamic.analysis.tools.valgrind" />
@@ -315,7 +369,8 @@
       <workItem from="1556447605541" duration="5319000" />
       <workItem from="1556454502297" duration="6223000" />
       <workItem from="1556462122213" duration="3838000" />
-      <workItem from="1556472991422" duration="11051000" />
+      <workItem from="1556472991422" duration="13437000" />
+      <workItem from="1556489178066" duration="9213000" />
     </task>
     <task id="LOCAL-00001" summary="testGit">
       <created>1556363444810</created>
@@ -401,32 +456,39 @@
       <option name="project" value="LOCAL" />
       <updated>1556466304546</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="all but routeDescription done without valgrind">
+      <created>1556486448652</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1556486448652</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64941000" />
+    <option name="totallyTimeSpent" value="76540000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="1075" width="1299" height="743" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49302325" weight="0.1707901" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49302325" visible="true" weight="0.17318435" />
       <window_info id="Structure" order="1" sideWeight="0.5069767" side_tool="true" weight="0.16360734" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.048859935" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.1921824" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.16286644" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.24592833" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.56514657" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.048859935" />
       <window_info anchor="bottom" id="CMake" order="11" weight="0.4446254" />
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32899022" />
-      <window_info anchor="bottom" id="Messages" order="13" weight="0.5358306" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.48045602" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -447,44 +509,27 @@
     <MESSAGE value="last valgrind problems up to routeExtention" />
     <MESSAGE value="working on route extention" />
     <MESSAGE value="extentionDone" />
-    <option name="LAST_COMMIT_MESSAGE" value="extentionDone" />
+    <MESSAGE value="all but routeDescription done without valgrind" />
+    <MESSAGE value="all but valgrind and comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="all but valgrind and comments" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/map_main.c</url>
-          <line>71</line>
-          <option name="timeStamp" value="25" />
+          <url>file://$PROJECT_DIR$/src/map.c</url>
+          <line>504</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/additionalFunctions.c</url>
+          <line>143</line>
+          <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="32" column="33" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/additionalFunctions.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/additionalFunctions.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="32" column="27" selection-start-line="32" selection-start-column="27" selection-end-line="32" selection-end-column="27" />
-          <folding>
-            <element signature="e#44#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="uml://JavaScript-modules-diagram//home/krzubuntu/CLionProjects/IPP-ks406362/src">
       <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
@@ -503,17 +548,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/deleteStructure.h">
+    <entry file="file://$PROJECT_DIR$/src/routeRelated.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="40" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
+        <state relative-caret-position="330">
+          <caret line="22" column="81" selection-start-line="22" selection-start-column="81" selection-end-line="22" selection-end-column="81" />
+          <folding>
+            <element signature="e#44#67#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/map.h">
+    <entry file="file://$PROJECT_DIR$/src/deleteStructure.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="22" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
+        <state relative-caret-position="150">
+          <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/additionalFunctions.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
+          <folding>
+            <element signature="e#117#137#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/additionalFunctions.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1155">
+          <caret line="77" column="42" selection-start-line="77" selection-start-column="42" selection-end-line="77" selection-end-column="42" />
+          <folding>
+            <element signature="e#44#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/map.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7125">
+          <caret line="475" column="22" selection-start-line="475" selection-start-column="22" selection-end-line="475" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -527,26 +605,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/roadsRelated.h">
+    <entry file="file://$PROJECT_DIR$/src/map.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+        <state relative-caret-position="375">
+          <caret line="25" column="6" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
+          <folding>
+            <element signature="e#253#273#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/deleteStructure.c">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1575">
-          <caret line="105" selection-start-line="105" selection-end-line="105" selection-end-column="39" />
+        <state relative-caret-position="240">
+          <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/map_main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1245">
+          <caret line="83" selection-start-line="83" selection-end-line="83" />
+          <folding>
+            <element signature="e#20#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dijkstra.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2505">
+          <caret line="167" column="67" selection-start-line="167" selection-start-column="67" selection-end-line="167" selection-end-column="67" />
+          <folding>
+            <element signature="e#44#63#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/structures.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="37" column="6" lean-forward="true" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="6" />
+        <state relative-caret-position="345">
+          <caret line="23" column="33" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
           <folding>
             <element signature="e#44#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/deleteStructure.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+          <folding>
+            <element signature="e#44#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/roadsRelated.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="9" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
+          <folding>
+            <element signature="e#103#119#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -561,59 +682,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routeRelated.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="22" column="81" selection-start-line="22" selection-start-column="81" selection-end-line="22" selection-end-column="81" />
-          <folding>
-            <element signature="e#44#67#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/structures.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dijkstra.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="119" lean-forward="true" selection-start-line="119" selection-end-line="119" />
-          <folding>
-            <element signature="e#44#63#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="90">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routeRelated.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="636">
-          <caret line="178" column="19" selection-start-line="178" selection-start-column="19" selection-end-line="178" selection-end-column="19" />
+        <state relative-caret-position="634">
+          <caret line="173" column="6" selection-start-line="173" selection-start-column="4" selection-end-line="173" selection-end-column="39" />
           <folding>
             <element signature="e#44#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/map.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="426" selection-start-line="426" selection-end-line="426" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/map_main.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="90" selection-start-line="90" selection-end-line="90" />
-          <folding>
-            <element signature="e#74#93#0" expanded="true" />
           </folding>
         </state>
       </provider>

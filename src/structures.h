@@ -2,16 +2,18 @@
 #ifndef DROGI_STRUCTURES_H
 #define DROGI_STRUCTURES_H
 
-#import <limits.h>
+#include <stdint.h>
+#include "map.h"
 #include <stdint.h>
 
-#define INF LONG_MAX
+#define INF UINT32_MAX
 
 typedef struct City City; // kazde miasto ma liste drog
 typedef struct Road Road; // miastA miastoB
 typedef struct CityList CityList; // lista miast
 typedef struct RouteList RouteList; // kazda route ma liste miast
 typedef struct RoadList RoadList;
+typedef struct Route Route;
 
 typedef struct Route{
 
