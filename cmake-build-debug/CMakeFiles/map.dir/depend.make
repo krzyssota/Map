@@ -3,6 +3,9 @@
 
 CMakeFiles/map.dir/src/additionalFunctions.c.o: ../src/additionalFunctions.c
 CMakeFiles/map.dir/src/additionalFunctions.c.o: ../src/additionalFunctions.h
+CMakeFiles/map.dir/src/additionalFunctions.c.o: ../src/map.h
+CMakeFiles/map.dir/src/additionalFunctions.c.o: ../src/roadsRelated.h
+CMakeFiles/map.dir/src/additionalFunctions.c.o: ../src/structures.h
 
 CMakeFiles/map.dir/src/deleteStructure.c.o: ../src/deleteStructure.c
 CMakeFiles/map.dir/src/deleteStructure.c.o: ../src/deleteStructure.h
@@ -45,6 +48,7 @@ CMakeFiles/map.dir/src/routeRelated.c.o: ../src/routeRelated.h
 CMakeFiles/map.dir/src/routeRelated.c.o: ../src/structures.h
 
 CMakeFiles/map.dir/src/structures.c.o: ../src/additionalFunctions.h
+CMakeFiles/map.dir/src/structures.c.o: ../src/map.h
 CMakeFiles/map.dir/src/structures.c.o: ../src/structures.c
 CMakeFiles/map.dir/src/structures.c.o: ../src/structures.h
 

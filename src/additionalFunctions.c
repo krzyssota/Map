@@ -1,7 +1,3 @@
-//
-// Created by krzubuntu on 25.04.19.
-//
-
 #include <stddef.h>
 #include <stdbool.h>
 #include <string.h>
@@ -13,10 +9,11 @@
 #include <math.h>
 
 char* getName(const char *name){
-    /*char *result = NULL;
-    result =  malloc(sizeof(*result));*/
+
     char *result = malloc(strlen(name)*sizeof(char) + 1);
+
     strcpy(result, name);
+
     return result;
 }
 
@@ -37,7 +34,7 @@ bool correctName(const char* cityName){
 
 }
 
-int countNumber(unsigned number){
+int countNumber(unsigned number){ ///< How many digits in the number.
     unsigned div = 1;
     unsigned digitCount = 1;
 
@@ -48,9 +45,8 @@ int countNumber(unsigned number){
     return digitCount;
 }
 
-int count(Route* route){
+int count(Route* route){ ///< How many characters description needs.
 
-    // id drogi + ; + nazwa miasta + ; + dl drogi + ; + rok + ; + nazwa miasta
     int length = 0;
     length += countNumber((int)route->routeId);
 
@@ -80,7 +76,7 @@ int count(Route* route){
     return length;
 }
 
-void writeNumber(int* i, char* str, unsigned number) {
+void writeNumber(int* i, char* str, unsigned number) { ///< Put integer in description.
 
     unsigned div = 1;
     unsigned digitCount = 1;
@@ -106,8 +102,6 @@ char* getDescription(Route* route, int lenght){
     }
 
     int i = 0;
-
-
 
     writeNumber(&i, str, route->routeId);
 

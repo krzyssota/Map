@@ -27,6 +27,8 @@ Road* olderRoad(Road* roadA, Road* roadB){
     return roadA;
 }
 
+/** W drogach skladajacych sie na droge krajowa zapisuje o tym informacje.
+ */
 void addRouteInfoToRoads(Route* route){
 
     CityList* cityList = route->cityList;
@@ -44,7 +46,18 @@ void addRouteInfoToRoads(Route* route){
         cityList = cityList->next;
     }
 }
-
+/** @brief Znajduje najkrotsza sciezke pomiedzy miastem A i miastem B.
+ * Rozwiazanie nie zawiera miast z drogi krajowej A, drogi krajowej B, ani drogi usuwanej.
+ * @param[in] map      – wskaźnik na mape.
+ * @param[in] routeA      – wskaźnik na droge krajowa.
+ * @param[in] routeB      – wskaźnik na droge krajowa.
+ * @param[in] cityA      – wskaźnik na miasto.
+ * @param[in] cityB      – wskaźnik na miasto.
+ * @param[in] yearOfOldestRoad      – wskaznik na wiek najstarszej drogi ze znalezionej sciezki.
+ * @param[in] roadRemoved   –  droga usuwana w funkcji removeRoad. Dla innych wywolan wartosc NULL.
+ * @return Wskaznik na liste miast z ktorych sklada sie sciezka jesli sciezka zostala znaleziona.
+ * Wartość NULL, jeśli nie zostala znaleziona.
+ */
 CityList* findShortestPath(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, int* yearOfOldestRoad, Road* roadRemoved){
 
     QueueElement* destination = Dijkstra(map, routeA, routeB, cityA, cityB, roadRemoved);
@@ -106,10 +119,10 @@ bool routeContainsCity(Route* route, City* city){
 bool routeContainsRoad(Route* route, Road* road){
 
     CityList* cityList = route->cityList;
-    if(cityList == NULL){ // no route yet
+    if(cityList == NULL){ ///< Wywolana w addRoute lub extendRoute. road jako zmienna dummy = NULL
         return false;
     }
-    // invoked during extendRoute
+
     bool contains = false;
 
     while(cityList->next != NULL && contains == false){
@@ -127,12 +140,17 @@ bool routeContainsRoad(Route* route, Road* road){
 unsigned calculateLength(CityList* path){
 
     unsigned length = 0;
+
     while(path->next != NULL){
+
         Road* road = findRoad(path->city, path->next->city);
         assert(road != NULL);
+
         length += road->length;
+
         path = path->next;
     }
+
     return length;
 }
 
@@ -148,6 +166,13 @@ int betterPath(int firstOldestRoadYear, unsigned firstLength, int secondOldestRo
 
 }
 
+/** @brief Wklada liste miast ze sciezki do drogi krajowej.
+ * @param[in] path      – wskaźnik na sciezke.
+ * @param[in] route      – wskaźnik na droge krajowa.
+ * @param[in] cityA      – wskaźnik na miasto.
+ * @param[in] cityB      – wskaźnik na miasto.
+ * @param[in] yearOfOldestRoad      – wskaznik na wiek najstarszej drogi ze znalezionej sciezki.
+ */
 void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB){
 
     CityList* cityList = route->cityList;
@@ -171,35 +196,10 @@ void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB)
     }
     assert(path != NULL);
 
-    /*CityList* toDelete2 = otherEnd;*/
-
     path->next = otherEnd->next;
     otherEnd->next->prev = path;
 
     free(toDelete);
     free(otherEnd);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

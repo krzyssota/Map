@@ -9,7 +9,7 @@
 #include "roadsRelated.h"
 #include "dijkstra.h"
 
-void deleteRoadListElement(Map* map, City* city, RoadList* roadList){
+void deleteRoadListElement(City* city, RoadList* roadList){
 
     if(roadList->prev != NULL){ // not first element in the list
 
@@ -22,8 +22,6 @@ void deleteRoadListElement(Map* map, City* city, RoadList* roadList){
 
     } else {
 
-        /*City* city = findCityByFirstRoadList(map, roadList);*/
-
         city->roadList = roadList->next;
         if(roadList->next != NULL) {
             (roadList->next)->prev = NULL;
@@ -35,36 +33,35 @@ void deleteRoadListElement(Map* map, City* city, RoadList* roadList){
 
 
 
-void deleteRoadAndTwoRoadLists(Map *map, Road *road){
+void deleteRoadAndTwoRoadLists(Road *road){
     RoadList* roadListA = findRoadListElement(road->cityA->roadList, road);
     RoadList* roadListB = findRoadListElement(road->cityB->roadList, road);
-    deleteRoadListElement(map, road->cityA, roadListA);
-    deleteRoadListElement(map, road->cityB, roadListB);
+    deleteRoadListElement(road->cityA, roadListA);
+    deleteRoadListElement(road->cityB, roadListB);
 
-    /*free(road->routesBelonging);*/
     free(road);
 }
 
-void deleteRoadsList(Map* map, RoadList* roadList, City* city){
+void deleteRoadsList(RoadList* roadList){
     while(roadList != NULL){
         RoadList* tmp = roadList;
         roadList = roadList->next;
-        deleteRoadAndTwoRoadLists(map, tmp->road);
+        deleteRoadAndTwoRoadLists(tmp->road);
         if(roadList != NULL) {
             roadList->prev = NULL;
         }
     }
 }
 
-void deleteCity(Map* map, City* city){
-    deleteRoadsList(map, city->roadList, city);
+void deleteCity(City* city){
+    deleteRoadsList(city->roadList);
     free(city->name);
     free(city);
 }
 
 void deleteCitiesRoads(Map *map, CityList *cityList){
     while(cityList != NULL){
-        deleteCity(map, cityList->city);
+        deleteCity(cityList->city);
         CityList* tmp = cityList;
         cityList = cityList->next;
         if(cityList != NULL) {
@@ -100,9 +97,8 @@ void deleteRouteList(Route* routeList[]){
             free(routeList[i]);
         }
     }
-
-    /*free(routeList);*/
 }
+
 void deleteCityList(CityList* cityList){
     while(cityList != NULL) {
         CityList *tmp = cityList;

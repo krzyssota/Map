@@ -15,7 +15,6 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 # Ustawiamy wspólne opcje kompilowania dla wszystkich wariantów projektu.
 
 set(CMAKE_C_FLAGS "-std=c11 -Wall -Wextra")
-#[[set(CMAKE_C_FLAGS "-std=c11")]]
 
 # Domyślne opcje dla wariantów Release i Debug są sensowne.
 # Jeśli to konieczne, ustawiamy tu inne.

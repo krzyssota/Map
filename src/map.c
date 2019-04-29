@@ -25,16 +25,9 @@ Map* newMap(void){
 
     map->cityList = NULL;
 
-    /*map->routes = malloc(sizeof(Route*) * 1000);*/
-    /*if(map->routes == NULL){
-        return NULL;
-    }*/
-
     for(int i = 0; i <= 999; i++) {
         map->routes[i] = NULL;
     }
-
-   /* map->stringList = NULL;*/
 
     return map;
 }
@@ -46,7 +39,9 @@ Map* newMap(void){
  * @param[in] map        – wskaźnik na usuwaną strukturę.
  */
 void deleteMap(Map *map){
+
     if(map != NULL) {
+
         deleteCitiesRoads(map, map->cityList);
         deleteRouteList(map->routes);
 
@@ -69,21 +64,21 @@ void deleteMap(Map *map){
  */
 bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, int builtYear){
 
-    if(!correctName(city1) || !correctName(city2) || builtYear == 0){
-        return false; //któryś z parametrów ma niepoprawną wartość,
+    if(!correctName(city1) || !correctName(city2) || builtYear == 0){ ///< Któryś z parametrów ma niepoprawną wartość.
+        return false;
     }
 
-    if(strcmp(city1, city2) == 0){ //obie podane nazwy miast są identyczne
+    if(strcmp(city1, city2) == 0){ ///< Podane nazwy miast są identyczne.
         return false;
     }
 
     Road* newRoad = createNewRoad();
     if(newRoad == NULL){
-        return false; //nie udało się zaalokować pamięci.
+        return false;
     }
 
     City* cityA = findCityByName(map->cityList, city1);
-    if(cityA == NULL){
+    if(cityA == NULL){ ///< Create city if it is not yet in the structure.
         cityA = newCity(city1);
         if(cityA == NULL){
             return false;
@@ -113,8 +108,8 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
 
 
 
-    if(!addRoadToCity(cityA, cityA->roadList, newRoad)){ // (miasta istnialy) odcinek drogi między tymi miastami już istnieje
-        free(newRoad); //todo pewnie tutaj
+    if(!addRoadToCity(cityA, cityA->roadList, newRoad)){ ///< Odcinek drogi między tymi miastami już istnieje.
+        free(newRoad);
         return false;
     }
     addRoadToCity(cityB, cityB->roadList, newRoad);
@@ -138,31 +133,29 @@ bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, in
  */
 bool repairRoad(Map *map, const char *city1, const char *city2, int repairYear) {
 
-    if(!correctName(city1) || !correctName(city2) || repairYear == 0){
-        return false; // któryś z parametrów ma niepoprawną wartość
-    }
-
-    City* cityA = findCityByName(map->cityList, city1); //któreś z podanych miast nie istnieje,
-    if(cityA == NULL){
-        return false;
-    }
-    City* cityB = findCityByName(map->cityList, city2);
-    if(cityB == NULL){
+    if (!correctName(city1) || !correctName(city2) || repairYear == 0) { ///< Któryś z parametrów ma niepoprawną wartość.
         return false;
     }
 
-    Road* road = findRoad(cityA, cityB);
-    if(road == NULL){ //nie ma odcinka drogi między podanymi miastami,
+    City *cityA = findCityByName(map->cityList, city1); ///< Któreś z podanych miast nie istnieje,
+    if (cityA == NULL) {
         return false;
     }
-    if(repairYear >= road->year){ // podany rok jest wcześniejszy niz zapisany dla tego odcinka rok
+    City *cityB = findCityByName(map->cityList, city2);
+    if (cityB == NULL) {
+        return false;
+    }
+
+    Road *road = findRoad(cityA, cityB);
+    if (road == NULL) {  ///< Nie ma odcinka drogi między podanymi miastami,
+        return false;
+    }
+    if (repairYear >= road->year) { ///< Podany rok jest wcześniejszy niz zapisany dla tej drogi.
         road->year = repairYear;
         return true;
     }
     return false;
 }
-// --------------------------------------------------------------------------------
-// --------------------------------------
 
 /** @brief Łączy dwa różne miasta drogą krajową.
  * Tworzy drogę krajową pomiędzy dwoma miastami i nadaje jej podany numer.
@@ -183,15 +176,15 @@ bool repairRoad(Map *map, const char *city1, const char *city2, int repairYear) 
  */
 bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
 
-    if(!correctName(city1) || !correctName(city2) || !correctId(routeId)){
+    if(!correctName(city1) || !correctName(city2) || !correctId(routeId)){ ///< Któryś z parametrów ma niepoprawną wartość.
         return false;
     }
 
-    if(strcmp(city1, city2) == 0){
+    if(strcmp(city1, city2) == 0){ ///< Podane nazwy miast są identyczne.
         return false;
     }
 
-    if(map->routes[routeId] != NULL){
+    if(map->routes[routeId] != NULL){ ///< Droga krajowa o podanym Id juz istnieje.
         return false;
     }
 
@@ -207,39 +200,18 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
         return false;
     }
 
-    /*CityList* start = newCityList();
-    if(start == NULL){
-        return false;
-    }
-    start->city = cityA;
-
-    CityList* end = newCityList();
-    if(end == NULL){
-        return false;
-    }
-    end->city = cityB;*/
-
     int dummyYear;
     Route* dummyRoute = NULL;
     Road* dummyRoad = NULL;
     CityList* shortestPath = findShortestPath(map, newRoute, dummyRoute, cityA, cityB, &dummyYear, dummyRoad);
-    if(shortestPath == NULL){
+    if(shortestPath == NULL){ ///< Nie udalo sie znalezc najkrotszego polaczenia.
         return false;
     }
 
     newRoute->cityList = shortestPath;
 
-    addRouteInfoToRoads(newRoute);
+    addRouteInfoToRoads(newRoute); ///< Drogi maja informacje do jakich drog krajowych naleza.
 
-    /*map->routes[newRoute->routeId] = malloc(sizeof(Route*));*/
-
-    /*if(map->routes[newRoute->routeId] == NULL) {
-        while (shortestPath != NULL){
-            CityList* tmp = shortestPath;
-            shortestPath = shortestPath->next;
-            free(tmp);
-        }
-    }*/
     map->routes[newRoute->routeId] = newRoute;
 
     return true;
@@ -262,44 +234,52 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
  * wyznaczyć nowego fragmentu drogi krajowej lub nie udało się zaalokować
  * pamięci.
  */
-bool extendRoute(Map *map, unsigned routeId, const char *city){ // TODO dla route A-B, extend C, wybiera min(C-A-B, A-B-C)
+bool extendRoute(Map *map, unsigned routeId, const char *city){
 
-    if(!correctName(city) || !correctId(routeId)){
+    if(!correctName(city) || !correctId(routeId)){ ///< Któryś z parametrów ma niepoprawną wartość.
         return false;
     }
 
-    if(map->routes[routeId] == NULL){
+    if(map->routes[routeId] == NULL){ ///< Droga krajowa o podanym Id nie istnieje.
         return false;
     }
 
-    City* additionalCity = findCityByName(map->cityList, city); //nie ma miasta o podanej nazwie
+    City* additionalCity = findCityByName(map->cityList, city); ///< Nie ma miasta o podanej nazwie.
     if(additionalCity == NULL){
         return false;
     }
 
-    if(routeContainsCity(map->routes[routeId], additionalCity)){ //przez miasto już przechodzi droga krajowa o podanym numerze
-        return false;                                            // podana droga krajowa kończy się w podanym mieście,
+    if(routeContainsCity(map->routes[routeId], additionalCity)){ ///< Miasto jest juz czescia drogi krajowej o podanym Id
+        return false;
     }
 
     CityList* tmp = map->routes[routeId]->cityList;
 
+    /** Rozwaza dwie mozliwosci przedluzenia drogi krajowej.
+     */
     int firstOldestRoadYear = INT_MIN;
     Route* dummyRoute = NULL;
     Road* dummyRoad = NULL;
-    CityList* firstPath = findShortestPath(map, map->routes[routeId], dummyRoute, additionalCity, tmp->city, &firstOldestRoadYear, dummyRoad);
+
+    CityList* firstPath = findShortestPath(map, map->routes[routeId], dummyRoute,additionalCity,
+                                           tmp->city, &firstOldestRoadYear, dummyRoad);
     if(firstPath == NULL){
         return false;
     }
+
     unsigned firstLength = calculateLength(firstPath);
 
     while(tmp->next != NULL){
         tmp = tmp->next;
     }
     int secondOldestRoadYear = INT_MIN;
-    CityList* secondPath = findShortestPath(map, map->routes[routeId], dummyRoute, tmp->city, additionalCity, &secondOldestRoadYear, dummyRoad);
+
+    CityList* secondPath = findShortestPath(map, map->routes[routeId], dummyRoute,
+                                            tmp->city, additionalCity, &secondOldestRoadYear, dummyRoad);
     if(secondPath == NULL){
         return false;
     }
+
     unsigned secondLength = calculateLength(secondPath);
 
 
@@ -366,25 +346,25 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){ // TODO dla rout
  */
 bool removeRoad(Map *map, const char *city1, const char *city2){
 
-    if(!correctName(city1) || !correctName(city2)){
-        return false; // któryś z parametrów ma niepoprawną wartość
+    if(!correctName(city1) || !correctName(city2)){ ///< Któryś z parametrów ma niepoprawną wartość.
+        return false;
     }
 
-    City* cityA = findCityByName(map->cityList, city1); //któreś z podanych miast nie istnieje,
-    if(cityA == NULL){
+    City* cityA = findCityByName(map->cityList, city1);
+    if(cityA == NULL){  ///< Któreś z podanych miast nie istnieje.
         return false;
     }
     City* cityB = findCityByName(map->cityList, city2);
-    if(cityB == NULL){
+    if(cityB == NULL){ ///< Któreś z podanych miast nie istnieje.
         return false;
     }
 
     Road* road = findRoad(cityA, cityB);
-    if(road == NULL){ //nie ma odcinka drogi między podanymi miastami,
+    if(road == NULL){ ///< Nie ma odcinka drogi między podanymi miastami.
         return false;
     }
     for(int i = 1; i <= 999; ++i) {
-        if(road->routesBelonging[i] != NULL) {
+        if(road->routesBelonging[i] != NULL) { ///< Dla istniejacych drog krajowych.
 
             Route* routeA = createNewRoute(1000);
 
@@ -397,7 +377,7 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
             CityList *cityListToCopy = road->routesBelonging[i]->cityList;
 
             bool last = false;
-            while(!last){
+            while(!last){ ///< Skopiuj miasta z drogi krajowej az do poczatku usunietej drogi.
 
                 firstCityList = newCityList();
                 if(firstCityList == NULL){
@@ -410,12 +390,12 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
                     previous->next = firstCityList;
                 }
 
-                if(previous == NULL) { // first element
+                if(previous == NULL) {
                     start = firstCityList;
                 }
 
                 previous = firstCityList;
-                firstCityList = firstCityList->next;
+                /*firstCityList = firstCityList->next;*/
 
 
                 if(cityListToCopy->city == road->cityA || cityListToCopy->city == road->cityB){
@@ -426,9 +406,8 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
             }
             routeA->cityList = start;
 
-            // second part
 
-            cityListToCopy = cityListToCopy->next; //skip second city and go to the next cityList
+            cityListToCopy = cityListToCopy->next;
 
             Route* routeB = createNewRoute(1000);
 
@@ -438,7 +417,7 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
 
 
 
-            while(cityListToCopy != NULL){
+            while(cityListToCopy != NULL){ ///< Skopiuj miasta z drogi krajowej od konca usunietej drogi.
 
                 secondCityList = newCityList();
                 if(secondCityList == NULL){
@@ -456,7 +435,7 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
                 }
 
                 previousB = secondCityList;
-                secondCityList = secondCityList->next;
+                /*secondCityList = secondCityList->next;*/
 
                 cityListToCopy = cityListToCopy->next;
             }
@@ -469,11 +448,10 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
 
                 return false;
             }
-            // free routeA, routeB
             deleteRoute(routeA);
             deleteRoute(routeB);
 
-            insertPathIntoRoute(shortestPath, road->routesBelonging[i], cityA, cityB);
+            insertPathIntoRoute(shortestPath, road->routesBelonging[i], cityA, cityB); ///< Includes found path in rotue.
         }
     }
 
@@ -502,8 +480,8 @@ char const* getRouteDescription(Map *map, unsigned routeId){
         str = 0;
         return str;
     } else {
-        int length = count(map->routes[routeId]);
-        char* str = getDescription(map->routes[routeId], length);
+        int length = count(map->routes[routeId]); ///< Calculates how many characters will be needed.
+        char* str = getDescription(map->routes[routeId], length); ///< Creates description.
         return str;
     }
 }

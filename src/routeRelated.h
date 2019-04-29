@@ -1,6 +1,3 @@
-//
-// Created by krzubuntu on 27.04.19.
-//
 
 #include "structures.h"
 #include "map.h"

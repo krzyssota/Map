@@ -8,20 +8,21 @@
 
 #define INF UINT32_MAX
 
-typedef struct City City; // kazde miasto ma liste drog
-typedef struct Road Road; // miastA miastoB
-typedef struct CityList CityList; // lista miast
-typedef struct RouteList RouteList; // kazda route ma liste miast
+typedef struct City City;
+typedef struct Road Road;
+typedef struct CityList CityList;
+typedef struct RouteList RouteList;
 typedef struct RoadList RoadList;
 typedef struct Route Route;
-
+/**
+ * Droga krajowa zawiera wskaznik liste miast.
+ */
 typedef struct Route{
 
     CityList* cityList;
     unsigned routeId;
 
 } Route;
-
 
 typedef struct RoadList{
 
@@ -30,7 +31,9 @@ typedef struct RoadList{
     Road* road;
 
 } RoadList;
-
+/**
+ * Droga zawiera wskaznik na miast, ktore laczy, swoja dlugosc, rok budowy/remontu i drogi krajowe, ktorych jest czescia
+ */
 struct Road{
 
     City* cityA;
@@ -50,6 +53,9 @@ typedef struct CityList{
 
 } CityList;
 
+/**
+ * Miasto ma wskaznik nadane imie i wskaznik na liste drog, ktore z niego wychodza.
+ */
 struct City{
 
     char* name;
@@ -57,6 +63,10 @@ struct City{
 
 };
 
+/**
+ * Element kolejki ma wskaznik na miasto, dystans od zrodla, wskaznik na poprzednika,
+ * wskaznik na najstarsza droge po drodze od zrodla i wskaznik na kolejny i poprzedni element.
+ */
 typedef struct QueueElement{
 
     City* city;
@@ -68,6 +78,8 @@ typedef struct QueueElement{
 
 } QueueElement;
 
+/** Kolejka priorytetowa.
+ */
 typedef struct Queue{
 
     QueueElement* head;

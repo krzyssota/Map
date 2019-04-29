@@ -4,6 +4,9 @@
 CMakeFiles/map.dir/src/additionalFunctions.c.o
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.c
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.h
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.h
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
 CMakeFiles/map.dir/src/deleteStructure.c.o
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/deleteStructure.c
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/deleteStructure.h
@@ -46,5 +49,6 @@ CMakeFiles/map.dir/src/routeRelated.c.o
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h
 CMakeFiles/map.dir/src/structures.c.o
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.h
+ /home/krzubuntu/CLionProjects/IPP-ks406362/src/map.h
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.c
  /home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.h

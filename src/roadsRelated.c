@@ -1,7 +1,3 @@
-//
-// Created by krzubuntu on 25.04.19.
-//
-
 #include "roadsRelated.h"
 #include "map.h"
 #include "map.h"
@@ -11,17 +7,6 @@
 #include "stdlib.h"
 #include "stdbool.h"
 
-/*CityList* findCityList(Map* map, City* city){
-
-    CityList* tmp = map->cityList;
-    while(tmp != NULL && tmp->city != city){
-        tmp = tmp->next;
-    }
-
-    return tmp;
-
-
-}*/
 
 RoadList* findRoadListElement(RoadList *roadList, Road *road){
 
@@ -54,9 +39,7 @@ bool sameRoad(Road* roadA, Road* roadB){
 
 bool addRoadToCity(City *city, RoadList* roadList, Road *newRoad){
 
-    /*RoadList* roadList = city->roadList;*/
-
-    if(roadList == NULL){ // city has got no roads yet
+    if(roadList == NULL){ ///< City has got no roads yet/
         roadList = newRoadList();
         if(roadList == NULL){
             return false;
@@ -76,7 +59,7 @@ bool addRoadToCity(City *city, RoadList* roadList, Road *newRoad){
 
         roadList->next = newRoadList();
         if (roadList->next == NULL){
-            return false; // nieudana alokacja
+            return false;
         }
 
         (roadList->next)->prev = roadList;
@@ -88,7 +71,12 @@ bool addRoadToCity(City *city, RoadList* roadList, Road *newRoad){
 
 
 
-
+/** Dodaje miasto do struktury mapy.
+ * @param[in] map - wskaznik na mape.
+ * @param[in] city - wskaznik na miasto.
+ * @return Wartość @p true, jeśli miasto zostalo dodane.
+ * Wartość @p false w przypadku nieudanej alokacji pamieci.
+ */
 bool addCity(Map* map, City* city){
 
     CityList* tmp = map->cityList;

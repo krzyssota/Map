@@ -3,6 +3,7 @@
 //
 
 #include <stddef.h>
+#include <assert.h>
 #include "dijkstra.h"
 #include "structures.h"
 #include "map.h"
@@ -24,19 +25,20 @@ void push(Queue** queue, QueueElement* element){
             tmp = tmp->next;
         }
 
-        if(tmp == NULL){ // add as last element
+        if(tmp == NULL){
+            assert(tmpPrev != NULL);
             tmpPrev->next = element;
             element->prev = tmpPrev;
 
-        } else if(tmp == (*queue)->head){ // while hasn't been entered; new head
+        } else if(tmp == (*queue)->head){
 
             ((*queue)->head)->prev = element;
             element->next = (*queue)->head;
 
             (*queue)->head = element;
 
-        } else { // insert between two elements
-
+        } else {
+            assert(tmpPrev != NULL);
             tmpPrev->next = element;
             element->prev = tmpPrev;
 
@@ -57,10 +59,21 @@ QueueElement* pop(Queue** queue){
 
     return result;
 }
-
+/** @brief Dodaje odpowiednie elementy do kolejki.
+ * Odpowiednimi miastami sa miasta spoza drogi krajowej A, drogi krajowej B.
+* @param[in,out] map    – wskaźnik na strukturę przechowującą mapę dróg;
+ * @param[in] routeA      – wskaźnik na droge krajowa.
+* @param[in] routeB      – wskaźnik na droge krajowa.
+* @param[in] cityA      – wskaźnik na miasto.
+* @param[in] cityB      – wskaźnik na miasto.
+* @return Wskaznik na kolejke. NULL jesli nie udalo sie zaalokowac pamieci.
+*/
 Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB) {
 
     Queue* queue = newQueue(cityB);
+    if(queue == NULL){
+        return NULL;
+    }
     push(&queue, newQueueElement(cityA, 0, NULL, NULL)); // source
 
     if(routeA->cityList != NULL && cityB == routeA->cityList->city){ // extending by adding prefix
@@ -81,7 +94,7 @@ Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* c
 
 
 
-QueueElement* findQueueElement(Queue* queue, City* city){
+QueueElement* findQueueElement(Queue* queue, City* city){ ///< Find element pointing to city in the queue.
 
     QueueElement* tmp = queue->head;
     while(tmp != NULL && tmp->city != city){
@@ -91,7 +104,7 @@ QueueElement* findQueueElement(Queue* queue, City* city){
     return tmp;
 }
 
-QueueElement* popElement(Queue **queue, QueueElement* element){
+QueueElement* popElement(Queue **queue, QueueElement* element){ ///< Take element out of the queue.
 
     if(element == (*queue)->head){
         (*queue)->head = element->next;
@@ -106,7 +119,10 @@ QueueElement* popElement(Queue **queue, QueueElement* element){
     return element;
 }
 
-
+/** @brief Sprawdza czy da sie zmniejszyc priorytet elementu.
+ * @param[in] queue      – wskaźnik na kolejke.
+*  @param[in] alternative   –  element z alternatywnym priorytetem.
+*/
 void updateElement(Queue **queue, QueueElement* alternative){
 
     QueueElement* original = findQueueElement((*queue), alternative->city);
@@ -128,19 +144,26 @@ void updateElement(Queue **queue, QueueElement* alternative){
     }
 }
 
+/** @brief Sprawdza czy da sie zmniejszyc priorytet sasiadom elementu.
+ * @param[in] queue      – wskaźnik na kolejke.
+ * * @param[in] route      – wskaźnik na droge krajowa.
+ * * @param[in] element      – wskaźnik na element kolejki.
+*  @param[in] roadRemoved   –  droga usuwana w funkcji removeRoad. Dla innych wywolan wartosc NULL.
+*/
 void processNeighbours(Queue* queue, Route* route, QueueElement* element, Road* roadRemoved){
 
     RoadList* tmp = element->city->roadList;
 
     while(tmp != NULL) {
 
-        if(!routeContainsRoad(route, tmp->road) && tmp->road != roadRemoved) { // do not accept road that is removed
+        if(!routeContainsRoad(route, tmp->road) && tmp->road != roadRemoved) { ///< Do not consider road that is being removed.
 
             City* neighbour = getOtherCity(tmp->road, element->city);
 
-            if (findQueueElement(queue, neighbour) != NULL) { // neighbour still in the queue
+            if (findQueueElement(queue, neighbour) != NULL) { ///< Neighbour still in the queue (can be processed)
 
                 long int alternativeDistance = element->distance + (long int) findRoad(neighbour, element->city)->length;
+
                 QueueElement* alternativeNeighbour = newQueueElement(neighbour, alternativeDistance, element,
                                                               olderRoad(element->oldestRoad, tmp->road));
 
@@ -152,15 +175,26 @@ void processNeighbours(Queue* queue, Route* route, QueueElement* element, Road* 
     }
 }
 
-
+/** @brief Sprawdza czy da sie zmniejszyc priorytet sasiadom elementu.
+ * @param[in] map      – wskaźnik na mape.
+ * @param[in] routeA      – wskaźnik na droge krajowa.
+ *  @param[in] routeB      – wskaźnik na droge krajowa.
+ * @param[in] cityA      – wskaźnik na miasto.
+ * @param[in] cityB      – wskaźnik na miasto.
+ * @param[in] roadRemoved   –  droga usuwana w funkcji removeRoad. Dla innych wywolan wartosc NULL.
+ * @return Wskaznik na element kolejki wskazujacy na miasto cel.
+*/
 QueueElement* Dijkstra(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, Road* roadRemoved){
 
-    Queue* queue = prepareQueue(map, routeA, routeB, cityA, cityB);
+    Queue* queue = prepareQueue(map, routeA, routeB, cityA, cityB); ///< Prepare priority queue.
+    if(queue == NULL){
+        return NULL;
+    }
 
     QueueElement* destinationElement = findQueueElement(queue, queue->destination);
 
     QueueElement* currElement = NULL;
-    while(findQueueElement(queue, queue->destination) != NULL) { // destination is still in the queue
+    while(findQueueElement(queue, queue->destination) != NULL) { ///< Destination is still in the queue
 
         destinationElement = findQueueElement(queue, queue->destination);
 
