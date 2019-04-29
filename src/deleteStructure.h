@@ -14,6 +14,7 @@ void cleanQueue(Queue **queue);
 void deleteRouteList(Route* routeList[]);
 void deleteCityList(CityList* cityList);
 void deleteRoute(Route* route);
+void deleteRoadAndTwoRoadLists(Road *road);
 
 
 

@@ -38,8 +38,9 @@ void addRouteInfoToRoads(Route* route){
         RoadList* roadList = cityList->city->roadList;
 
         while(roadList != NULL){
-
-            roadList->road->routesBelonging[route->routeId] = route;
+            if(routeContainsRoad(route, roadList->road)) {
+                roadList->road->routesBelonging[route->routeId] = route;
+            }
             roadList = roadList->next;
         }
 
@@ -70,10 +71,12 @@ CityList* findShortestPath(Map* map, Route* routeA, Route* routeB, City* cityA, 
 
     QueueElement* tmp = destination;
     CityList* cityList = NULL;
+    int flag = 1;
+    while(tmp != NULL && flag == 1) {
 
-    while(tmp != NULL) {
-
-
+        if(tmp->ambiguous == true){
+            flag = 0;
+        }
         CityList* newStartingElement = newCityList();
 
         newStartingElement->city = tmp->city;
@@ -88,6 +91,15 @@ CityList* findShortestPath(Map* map, Route* routeA, Route* routeB, City* cityA, 
         tmp = tmp->predecessor;
         free(toDelete);
 
+    }
+    if(flag == 0){
+
+        while(cityList != NULL){
+            CityList* toDelete = cityList;
+            cityList = cityList->next;
+            free(toDelete);
+        }
+        return NULL;
     }
     return cityList;
 
@@ -158,11 +170,15 @@ int betterPath(int firstOldestRoadYear, unsigned firstLength, int secondOldestRo
 
     if(firstLength < secondLength) return 1;
     if(firstLength > secondLength) return 2;
-    if(firstLength == secondLength){
-        if(firstOldestRoadYear > secondOldestRoadYear) return 1;
-        if(firstOldestRoadYear < secondOldestRoadYear) return 2;
+
+    else {
+
+        if (firstOldestRoadYear > secondOldestRoadYear) return 1;
+        if (firstOldestRoadYear < secondOldestRoadYear) return 2;
+
         return 0;
     }
+
 
 }
 

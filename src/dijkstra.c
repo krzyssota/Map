@@ -4,6 +4,7 @@
 
 #include <stddef.h>
 #include <assert.h>
+#include <values.h>
 #include "dijkstra.h"
 #include "structures.h"
 #include "map.h"
@@ -20,7 +21,7 @@ void push(Queue** queue, QueueElement* element){
         QueueElement* tmp = (*queue)->head;
         QueueElement* tmpPrev = NULL;
 
-        while(tmp != NULL && tmp->distance <= element->distance){
+        while(tmp != NULL && tmp->distance < element->distance){
             tmpPrev = tmp;
             tmp = tmp->next;
         }
@@ -38,6 +39,27 @@ void push(Queue** queue, QueueElement* element){
             (*queue)->head = element;
 
         } else {
+
+            int tmpOldestRoadYear = INT_MIN;
+            int elementOldestRoadYear = INT_MIN;
+            if(tmp->oldestRoad != NULL ){
+                tmpOldestRoadYear = tmp->oldestRoad->year;
+            }
+            if(element->oldestRoad != NULL){
+                elementOldestRoadYear = element->oldestRoad->year;
+            }
+
+            if (tmp->distance == element->distance && tmpOldestRoadYear > elementOldestRoadYear) {
+
+                    QueueElement *nextEl = tmp->next;
+                    tmp->next = element;
+                    element->prev = tmp;
+                    element->next = nextEl;
+                    if (nextEl != NULL) {
+                        nextEl->prev = element;
+                    }
+
+            }
             assert(tmpPrev != NULL);
             tmpPrev->next = element;
             element->prev = tmpPrev;
@@ -138,6 +160,9 @@ void updateElement(Queue **queue, QueueElement* alternative){
 
             free(popElement(queue, original));
             push(queue, alternative);
+        } else if(original->oldestRoad->year == alternative->oldestRoad->year) {
+            original->ambiguous = true;
+            free(alternative);
         }
     } else {
         free(alternative);

@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "../CMakeLists.txt"
+  "../Doxyfile.in"
   "CMakeFiles/3.14.2/CMakeCCompiler.cmake"
   "CMakeFiles/3.14.2/CMakeSystem.cmake"
   "/snap/clion/69/bin/cmake/linux/share/cmake-3.14/Modules/CMakeCInformation.cmake"
@@ -42,10 +43,12 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
+  "Doxyfile"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/map.dir/DependInfo.cmake"
+  "CMakeFiles/doc.dir/DependInfo.cmake"
   )

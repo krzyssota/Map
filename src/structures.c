@@ -61,6 +61,7 @@ QueueElement* newQueueElement(City* city, long int distance, QueueElement* prede
         newElement->predecessor = predecessor;
         newElement->oldestRoad = road;
         newElement->prev = newElement->next = NULL;
+        newElement->ambiguous = false;
     }
     return newElement;
 }

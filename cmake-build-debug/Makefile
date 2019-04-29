@@ -126,6 +126,19 @@ map/fast:
 	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/build
 .PHONY : map/fast
 
+#=============================================================================
+# Target rules for targets named doc
+
+# Build rule for target.
+doc: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 doc
+.PHONY : doc
+
+# fast build rule for target.
+doc/fast:
+	$(MAKE) -f CMakeFiles/doc.dir/build.make CMakeFiles/doc.dir/build
+.PHONY : doc/fast
+
 src/additionalFunctions.o: src/additionalFunctions.c.o
 
 .PHONY : src/additionalFunctions.o
@@ -349,8 +362,9 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... map"
 	@echo "... edit_cache"
+	@echo "... map"
+	@echo "... doc"
 	@echo "... src/additionalFunctions.o"
 	@echo "... src/additionalFunctions.i"
 	@echo "... src/additionalFunctions.s"

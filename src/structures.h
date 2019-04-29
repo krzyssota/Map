@@ -75,6 +75,7 @@ typedef struct QueueElement{
     Road* oldestRoad;
     struct QueueElement* next;
     struct QueueElement* prev;
+    bool ambiguous;
 
 } QueueElement;
 

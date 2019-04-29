@@ -435,7 +435,6 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
                 }
 
                 previousB = secondCityList;
-                /*secondCityList = secondCityList->next;*/
 
                 cityListToCopy = cityListToCopy->next;
             }
@@ -454,6 +453,7 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
             insertPathIntoRoute(shortestPath, road->routesBelonging[i], cityA, cityB); ///< Includes found path in rotue.
         }
     }
+    deleteRoadAndTwoRoadLists(road);
 
     return false;
 }
@@ -476,8 +476,8 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
 char const* getRouteDescription(Map *map, unsigned routeId){
 
     if(map->routes[routeId] == NULL){
-        char* str;
-        str = 0;
+        char* str = malloc(sizeof(char));
+        str[0] = 0;
         return str;
     } else {
         int length = count(map->routes[routeId]); ///< Calculates how many characters will be needed.
