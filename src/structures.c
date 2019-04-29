@@ -1,7 +1,3 @@
-//
-// Created by krzubuntu on 27.04.19.
-//
-
 #include <stddef.h>
 #include "structures.h"
 #include "additionalFunctions.h"

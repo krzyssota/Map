@@ -1,7 +1,3 @@
-//
-// Created by krzubuntu on 27.04.19.
-//
-
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>

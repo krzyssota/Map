@@ -1,7 +1,3 @@
-//
-// Created by krzubuntu on 26.04.19.
-//
-
 #include <stddef.h>
 #include <stdlib.h>
 #include "deleteStructure.h"

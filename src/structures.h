@@ -1,4 +1,3 @@
-
 #ifndef DROGI_STRUCTURES_H
 #define DROGI_STRUCTURES_H
 

@@ -94,9 +94,9 @@ void writeNumber(int* i, char* str, unsigned number) { ///< Put integer in descr
     }
 }
 
-char* getDescription(Route* route, int lenght){
+char* getDescription(Route* route, int length){
 
-    char* str = malloc(sizeof(char) * lenght);
+    char* str = malloc(sizeof(char) * length);
     if(str == NULL){
         return NULL;
     }

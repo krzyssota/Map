@@ -395,7 +395,6 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
                 }
 
                 previous = firstCityList;
-                /*firstCityList = firstCityList->next;*/
 
 
                 if(cityListToCopy->city == road->cityA || cityListToCopy->city == road->cityB){
