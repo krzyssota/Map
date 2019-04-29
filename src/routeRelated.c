@@ -23,8 +23,7 @@ Road* olderRoad(Road* roadA, Road* roadB){
     return roadA;
 }
 
-/** W drogach skladajacych sie na droge krajowa zapisuje o tym informacje.
- */
+
 void addRouteInfoToRoads(Route* route){
 
     CityList* cityList = route->cityList;
@@ -43,18 +42,7 @@ void addRouteInfoToRoads(Route* route){
         cityList = cityList->next;
     }
 }
-/** @brief Znajduje najkrotsza sciezke pomiedzy miastem A i miastem B.
- * Rozwiazanie nie zawiera miast z drogi krajowej A, drogi krajowej B, ani drogi usuwanej.
- * @param[in] map      – wskaźnik na mape.
- * @param[in] routeA      – wskaźnik na droge krajowa.
- * @param[in] routeB      – wskaźnik na droge krajowa.
- * @param[in] cityA      – wskaźnik na miasto.
- * @param[in] cityB      – wskaźnik na miasto.
- * @param[in] yearOfOldestRoad      – wskaznik na wiek najstarszej drogi ze znalezionej sciezki.
- * @param[in] roadRemoved   –  droga usuwana w funkcji removeRoad. Dla innych wywolan wartosc NULL.
- * @return Wskaznik na liste miast z ktorych sklada sie sciezka jesli sciezka zostala znaleziona.
- * Wartość NULL, jeśli nie zostala znaleziona.
- */
+
 CityList* findShortestPath(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, int* yearOfOldestRoad, Road* roadRemoved){
 
     QueueElement* destination = Dijkstra(map, routeA, routeB, cityA, cityB, roadRemoved);
@@ -178,13 +166,7 @@ int betterPath(int firstOldestRoadYear, unsigned firstLength, int secondOldestRo
 
 }
 
-/** @brief Wklada liste miast ze sciezki do drogi krajowej.
- * @param[in] path      – wskaźnik na sciezke.
- * @param[in] route      – wskaźnik na droge krajowa.
- * @param[in] cityA      – wskaźnik na miasto.
- * @param[in] cityB      – wskaźnik na miasto.
- * @param[in] yearOfOldestRoad      – wskaznik na wiek najstarszej drogi ze znalezionej sciezki.
- */
+
 void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB){
 
     CityList* cityList = route->cityList;

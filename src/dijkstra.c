@@ -196,15 +196,6 @@ void processNeighbours(Queue* queue, Route* route, QueueElement* element, Road* 
     }
 }
 
-/** @brief Sprawdza czy da sie zmniejszyc priorytet sasiadom elementu.
- * @param[in] map      – wskaźnik na mape.
- * @param[in] routeA      – wskaźnik na droge krajowa.
- *  @param[in] routeB      – wskaźnik na droge krajowa.
- * @param[in] cityA      – wskaźnik na miasto.
- * @param[in] cityB      – wskaźnik na miasto.
- * @param[in] roadRemoved   –  droga usuwana w funkcji removeRoad. Dla innych wywolan wartosc NULL.
- * @return Wskaznik na element kolejki wskazujacy na miasto cel.
-*/
 QueueElement* Dijkstra(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, Road* roadRemoved){
 
     Queue* queue = prepareQueue(map, routeA, routeB, cityA, cityB); ///< Prepare priority queue.

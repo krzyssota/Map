@@ -49,13 +49,13 @@ Queue* newQueue(City* destination){
     return newQueue;
 }
 
-QueueElement* newQueueElement(City* city, long int distance, QueueElement* predecessor, Road* road){
+QueueElement* newQueueElement(City* city, long int distance, QueueElement* predecessor, Road* oldestRoad){
     QueueElement* newElement = malloc(sizeof(QueueElement));
     if(newElement != NULL){
         newElement->city = city;
         newElement->distance = distance;
         newElement->predecessor = predecessor;
-        newElement->oldestRoad = road;
+        newElement->oldestRoad = oldestRoad;
         newElement->prev = newElement->next = NULL;
         newElement->ambiguous = false;
     }

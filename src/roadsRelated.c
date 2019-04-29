@@ -101,14 +101,14 @@ bool addCity(Map* map, City* city){
     return true;
 }
 
-Road* findRoad(City* city1, City* city2){
+Road* findRoad(City* cityA, City* cityB){
 
-    RoadList* roadList = city1->roadList;
-    while(roadList != NULL && (roadList->road->cityA != city2 && roadList->road->cityB != city2)){
+    RoadList* roadList = cityA->roadList;
+    while(roadList != NULL && (roadList->road->cityA != cityB && roadList->road->cityB != cityB)){
         roadList = roadList->next;
     }
 
-    if(roadList != NULL && (roadList->road->cityA == city2 || roadList->road->cityB == city2)){
+    if(roadList != NULL && (roadList->road->cityA == cityB || roadList->road->cityB == cityB)){
         return roadList->road;
     }
     return NULL;

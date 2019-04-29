@@ -13,68 +13,58 @@ typedef struct CityList CityList;
 typedef struct RouteList RouteList;
 typedef struct RoadList RoadList;
 typedef struct Route Route;
-/**
- * Droga krajowa zawiera wskaznik liste miast.
- */
+
+
 typedef struct Route{
 
-    CityList* cityList;
-    unsigned routeId;
+    CityList* cityList; ///< wskaźnik na listę miast.
+    unsigned routeId; ///< id drogi krajowej.
 
 } Route;
 
 typedef struct RoadList{
 
-    RoadList* prev;
-    RoadList* next;
-    Road* road;
+    RoadList* prev; ///< wskaźnik na poprzedni element list dróg.
+    RoadList* next; ///< wskaźnik na następny element listy dróg.
+    Road* road; ///< wskaźnik na drogę.
 
 } RoadList;
-/**
- * Droga zawiera wskaznik na miast, ktore laczy, swoja dlugosc, rok budowy/remontu i drogi krajowe, ktorych jest czescia
- */
+
 struct Road{
 
-    City* cityA;
-    City* cityB;
+    City* cityA; ///< wskaźnik na miasto do którego prowadzi.
+    City* cityB; ///< wskaźnik na drugie miasto do którego prowadzi.
 
-    unsigned length;
-    int year;
+    unsigned length; ///< długość drogi.
+    int year; ///< rok budowy/remontu drogi.
 
-    Route* routesBelonging[1000];
+    Route* routesBelonging[1000]; ///< tablica wskaźników na drogi krajowe, w których zawarta jest droga.
 };
 
 typedef struct CityList{
 
-    struct CityList* next;
-    struct CityList* prev;
-    City* city;
+    struct CityList* next;  ///< wskaźnik na następny element listy miast.
+    struct CityList* prev;  ///< wskaźnik na poprzedni element listy miast.
+    City* city; ///< wskaźnik na miasto
 
 } CityList;
 
-/**
- * Miasto ma wskaznik nadane imie i wskaznik na liste drog, ktore z niego wychodza.
- */
 struct City{
 
-    char* name;
-    RoadList* roadList;
+    char* name;  ///< wskaźnik na nazwę miasta.
+    RoadList* roadList;  ///< wskaźnik na listę dróg.
 
 };
 
-/**
- * Element kolejki ma wskaznik na miasto, dystans od zrodla, wskaznik na poprzednika,
- * wskaznik na najstarsza droge po drodze od zrodla i wskaznik na kolejny i poprzedni element.
- */
 typedef struct QueueElement{
 
-    City* city;
-    long int distance;
-    struct QueueElement* predecessor;
-    Road* oldestRoad;
-    struct QueueElement* next;
-    struct QueueElement* prev;
-    bool ambiguous;
+    City* city;  ///< wskaźnik na miasto.
+    long int distance;  ///< obecna odległość od miasta źródłowego.
+    struct QueueElement* predecessor;  ///< poprzednik na ścieżce z miasta źródłowego na miasta wskazywane przez element.
+    Road* oldestRoad;  ///< wskaźnik na najstarsza drogę na tej ścieżce.
+    struct QueueElement* next;  ///< wskaźnik na następny element kolejki priorytetowej.
+    struct QueueElement* prev; ///< wskaźnik na poprzedni element kolejki priorytetowej.
+    bool ambiguous; ///< flaga czy element jest został jednoznacznie wyznaczony - na dwóch różnych ścieżkach uzyskał taki sam priorytet.
 
 } QueueElement;
 
@@ -82,17 +72,49 @@ typedef struct QueueElement{
  */
 typedef struct Queue{
 
-    QueueElement* head;
-    City* destination;
+    QueueElement* head; ///< wskaźnik na element z najwyższym priorytetem.
+    City* destination; ///< wskaźnik na miasto źródłowe.
 
 } Queue;
 
+/** @brief Tworzy nowy element list dróg.
+    @return Zwraca wskaźnik na nowy element. NULL jeśli alokacją nie udała się.
+ */
 RoadList* newRoadList();
+
+/** @brief Tworzy nowe miasto o podanej nazwie.
+ * @param[in] name - wskaźnik na nazwę.
+    @return Zwraca wskaźnik na nowe miasto. NULL jeśli alokacją nie udała się.
+ */
 City* newCity(const char *name);
+
+/** @brief Tworzy nowy element list miast.
+   @return Zwraca wskaźnik na nowy element. NULL jeśli alokacją nie udała się.
+*/
 CityList* newCityList();
+
+/** @brief Tworzy nową drogę krajową o podanym id..
+ * @param[in] id - id drogi krajowej.
+    @return Zwraca wskaźnik na nową drogę krajową. NULL jeśli alokacją nie udała się.
+ */
 Route* createNewRoute(unsigned id);
+/** @brief Tworzy kolejkę priorytetową o podanym mieście źródłowym.
+ * @param[in] destination - wskaźnik na miasto.
+    @return Zwraca wskaźnik na nową kolejkę. NULL jeśli alokacją nie udała się.
+ */
 Queue* newQueue(City* destination);
-QueueElement* newQueueElement(City* city, long int distance, QueueElement* predecessor, Road* road);
+
+/** @brief Tworzy nowy element kolejki priorytetowej
+ * @param[in] city - wskaźnik na miasto.
+ * @param[in] distance - odległość od miasta źródłowego.
+ * @param[in] predecessor - poprzednik na ścieżce z miasta źródłowego do miasta.
+ * @param[in] road - wskaźnik na najstarszą drogę na powyższej ścieżce.
+    @return Zwraca wskaźnik na nowy element kolejki. NULL jeśli alokacją nie udała się.
+ */
+QueueElement* newQueueElement(City* city, long int distance, QueueElement* predecessor, Road* oldestRoad);
+/** @brief Tworzy nową drogę.
+   @return Zwraca wskaźnik na nową drogę. NULL jeśli alokacją nie udała się.
+*/
 Road* createNewRoad();
 
 

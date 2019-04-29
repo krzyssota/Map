@@ -75,7 +75,7 @@ void cleanQueue(Queue **queue){
     (*queue)->head = NULL;
 }
 
-void deleteRouteList(Route* routeList[]){
+void deleteRoutes(Route **routeList){
 
     for (int i = 0; i <= 999 ; ++i) {
 

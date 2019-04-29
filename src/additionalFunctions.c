@@ -73,6 +73,8 @@ int count(Route* route){ ///< How many characters description needs.
     length += 1;
     length += strlen(cityList->city->name);
 
+    length += 1;
+
     return length;
 }
 
@@ -141,6 +143,7 @@ char* getDescription(Route* route, int length){
         str[i] = cityList->city->name[j];
         i++;
     }
+    str[i] = 0;
 
     return str;
 }

@@ -43,7 +43,7 @@ void deleteMap(Map *map){
     if(map != NULL) {
 
         deleteCitiesRoads(map, map->cityList);
-        deleteRouteList(map->routes);
+        deleteRoutes(map->routes);
 
         free(map);
     }
