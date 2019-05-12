@@ -31,4 +31,7 @@ int count(Route* route);
  */
 char* getDescription(Route* route, int length);
 
+int digitsInNumber(unsigned number); ///< How many digits in the number.
+
+
 #endif //DROGI_ADDITIONALFUNCTIONS_H

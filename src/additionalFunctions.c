@@ -34,7 +34,7 @@ bool correctName(const char* cityName){
 
 }
 
-int countNumber(unsigned number){ ///< How many digits in the number.
+int digitsInNumber(unsigned number){
     unsigned div = 1;
     unsigned digitCount = 1;
 
@@ -48,7 +48,7 @@ int countNumber(unsigned number){ ///< How many digits in the number.
 int count(Route* route){ ///< How many characters description needs.
 
     int length = 0;
-    length += countNumber((int)route->routeId);
+    length += digitsInNumber((int) route->routeId);
 
 
     CityList* cityList = route->cityList;
@@ -60,13 +60,13 @@ int count(Route* route){ ///< How many characters description needs.
 
         length += 1;
         Road* road = findRoad(cityList->city, cityList->next->city);
-        length += countNumber(road->length);
+        length += digitsInNumber(road->length);
 
         length += 1;
         if(road->year < 0){
             length += 1;
         }
-        length += countNumber(road->year);
+        length += digitsInNumber(road->year);
 
         cityList = cityList->next;
     }
