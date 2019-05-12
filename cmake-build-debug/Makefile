@@ -42,10 +42,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /snap/clion/69/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/70/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /snap/clion/69/bin/cmake/linux/bin/cmake -E remove -f
+RM = /snap/clion/70/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -62,7 +62,7 @@ CMAKE_BINARY_DIR = /home/krzubuntu/CLionProjects/IPP-ks406362/cmake-build-debug
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/snap/clion/69/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/snap/clion/70/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -73,7 +73,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/snap/clion/69/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/snap/clion/70/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -219,6 +219,33 @@ src/dijkstra.s: src/dijkstra.c.s
 src/dijkstra.c.s:
 	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/dijkstra.c.s
 .PHONY : src/dijkstra.c.s
+
+src/input.o: src/input.c.o
+
+.PHONY : src/input.o
+
+# target to build an object file
+src/input.c.o:
+	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/input.c.o
+.PHONY : src/input.c.o
+
+src/input.i: src/input.c.i
+
+.PHONY : src/input.i
+
+# target to preprocess a source file
+src/input.c.i:
+	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/input.c.i
+.PHONY : src/input.c.i
+
+src/input.s: src/input.c.s
+
+.PHONY : src/input.s
+
+# target to generate assembly for a file
+src/input.c.s:
+	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/input.c.s
+.PHONY : src/input.c.s
 
 src/map.o: src/map.c.o
 
@@ -374,6 +401,9 @@ help:
 	@echo "... src/dijkstra.o"
 	@echo "... src/dijkstra.i"
 	@echo "... src/dijkstra.s"
+	@echo "... src/input.o"
+	@echo "... src/input.i"
+	@echo "... src/input.s"
 	@echo "... src/map.o"
 	@echo "... src/map.i"
 	@echo "... src/map.s"

@@ -1,5 +1,4 @@
-/snap/clion/69/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/usr/bin/make -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/gcc -G "CodeBlocks - Unix Makefiles" /home/krzubuntu/CLionProjects/IPP-ks406362
--- Could NOT find Doxygen (missing: DOXYGEN_EXECUTABLE) 
+/snap/clion/70/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/usr/bin/make -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/gcc -G "CodeBlocks - Unix Makefiles" /home/krzubuntu/CLionProjects/IPP-ks406362
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/krzubuntu/CLionProjects/IPP-ks406362/cmake-build-debug

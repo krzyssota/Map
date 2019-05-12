@@ -7,6 +7,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.c" "/home/krzubuntu/CLionProjects/IPP-ks406362/cmake-build-debug/CMakeFiles/map.dir/src/additionalFunctions.c.o"
   "/home/krzubuntu/CLionProjects/IPP-ks406362/src/deleteStructure.c" "/home/krzubuntu/CLionProjects/IPP-ks406362/cmake-build-debug/CMakeFiles/map.dir/src/deleteStructure.c.o"
   "/home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.c" "/home/krzubuntu/CLionProjects/IPP-ks406362/cmake-build-debug/CMakeFiles/map.dir/src/dijkstra.c.o"
+  "/home/krzubuntu/CLionProjects/IPP-ks406362/src/input.c" "/home/krzubuntu/CLionProjects/IPP-ks406362/cmake-build-debug/CMakeFiles/map.dir/src/input.c.o"
   "/home/krzubuntu/CLionProjects/IPP-ks406362/src/map.c" "/home/krzubuntu/CLionProjects/IPP-ks406362/cmake-build-debug/CMakeFiles/map.dir/src/map.c.o"
   "/home/krzubuntu/CLionProjects/IPP-ks406362/src/map_main.c" "/home/krzubuntu/CLionProjects/IPP-ks406362/cmake-build-debug/CMakeFiles/map.dir/src/map_main.c.o"
   "/home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.c" "/home/krzubuntu/CLionProjects/IPP-ks406362/cmake-build-debug/CMakeFiles/map.dir/src/roadsRelated.c.o"

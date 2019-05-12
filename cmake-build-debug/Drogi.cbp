@@ -106,6 +106,12 @@
 		<Unit filename="/home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.h">
 			<Option target="map"/>
 		</Unit>
+		<Unit filename="/home/krzubuntu/CLionProjects/IPP-ks406362/src/input.c">
+			<Option target="map"/>
+		</Unit>
+		<Unit filename="/home/krzubuntu/CLionProjects/IPP-ks406362/src/input.h">
+			<Option target="map"/>
+		</Unit>
 		<Unit filename="/home/krzubuntu/CLionProjects/IPP-ks406362/src/map.c">
 			<Option target="map"/>
 		</Unit>

@@ -37,7 +37,7 @@ set(SOURCE_FILES
         src/routeRelated.c
         src/routeRelated.h
         src/dijkstra.c
-        src/dijkstra.h)
+        src/dijkstra.h src/input.c src/input.h)
 
 # Wskazujemy plik wykonywalny.
 add_executable(map ${SOURCE_FILES})

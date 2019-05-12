@@ -37,10 +37,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /snap/clion/69/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/70/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /snap/clion/69/bin/cmake/linux/bin/cmake -E remove -f
+RM = /snap/clion/70/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -153,6 +153,18 @@ CMakeFiles/map.dir/src/dijkstra.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/map.dir/src/dijkstra.c.s"
 	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/krzubuntu/CLionProjects/IPP-ks406362/src/dijkstra.c -o CMakeFiles/map.dir/src/dijkstra.c.s
 
+CMakeFiles/map.dir/src/input.c.o: CMakeFiles/map.dir/flags.make
+CMakeFiles/map.dir/src/input.c.o: ../src/input.c
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/map.dir/src/input.c.o   -c /home/krzubuntu/CLionProjects/IPP-ks406362/src/input.c
+
+CMakeFiles/map.dir/src/input.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/map.dir/src/input.c.i"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/krzubuntu/CLionProjects/IPP-ks406362/src/input.c > CMakeFiles/map.dir/src/input.c.i
+
+CMakeFiles/map.dir/src/input.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/map.dir/src/input.c.s"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/krzubuntu/CLionProjects/IPP-ks406362/src/input.c -o CMakeFiles/map.dir/src/input.c.s
+
 # Object files for target map
 map_OBJECTS = \
 "CMakeFiles/map.dir/src/map.c.o" \
@@ -162,7 +174,8 @@ map_OBJECTS = \
 "CMakeFiles/map.dir/src/deleteStructure.c.o" \
 "CMakeFiles/map.dir/src/structures.c.o" \
 "CMakeFiles/map.dir/src/routeRelated.c.o" \
-"CMakeFiles/map.dir/src/dijkstra.c.o"
+"CMakeFiles/map.dir/src/dijkstra.c.o" \
+"CMakeFiles/map.dir/src/input.c.o"
 
 # External object files for target map
 map_EXTERNAL_OBJECTS =
@@ -175,6 +188,7 @@ map: CMakeFiles/map.dir/src/deleteStructure.c.o
 map: CMakeFiles/map.dir/src/structures.c.o
 map: CMakeFiles/map.dir/src/routeRelated.c.o
 map: CMakeFiles/map.dir/src/dijkstra.c.o
+map: CMakeFiles/map.dir/src/input.c.o
 map: CMakeFiles/map.dir/build.make
 map: CMakeFiles/map.dir/link.txt
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/map.dir/link.txt --verbose=$(VERBOSE)
