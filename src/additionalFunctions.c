@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -8,6 +9,9 @@
 #include "roadsRelated.h"
 #include <math.h>
 
+void handleError(){
+    fprintf(stderr, "ERROR\n");
+}
 char* getName(const char *name){
 
     char *result = malloc(strlen(name)*sizeof(char) + 1);

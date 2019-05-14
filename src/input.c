@@ -38,10 +38,13 @@ getRouteDescription;routeId
  liczby są zapisywane przy podstawie 10. Spacje w nazwie miasta są istotne.
 */
 
-void putZeroes(char *line){
+bool putZeroes(char *line, size_t lineLength){
 
+    if(line[lineLength - 1] == ';'){
+        return false;
+    }
     int i = 0;
-    int ch = getchar();
+    int ch = line[i];
 
     while (ch != '\n' && ch != EOF){
 
@@ -50,16 +53,17 @@ void putZeroes(char *line){
         }
 
         i++;
-        ch = getchar();
+        ch = line[i];
     }
     if(ch == '\n'){
         line[i] = 0;
+        return true;
     }
+    return false;
 }
 enum Command getCommand(char* line){
 
-    char command[20];
-    strcpy(command, line);
+    char* command = line;
 
     if(strcmp(command, "addRoute") == 0) return ADD_ROUTE;
     if(strcmp(command, "addRoad") == 0) return ADD_ROAD;
@@ -68,8 +72,38 @@ enum Command getCommand(char* line){
     return ERROR;
 
 }
-void getParametersAndAddRoute(char* line){
-    //TODO
+void getParametersAndAddRoute(char* line, size_t lineLength, Map* map){
+    // numer drogi krajowej;nazwa miasta;długość odcinka drogi;rok budowy lub ostatniego remontu;nazwa miasta
+    char* end = NULL;
+    unsigned id = (int)strtol(line, &end, 10);
+    if(*end != 0){
+        handleError();
+        return;
+    }
+
+    lineLength -= (digitsInNumber(id)+1);
+    if(lineLength != 0){
+        handleError();
+        return;
+    }
+
+    char* firstCity = line;
+
+    lineLength -= (strlen(firstCity)+1);
+    if(lineLength == 0){
+        handleError();
+        return;
+    }
+    line = &line[strlen(firstCity) + 1];
+
+    RouteParam* routeParam = newRouteParam();
+    addCityToRouteParam(routeParam, firstCity);
+
+    bool moreArg = true;
+    while(moreArg){
+
+    }
+
 }
 void getParametersAndAddRoad(char* line, size_t lineLength, Map* map){
 
@@ -77,80 +111,118 @@ void getParametersAndAddRoad(char* line, size_t lineLength, Map* map){
         handleError();
     }
 
-    size_t cityNameLength = 0;
-    char* tmp = line;
-
-    while(tmp != 0 && tmp != EOF){
-        cityNameLength++;
-        tmp++;
-    }
-    char cityA[cityNameLength];
-    strcpy(cityA, line);
+    char* cityA = line;
 
     lineLength -= (strlen(cityA)+1);
     if(lineLength == 0){
         handleError();
         return;
     }
+    line = &line[strlen(cityA) + 1];
 
-
-    line = &line[strlen(line) + 1];
-    cityNameLength = 0;
-    tmp = line;
-
-    while(tmp != 0 && tmp != EOF){
-        cityNameLength++;
-        tmp++;
-    }
-    char cityB[cityNameLength];
-    strcpy(cityB, line);
+    char* cityB = line;
 
     lineLength -= (strlen(cityB)+1);
     if(lineLength == 0){
         handleError();
         return;
     }
+    line = &line[strlen(cityB) + 1];
 
-
-    line = &line[strlen(line) + 1];
     char* end = NULL;
-    int length = (int)strtol(line, &end, 10);
-    if(end != 0){
+    int roadLength = (int)strtol(line, &end, 10);
+    if(*end != 0){
         handleError();
         return;
     }
 
-    lineLength -= (digitsInNumber(length)+1);
+    lineLength -= (digitsInNumber(roadLength)+1);
     if(lineLength == 0){
         handleError();
         return;
     }
 
-
     line = &line[strlen(line) + 1];
     end = NULL;
     int year = (unsigned) strtol(line, &end, 10);
-    if(end != 0){
+    if(*end != 0){
         handleError();
         return;
     }
 
     lineLength -= (digitsInNumber(year)+1);
-    if(lineLength == 0){
+    if(lineLength != 0){
         handleError();
         return;
     }
 
-
-    if(!addRoad(map, (const char*) cityA, (const char*) cityB, length, year)){
+    if(!addRoad(map, (const char*) cityA, (const char*) cityB, roadLength, year)){
         handleError();
+    } else {
+        printf("road added");
     }
 }
-void getParametersAndRepairRoad(char* line){
-    //TODO
+void getParametersAndRepairRoad(char* line, size_t lineLength, Map* map){
+    if(lineLength == 0){
+        handleError();
+    }
+
+    char* cityA = line;
+
+    lineLength -= (strlen(cityA)+1);
+    if(lineLength == 0){
+        handleError();
+        return;
+    }
+    line = &line[strlen(cityA) + 1];
+
+    char* cityB = line;
+
+    lineLength -= (strlen(cityB)+1);
+    if(lineLength == 0){
+        handleError();
+        return;
+    }
+    line = &line[strlen(cityB) + 1];
+
+    char* end = NULL;
+    int repairYear = (int)strtol(line, &end, 10);
+    if(*end != 0){
+        handleError();
+        return;
+    }
+
+    lineLength -= (digitsInNumber(repairYear)+1);
+    if(lineLength != 0){
+        handleError();
+        return;
+    }
+
+    if(!repairRoad(map, (const char*) cityA, (const char*) cityB, repairYear)){
+        handleError();
+    } else {
+        printf("road repaired");
+    }
 }
-void getParametersAndGetRouteDescription(char* line){
-    //TODO
+void getParametersAndGetRouteDescription(char* line, size_t lineLength, Map* map){
+    // getRouteDescription;routeId
+    char* end = NULL;
+    unsigned id = (int)strtol(line, &end, 10);
+    if(*end != 0){
+        handleError();
+        return;
+    }
+
+    lineLength -= (digitsInNumber(id)+1);
+    if(lineLength != 0){
+        handleError();
+        return;
+    }
+
+    if(printf("%s", getRouteDescription(map, id))){
+    } else {
+        handleError();
+    }
 }
 
 void executeCommand(enum Command command, char* line, size_t lineLength, Map* map){
@@ -162,10 +234,10 @@ void executeCommand(enum Command command, char* line, size_t lineLength, Map* ma
             getParametersAndAddRoad(&line[strlen(line) + 1], lineLength-(strlen(line) + 1), map);
             break;
         case REPAIR_ROAD:
-            getParametersAndRepairRoad(&line[strlen(line) + 1]);
+            getParametersAndRepairRoad(&line[strlen(line) + 1], lineLength-(strlen(line) + 1), map);
             break;
         case DESCRIBE_ROUTE:
-            getParametersAndGetRouteDescription(&line[strlen(line) + 1]);
+            getParametersAndGetRouteDescription(&line[strlen(line) + 1], lineLength-(strlen(line) + 1), map);
             break;
         default:
             exit(1);
@@ -176,29 +248,38 @@ void readInput(Map* map) {
 
     int lineNo = 0;
     char *line = NULL;
-    size_t lineLength = 0;
-   /* ssize_t read;*/
+    ssize_t lineLength = 0;
+    size_t dummy;
 
-    while ((/*read = */getline(&line, &lineLength, stdin)) != -1) {
-        /*printf("Retrieved line of length %zu:\n", read);
-        printf("%s", line);*/
-        if(line[0] == '#' || line[0] == 0){
+    do {
+        lineLength = getline(&line, &dummy, stdin);
+        lineNo++;
+
+        if(line[0] == '#' || line[0] == '\n'){
             continue;
         }
-        putZeroes(line);
-        enum Command command = getCommand(line);
-        if(command == ERROR){
-            handleError();
+
+        if(!putZeroes(line, lineLength)){
+            handleError(lineLength);
+            continue;
         }
+
+        enum Command command = getCommand(line);
+
+        if(command == ERROR){
+            handleError(lineLength);
+            continue;
+        }
+
         executeCommand(command, line, lineLength--, map);
 
-
         lineNo++;
-    }
+
+    } while (lineLength  != -1);
     
-    if (line)
+    if (line){
         free(line);
-    exit(EXIT_SUCCESS);
+    }
 }
 
 

@@ -79,6 +79,43 @@ Road* createNewRoad(){
     }
     return newRoad;
 }
+
+RouteParam* newRouteParam(){
+
+    RouteParam* routeParam = malloc(sizeof(RouteParam));
+
+    if(routeParam != NULL) {
+
+        routeParam->cities = malloc(sizeof(char *) * 2);
+        routeParam->cities = NULL;
+        routeParam->cFilled = 0;
+        routeParam->cSize = 2;
+
+        routeParam->lengths = malloc(sizeof(unsigned));
+        routeParam->lengths = NULL;
+        routeParam->lFilled = 0;
+        routeParam->lSize = 1;
+
+        routeParam->years = malloc(sizeof(int));
+        routeParam->years = NULL;
+        routeParam->yFilled = 0;
+        routeParam->ySize = 1;
+    }
+    return routeParam;
+
+}
+bool addCityToRouteParam(RouteParam* routeParam, char* cityName) {
+
+    if(routeParam->cFilled == routeParam->cSize){
+        routeParam->cities = realloc(routeParam->cities, sizeof(char*) * (2*routeParam->cSize));
+        if(routeParam->cities == NULL){
+            return false;
+        }
+    }
+    routeParam->cities[routeParam->cFilled] = cityName;
+    routeParam->cFilled++;
+}
+
 /*
 StringList* newStringList(char* string){
     StringList* stringList = malloc(sizeof(StringList));

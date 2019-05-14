@@ -77,6 +77,20 @@ typedef struct Queue{
 
 } Queue;
 
+typedef struct RouteParam{
+    char** cities;
+    int cFilled;
+    int cSize;
+    unsigned* lengths;
+    int lFilled;
+    int lSize;
+    int* years;
+    int yFilled;
+    int ySize;
+} RouteParam;
+
+RouteParam* newRouteParam();
+
 /** @brief Tworzy nowy element list dróg.
     @return Zwraca wskaźnik na nowy element. NULL jeśli alokacją nie udała się.
  */
@@ -116,6 +130,8 @@ QueueElement* newQueueElement(City* city, long int distance, QueueElement* prede
    @return Zwraca wskaźnik na nową drogę. NULL jeśli alokacją nie udała się.
 */
 Road* createNewRoad();
+
+
 
 
 #endif //DROGI_STRUCTURES_H
