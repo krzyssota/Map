@@ -90,6 +90,8 @@ typedef struct RouteParam{
 } RouteParam;
 
 RouteParam* newRouteParam();
+bool addCityToRouteParam(RouteParam* routeParam, char* cityName);
+bool addRoadToRouteParam(RouteParam* routeParam, unsigned roadLength, int year);
 
 /** @brief Tworzy nowy element list dróg.
     @return Zwraca wskaźnik na nowy element. NULL jeśli alokacją nie udała się.

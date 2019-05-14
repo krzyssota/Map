@@ -97,12 +97,59 @@ void getParametersAndAddRoute(char* line, size_t lineLength, Map* map){
     line = &line[strlen(firstCity) + 1];
 
     RouteParam* routeParam = newRouteParam();
-    addCityToRouteParam(routeParam, firstCity);
-
-    bool moreArg = true;
-    while(moreArg){
-
+    if(!addCityToRouteParam(routeParam, firstCity)){
+        handleError();
+        return;
     }
+
+    while(line > 0){
+
+        end = NULL;
+        unsigned roadLength = (int)strtol(line, &end, 10);
+        if(*end != 0){
+            handleError();
+            return;
+        }
+
+        lineLength -= (digitsInNumber(roadLength)+1);
+        if(lineLength == 0){
+            handleError();
+            return;
+        }
+        line = &line[strlen(line) + 1];
+
+        end = NULL;
+        int year = (int)strtol(line, &end, 10);
+        if(*end != 0){
+            handleError();
+            return;
+        }
+
+        lineLength -= (digitsInNumber(year)+1);
+        if(lineLength != 0){
+            handleError();
+            return;
+        }
+
+        if (!addRoadToRouteParam(routeParam, roadLength, year)){
+            handleError();
+            return;
+        }
+
+        char* city = line;
+
+        lineLength -= (strlen(city) + 1);
+
+        line = &line[strlen(city) + 1];
+
+        if(!addCityToRouteParam(routeParam, city)){
+            handleError();
+            return;
+        }
+    }
+    //TODO tu skonczylem
+
+    newRouteFromRouteParam(map, routeParam);
 
 }
 void getParametersAndAddRoad(char* line, size_t lineLength, Map* map){
@@ -130,7 +177,7 @@ void getParametersAndAddRoad(char* line, size_t lineLength, Map* map){
     line = &line[strlen(cityB) + 1];
 
     char* end = NULL;
-    int roadLength = (int)strtol(line, &end, 10);
+    unsigned roadLength = (int)strtol(line, &end, 10);
     if(*end != 0){
         handleError();
         return;

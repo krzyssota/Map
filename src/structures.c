@@ -111,10 +111,35 @@ bool addCityToRouteParam(RouteParam* routeParam, char* cityName) {
         if(routeParam->cities == NULL){
             return false;
         }
+        routeParam->cSize *= 2;
     }
     routeParam->cities[routeParam->cFilled] = cityName;
     routeParam->cFilled++;
 }
+
+bool addRoadToRouteParam(RouteParam* routeParam, unsigned roadLength, int year){
+
+    if(routeParam->lFilled == routeParam->lSize){
+        routeParam->lengths = realloc(routeParam->lengths, sizeof(char*) * (2*routeParam->lSize));
+        if(routeParam->lengths == NULL){
+            return false;
+        }
+        routeParam->lSize *= 2;
+    }
+    if(routeParam->yFilled == routeParam->ySize){
+        routeParam->years = realloc(routeParam->years, sizeof(char*) * (2*routeParam->ySize));
+        if(routeParam->years == NULL){
+            return false;
+        }
+        routeParam->ySize *= 2;
+    }
+    routeParam->lengths[routeParam->lFilled] = roadLength;
+    routeParam->lFilled++;
+
+    routeParam->years[routeParam->yFilled] = year;
+    routeParam->yFilled++;
+}
+
 
 /*
 StringList* newStringList(char* string){
