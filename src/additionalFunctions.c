@@ -9,8 +9,8 @@
 #include "roadsRelated.h"
 #include <math.h>
 
-void handleError(){
-    fprintf(stderr, "ERROR\n");
+void handleError(int lineNo){
+    fprintf(stderr, "ERROR %d\n", lineNo);
 }
 char* getName(const char *name){
 

@@ -117,6 +117,12 @@ void deleteRoute(Route* route){
     free(route);
 }
 
+void deleteLine(char* line){
+    if(line != NULL){
+        free(line);
+    }
+}
+
 
 
 

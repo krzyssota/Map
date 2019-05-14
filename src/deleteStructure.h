@@ -31,6 +31,8 @@ void deleteRoute(Route* route);
  */
 void deleteRoadAndTwoRoadLists(Road *road);
 
+void deleteLine(char* line);
+
 
 
 

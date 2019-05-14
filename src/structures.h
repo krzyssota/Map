@@ -78,18 +78,24 @@ typedef struct Queue{
 } Queue;
 
 typedef struct RouteParam{
+
+    int id;
+
     char** cities;
     int cFilled;
     int cSize;
+
     unsigned* lengths;
     int lFilled;
     int lSize;
+
     int* years;
     int yFilled;
     int ySize;
+
 } RouteParam;
 
-RouteParam* newRouteParam();
+RouteParam* newRouteParam(int id);
 bool addCityToRouteParam(RouteParam* routeParam, char* cityName);
 bool addRoadToRouteParam(RouteParam* routeParam, unsigned roadLength, int year);
 

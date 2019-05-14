@@ -7,6 +7,8 @@
 #include "map.h"
 #include "dijkstra.h"
 #include "roadsRelated.h"
+#include "additionalFunctions.h"
+#include <string.h>
 
 Road* olderRoad(Road* roadA, Road* roadB){
 
@@ -195,5 +197,96 @@ void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB)
 
     free(toDelete);
     free(otherEnd);
+}
+
+bool newRouteFromRouteParam( Map* map, RouteParam* routeParam, int lineNo) {
+
+
+    char* city1 = routeParam->cities[0];
+    if(!correctName(city1)){
+        return false;
+    }
+    char* city2;
+
+    int i = 1;
+    while(i < routeParam->cFilled){
+
+        city2 = routeParam->cities[i];
+
+        if(!correctName(city2)){ ///< Któryś z parametrów ma niepoprawną wartość.
+            return false;
+        }
+        if(strcmp(city1, city2) == 0){ ///< Podane nazwy miast są identyczne.
+            return false;
+        }
+
+        city1 = city2;
+        i++;
+    }
+
+    if(!correctId(routeParam->id)){
+        return false;
+    }
+
+    if(map->routes[routeParam->id] != NULL){ ///< Droga krajowa o podanym Id juz istnieje.
+        return false;
+    }
+
+//--------------
+//  TO W PETLI WHILE
+// TODO tu skonczylem
+    Road* newRoad = createNewRoad();
+    if(newRoad == NULL){
+        return false;
+    }
+
+    City* cityA = findCityByName(map->cityList, city1);
+    if(cityA == NULL){ ///< Create city if it is not yet in the structure.
+        cityA = newCity(city1);
+        if(cityA == NULL){
+            return false;
+        }
+
+        if(!addCity(map, cityA)){
+            return false;
+        }
+    }
+    newRoad->cityA = cityA;
+
+    City* cityB = findCityByName(map->cityList, city2);
+    if(cityB == NULL){
+        cityB = newCity(city2);
+        if(cityB == NULL){
+            return false;
+        }
+
+        if(!addCity(map, cityB)){
+            return false;
+        }
+    }
+    newRoad->cityB = cityB;
+
+    newRoad->length = length;
+    newRoad->year = builtYear;
+
+
+
+    if(!addRoadToCity(cityA, cityA->roadList, newRoad)){ ///< Odcinek drogi między tymi miastami już istnieje.
+        free(newRoad);
+        return false;
+    }
+    addRoadToCity(cityB, cityB->roadList, newRoad);
+
+//---------------------------
+
+
+    Route* newRoute = createNewRoute(routeId);
+    if(newRoute == NULL){
+        return false;
+    }
+
+    addRouteInfoToRoads(newRoute); ///< Drogi maja informacje do jakich drog krajowych naleza.
+
+    map->routes[newRoute->routeId] = newRoute;
 }
 

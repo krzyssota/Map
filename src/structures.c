@@ -80,24 +80,23 @@ Road* createNewRoad(){
     return newRoad;
 }
 
-RouteParam* newRouteParam(){
+RouteParam* newRouteParam(int id){
 
     RouteParam* routeParam = malloc(sizeof(RouteParam));
 
     if(routeParam != NULL) {
 
+        routeParam->id = id;
+
         routeParam->cities = malloc(sizeof(char *) * 2);
-        routeParam->cities = NULL;
         routeParam->cFilled = 0;
         routeParam->cSize = 2;
 
         routeParam->lengths = malloc(sizeof(unsigned));
-        routeParam->lengths = NULL;
         routeParam->lFilled = 0;
         routeParam->lSize = 1;
 
         routeParam->years = malloc(sizeof(int));
-        routeParam->years = NULL;
         routeParam->yFilled = 0;
         routeParam->ySize = 1;
     }
@@ -115,6 +114,8 @@ bool addCityToRouteParam(RouteParam* routeParam, char* cityName) {
     }
     routeParam->cities[routeParam->cFilled] = cityName;
     routeParam->cFilled++;
+    return true;
+
 }
 
 bool addRoadToRouteParam(RouteParam* routeParam, unsigned roadLength, int year){
@@ -138,6 +139,7 @@ bool addRoadToRouteParam(RouteParam* routeParam, unsigned roadLength, int year){
 
     routeParam->years[routeParam->yFilled] = year;
     routeParam->yFilled++;
+    return true;
 }
 
 

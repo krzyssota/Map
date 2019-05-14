@@ -22,6 +22,7 @@ typedef struct Map{
 
     CityList* cityList;
     Route* routes[1000];
+    char* inputLine;
 
 } Map;
 

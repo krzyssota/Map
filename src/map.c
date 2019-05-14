@@ -29,6 +29,8 @@ Map* newMap(void){
         map->routes[i] = NULL;
     }
 
+    map->inputLine = NULL;
+
     return map;
 }
 
@@ -44,6 +46,7 @@ void deleteMap(Map *map){
 
         deleteCitiesRoads(map, map->cityList);
         deleteRoutes(map->routes);
+        deleteLine(map->inputLine);
 
         free(map);
     }
@@ -476,6 +479,9 @@ char const* getRouteDescription(Map *map, unsigned routeId){
 
     if(map->routes[routeId] == NULL){
         char* str = malloc(sizeof(char));
+        if(str == NULL){
+            return NULL;
+        }
         str[0] = 0;
         return str;
     } else {
