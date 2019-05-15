@@ -199,7 +199,54 @@ void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB)
     free(otherEnd);
 }
 
-bool newRouteFromRouteParam( Map* map, RouteParam* routeParam, int lineNo) {
+bool addCityToRoute(City* city, Route* route){
+
+    CityList* cityList = route->cityList;
+
+    if(cityList == NULL){
+
+        route->cityList = newCityList();
+        if(route->cityList == NULL){
+            return false;
+        }
+
+        route->cityList->city = city;
+
+        return true;
+
+    } else {
+
+        while (cityList->next != NULL) {
+            cityList = cityList->next;
+        }
+
+        cityList->next = newCityList();
+        if(cityList->next == NULL){
+            return false;
+        }
+        (cityList->next)->prev = cityList;
+
+        cityList->next->city = city;
+
+        return true;
+
+    }
+}
+
+bool newRouteFromRouteParam(Map* map, RouteParam* routeParam) {
+
+    if(!correctId(routeParam->id)){
+        return false;
+    }
+
+    if(map->routes[routeParam->id] != NULL){ ///< Droga krajowa o podanym Id juz istnieje.
+        return false;
+    }
+
+    Route* newRoute = createNewRoute(routeParam->id);
+    if(newRoute == NULL){
+        return false;
+    }
 
 
     char* city1 = routeParam->cities[0];
@@ -213,10 +260,14 @@ bool newRouteFromRouteParam( Map* map, RouteParam* routeParam, int lineNo) {
 
         city2 = routeParam->cities[i];
 
-        if(!correctName(city2)){ ///< Któryś z parametrów ma niepoprawną wartość.
-            return false;
+        addRoad(map, city1, city2, routeParam->lengths[i-1], routeParam->years[i-1]);
+
+        if(i == 1) {
+            if(!addCityToRoute(findCityByName(map->cityList, city1), newRoute)){
+                return false;
+            }
         }
-        if(strcmp(city1, city2) == 0){ ///< Podane nazwy miast są identyczne.
+        if(!addCityToRoute(findCityByName(map->cityList, city2), newRoute)){
             return false;
         }
 
@@ -224,69 +275,10 @@ bool newRouteFromRouteParam( Map* map, RouteParam* routeParam, int lineNo) {
         i++;
     }
 
-    if(!correctId(routeParam->id)){
-        return false;
-    }
-
-    if(map->routes[routeParam->id] != NULL){ ///< Droga krajowa o podanym Id juz istnieje.
-        return false;
-    }
-
-//--------------
-//  TO W PETLI WHILE
-// TODO tu skonczylem
-    Road* newRoad = createNewRoad();
-    if(newRoad == NULL){
-        return false;
-    }
-
-    City* cityA = findCityByName(map->cityList, city1);
-    if(cityA == NULL){ ///< Create city if it is not yet in the structure.
-        cityA = newCity(city1);
-        if(cityA == NULL){
-            return false;
-        }
-
-        if(!addCity(map, cityA)){
-            return false;
-        }
-    }
-    newRoad->cityA = cityA;
-
-    City* cityB = findCityByName(map->cityList, city2);
-    if(cityB == NULL){
-        cityB = newCity(city2);
-        if(cityB == NULL){
-            return false;
-        }
-
-        if(!addCity(map, cityB)){
-            return false;
-        }
-    }
-    newRoad->cityB = cityB;
-
-    newRoad->length = length;
-    newRoad->year = builtYear;
-
-
-
-    if(!addRoadToCity(cityA, cityA->roadList, newRoad)){ ///< Odcinek drogi między tymi miastami już istnieje.
-        free(newRoad);
-        return false;
-    }
-    addRoadToCity(cityB, cityB->roadList, newRoad);
-
-//---------------------------
-
-
-    Route* newRoute = createNewRoute(routeId);
-    if(newRoute == NULL){
-        return false;
-    }
-
     addRouteInfoToRoads(newRoute); ///< Drogi maja informacje do jakich drog krajowych naleza.
 
     map->routes[newRoute->routeId] = newRoute;
+
+    return true;
 }
 

@@ -33,7 +33,7 @@ char* getDescription(Route* route, int length);
 
 int digitsInNumber(unsigned number); ///< How many digits in the number.
 
-void handleError();
+void handleError(int lineNo);
 
 
 #endif //DROGI_ADDITIONALFUNCTIONS_H

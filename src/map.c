@@ -46,6 +46,7 @@ void deleteMap(Map *map){
 
         deleteCitiesRoads(map, map->cityList);
         deleteRoutes(map->routes);
+
         deleteLine(map->inputLine);
 
         free(map);

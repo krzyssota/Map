@@ -80,7 +80,7 @@ Road* createNewRoad(){
     return newRoad;
 }
 
-RouteParam* newRouteParam(int id){
+RouteParam* newRouteParam(unsigned id){
 
     RouteParam* routeParam = malloc(sizeof(RouteParam));
 

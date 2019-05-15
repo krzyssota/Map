@@ -62,6 +62,6 @@ int betterPath(int firstOldestRoadYear, unsigned firstLength, int secondOldestRo
  */
 void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB);
 
-bool newRouteFromRouteParam( Map* map, RouteParam* routeParam, int lineNo);
+bool newRouteFromRouteParam(Map* map, RouteParam* routeParam);
 
 #endif //DROGI_ROUTERELATED_H

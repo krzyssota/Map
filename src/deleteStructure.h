@@ -33,6 +33,8 @@ void deleteRoadAndTwoRoadLists(Road *road);
 
 void deleteLine(char* line);
 
+void deleteRouteParam(RouteParam* routeParam);
+
 
 
 

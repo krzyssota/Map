@@ -79,7 +79,7 @@ typedef struct Queue{
 
 typedef struct RouteParam{
 
-    int id;
+    unsigned id;
 
     char** cities;
     int cFilled;
@@ -95,7 +95,7 @@ typedef struct RouteParam{
 
 } RouteParam;
 
-RouteParam* newRouteParam(int id);
+RouteParam* newRouteParam(unsigned id);
 bool addCityToRouteParam(RouteParam* routeParam, char* cityName);
 bool addRoadToRouteParam(RouteParam* routeParam, unsigned roadLength, int year);
 
