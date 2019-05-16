@@ -14,13 +14,12 @@
   <component name="ChangeListManager">
     <list default="true" id="1bd1d48c-e182-4ef4-8396-4267b666b999" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/additionalFunctions.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/additionalFunctions.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/deleteStructure.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/deleteStructure.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/deleteStructure.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/deleteStructure.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/C.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/additionalFunctions.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/additionalFunctions.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/input.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/input.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/map.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/map.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routeRelated.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/routeRelated.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routeRelated.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/routeRelated.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/structures.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/structures.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/structures.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/structures.h" afterDir="false" />
     </list>
@@ -41,10 +40,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/map.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="121" selection-start-line="121" selection-end-line="121" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/input.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1403">
-              <caret line="162" column="28" selection-start-line="162" selection-start-column="28" selection-end-line="162" selection-end-column="28" />
+            <state relative-caret-position="70">
+              <caret line="161" column="32" lean-forward="true" selection-start-line="161" selection-start-column="32" selection-end-line="161" selection-end-column="32" />
               <folding>
                 <element signature="e#20#38#0" expanded="true" />
               </folding>
@@ -53,36 +64,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/map.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-41">
-              <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/routeRelated.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="250" lean-forward="true" selection-start-line="250" selection-end-line="250" />
+            <state relative-caret-position="-48">
+              <caret line="235" column="5" selection-start-line="235" selection-start-column="5" selection-end-line="235" selection-end-column="5" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/map_main.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
-              <folding>
-                <element signature="e#74#93#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -91,7 +78,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/deleteStructure.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="502">
               <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
             </state>
           </provider>
@@ -100,8 +87,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/additionalFunctions.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="40" column="4" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="4" />
+            <state relative-caret-position="101">
+              <caret line="41" selection-start-line="41" selection-end-line="41" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -110,21 +97,36 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/structures.c">
+        <entry file="file://$PROJECT_DIR$/src/structures.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="82" column="34" selection-start-line="82" selection-start-column="34" selection-end-line="82" selection-end-column="34" />
+            <state relative-caret-position="172">
+              <caret line="100" column="69" selection-start-line="100" selection-start-column="69" selection-end-line="100" selection-end-column="69" />
+              <folding>
+                <element signature="e#55#74#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/structures.h">
+        <entry file="file://$PROJECT_DIR$/src/structures.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
-              <caret line="81" column="12" selection-start-line="81" selection-start-column="12" selection-end-line="81" selection-end-column="12" />
+            <state relative-caret-position="276">
+              <caret line="107" selection-start-line="107" selection-end-line="107" selection-end-column="70" />
               <folding>
-                <element signature="e#55#74#0" expanded="true" />
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/map_main.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+              <folding>
+                <element signature="e#74#93#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -134,8 +136,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>assert</find>
-      <find>!</find>
       <find>Alinów</find>
       <find>Bór</find>
       <find>Cielińsk-Niekłańsk</find>
@@ -157,13 +157,15 @@
       <find>map</find>
       <find>addRoad</find>
       <find>uId</find>
-      <find>newRoute</find>
       <find>readCity</find>
       <find>lineLength != 0</find>
       <find>lineLength -=</find>
       <find>printf</find>
       <find>prin</find>
       <find>getParametersAndAddRoute</find>
+      <find>newRoute</find>
+      <find>add</find>
+      <find>addCityto</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -178,26 +180,27 @@
         <option value="$PROJECT_DIR$/src/dijkstra.h" />
         <option value="$PROJECT_DIR$/src/roadsRelated.h" />
         <option value="$PROJECT_DIR$/src/input.h" />
-        <option value="$PROJECT_DIR$/src/additionalFunctions.c" />
         <option value="$PROJECT_DIR$/src/map.h" />
         <option value="$PROJECT_DIR$/src/additionalFunctions.h" />
         <option value="$PROJECT_DIR$/src/routeRelated.h" />
+        <option value="$PROJECT_DIR$/src/deleteStructure.c" />
+        <option value="$PROJECT_DIR$/src/deleteStructure.h" />
+        <option value="$PROJECT_DIR$/src/routeRelated.c" />
+        <option value="$PROJECT_DIR$/src/additionalFunctions.c" />
+        <option value="$PROJECT_DIR$/src/map.c" />
+        <option value="$PROJECT_DIR$/src/input.c" />
         <option value="$PROJECT_DIR$/src/structures.c" />
         <option value="$PROJECT_DIR$/src/structures.h" />
         <option value="$PROJECT_DIR$/src/map_main.c" />
-        <option value="$PROJECT_DIR$/src/deleteStructure.c" />
-        <option value="$PROJECT_DIR$/src/deleteStructure.h" />
-        <option value="$PROJECT_DIR$/src/map.c" />
-        <option value="$PROJECT_DIR$/src/input.c" />
-        <option value="$PROJECT_DIR$/src/routeRelated.c" />
       </list>
     </option>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="-2" />
-    <option name="width" value="1680" />
-    <option name="height" value="1052" />
+    <option name="x" value="67" />
+    <option name="y" value="1075" />
+    <option name="width" value="1299" />
+    <option name="height" value="743" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -307,7 +310,12 @@
       <workItem from="1557824649439" duration="13670000" />
       <workItem from="1557863901147" duration="1589000" />
       <workItem from="1557865535836" duration="6710000" />
-      <workItem from="1557921967949" duration="12197000" />
+      <workItem from="1557921967949" duration="12377000" />
+      <workItem from="1557997758341" duration="1038000" />
+      <workItem from="1557999664992" duration="202000" />
+      <workItem from="1558000931182" duration="47000" />
+      <workItem from="1558034868769" duration="1905000" />
+      <workItem from="1558038546834" duration="5760000" />
     </task>
     <task id="LOCAL-00001" summary="testGit">
       <created>1556363444810</created>
@@ -470,23 +478,30 @@
       <option name="project" value="LOCAL" />
       <updated>1557874279639</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="all but doxygen">
+      <created>1557960068701</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1557960068701</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="157650000" />
+    <option name="totallyTimeSpent" value="166782000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-2" width="1680" height="1052" extended-state="6" />
+    <frame x="67" y="1075" width="1299" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49187434" weight="0.2888617" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49187434" weight="0.28810853" />
       <window_info id="Structure" order="1" sideWeight="0.50812566" side_tool="true" weight="0.28396574" />
       <window_info id="Favorites" order="2" sideWeight="0.50812566" side_tool="true" weight="0.28396574" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.12351029" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.36944744" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.28494042" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4820847" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.048859935" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -496,7 +511,7 @@
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.048859935" />
       <window_info anchor="bottom" id="CMake" order="11" weight="0.4446254" />
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32899022" />
-      <window_info anchor="bottom" id="Messages" order="13" weight="0.2665222" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.57166123" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -529,7 +544,8 @@
     <MESSAGE value="addRoute" />
     <MESSAGE value="addroute parametry zebrane" />
     <MESSAGE value="newroutefunkcja" />
-    <option name="LAST_COMMIT_MESSAGE" value="newroutefunkcja" />
+    <MESSAGE value="all but doxygen" />
+    <option name="LAST_COMMIT_MESSAGE" value="all but doxygen" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -540,12 +556,62 @@
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <condition expression="lineNo == 55" language="ObjectiveC" />
           <url>file://$PROJECT_DIR$/src/input.c</url>
-          <line>343</line>
-          <option name="timeStamp" value="15" />
+          <line>374</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>lineNo == 55</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>lineNo == 60</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>lineNo == 59</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>lineNo == 45</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>linNo == 45</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>lineNo == 32</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>lineNo == 34</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>number == -100</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>lineNo == 27</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
   </component>
   <component name="editorHistoryManager">
     <entry file="uml://JavaScript-modules-diagram//home/krzubuntu/CLionProjects/IPP-ks406362/src">
@@ -573,24 +639,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/roadsRelated.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1050">
-          <caret line="77" column="59" selection-start-line="77" selection-start-column="59" selection-end-line="77" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dijkstra.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="7" selection-start-line="7" selection-end-line="15" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dijkstra.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2955">
-          <caret line="197" selection-start-line="197" selection-end-line="197" />
         </state>
       </provider>
     </entry>
@@ -635,43 +687,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/additionalFunctions.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="40" column="4" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/structures.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="81" column="12" selection-start-line="81" selection-start-column="12" selection-end-line="81" selection-end-column="12" />
-          <folding>
-            <element signature="e#55#74#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/map_main.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-          <folding>
-            <element signature="e#74#93#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/structures.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="82" column="34" selection-start-line="82" selection-start-column="34" selection-end-line="82" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/input.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -686,39 +701,93 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/dijkstra.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="198" column="14" selection-start-line="198" selection-start-column="14" selection-end-line="198" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/deleteStructure.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
+        <state relative-caret-position="502">
           <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/map.c">
+    <entry file="file://$PROJECT_DIR$/src/additionalFunctions.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-41">
-          <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
+        <state relative-caret-position="101">
+          <caret line="41" selection-start-line="41" selection-end-line="41" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/input.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1403">
-          <caret line="162" column="28" selection-start-line="162" selection-start-column="28" selection-end-line="162" selection-end-column="28" />
-          <folding>
-            <element signature="e#20#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routeRelated.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="250" lean-forward="true" selection-start-line="250" selection-end-line="250" />
+        <state relative-caret-position="-48">
+          <caret line="235" column="5" selection-start-line="235" selection-start-column="5" selection-end-line="235" selection-end-column="5" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/roadsRelated.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="69" selection-start-line="69" selection-end-line="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/structures.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="107" selection-start-line="107" selection-end-line="107" selection-end-column="70" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/structures.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="100" column="69" selection-start-line="100" selection-start-column="69" selection-end-line="100" selection-end-column="69" />
+          <folding>
+            <element signature="e#55#74#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/input.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="161" column="32" lean-forward="true" selection-start-line="161" selection-start-column="32" selection-end-line="161" selection-end-column="32" />
+          <folding>
+            <element signature="e#20#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/map.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="121" selection-start-line="121" selection-end-line="121" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/map_main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+          <folding>
+            <element signature="e#74#93#0" expanded="true" />
           </folding>
         </state>
       </provider>

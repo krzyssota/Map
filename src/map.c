@@ -68,7 +68,7 @@ void deleteMap(Map *map){
  */
 bool addRoad(Map *map, const char *city1, const char *city2, unsigned length, int builtYear){
 
-    if(!correctName(city1) || !correctName(city2) || builtYear == 0){ ///< Któryś z parametrów ma niepoprawną wartość.
+    if(!correctName(city1) || !correctName(city2) || length <= 0 || builtYear == 0){ ///< Któryś z parametrów ma niepoprawną wartość.
         return false;
     }
 

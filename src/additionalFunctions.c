@@ -34,7 +34,7 @@ bool correctName(const char* cityName){
         tmp++;
         counter++;
     }
-    return (counter == strlen(cityName) && (int)(*tmp) == 0);
+    return (counter == strlen(cityName) && (int)(*tmp) == 0 && strlen(cityName) != 0);
 
 }
 

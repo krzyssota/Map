@@ -58,7 +58,6 @@ bool readPositiveNumber(char **line, size_t *lineLength, unsigned *number, int l
 
     *number = (int)strtol(*line, &end, 10); // strtol reads only positive numbers
     if(*end != 0){
-        handleError(lineNo);
         return false;
     }
 
@@ -77,25 +76,31 @@ bool readNumber(char **line, size_t *lineLength, int *year, int lineNo){
     bool negative = false;
     if(**line == '-'){
         negative = true;
-        line++;
+        (*line)++;
     }
 
     *year = (int)strtol(*line, &end, 10);
     if(*end != 0){
-        handleError(lineNo);
         return false;
     }
     
-    if(negative){
-        *year *= -1;
-    }
+
     
     size_t digitsInYear= digitsInNumber(*year);
+
+    if(negative){
+        *year *= -1;
+        digitsInYear++;
+    }
 
     *lineLength -= digitsInYear;
     if(*lineLength != 0)  *lineLength -= 1;
 
-    *line = &(*line)[digitsInYear + 1];
+    if(negative){
+        *line = &(*line)[(digitsInYear-1) + 1];
+    } else {
+        *line = &(*line)[digitsInYear + 1];
+    }
 
     return true;
 }
@@ -111,7 +116,7 @@ void getParametersAndAddRoute(char* line, size_t lineLength, Map* map, int lineN
 
 
     unsigned id;
-    if(!readPositiveNumber(&line, &lineLength, &id, lineNo) || (lineLength == 0)){
+    if(!readPositiveNumber(&line, &lineLength, &id, lineNo) || !correctId(id) || (lineLength == 0)){
         handleError(lineNo);
         return;
     }
@@ -132,14 +137,14 @@ void getParametersAndAddRoute(char* line, size_t lineLength, Map* map, int lineN
     while(lineLength > 0){
 
         unsigned roadLength;
-        if(!readPositiveNumber(&line, &lineLength, &roadLength, lineNo) ||  lineLength == 0){
+        if(!readPositiveNumber(&line, &lineLength, &roadLength, lineNo) || roadLength == 0 || lineLength == 0){
             handleError(lineNo);
             deleteRouteParam(routeParam);
             return;
         }
 
         int year;
-        if(!readNumber(&line, &lineLength, &year, lineNo) ||  lineLength == 0){
+        if(!readNumber(&line, &lineLength, &year, lineNo) || year == 0 || lineLength == 0){
             handleError(lineNo);
             deleteRouteParam(routeParam);
             return;
@@ -153,8 +158,14 @@ void getParametersAndAddRoute(char* line, size_t lineLength, Map* map, int lineN
         char* city;
         readCity(&line, &lineLength, &city);
 
+        if(cityAlreadyInRouteParam(routeParam, city)){
+            handleError(lineNo);
+            deleteRouteParam(routeParam);
+            return;
+        }
 
-        if(!addCityToRouteParam(routeParam, city)){
+
+        if( !addCityToRouteParam(routeParam, city)){
             deleteRouteParam(routeParam);
             exit(0);
         }
@@ -190,13 +201,13 @@ void getParametersAndAddRoad(char* line, size_t lineLength, Map* map, int lineNo
     }
 
     unsigned roadLength;
-    if(!readPositiveNumber(&line, &lineLength, &roadLength, lineNo) ||  lineLength == 0){
+    if(!readPositiveNumber(&line, &lineLength, &roadLength, lineNo) || roadLength == 0 ||  lineLength == 0){
         handleError(lineNo);
         return;
     }
 
     int year;
-    if(!readNumber(&line, &lineLength, &year, lineNo) ||  lineLength > 0){
+    if(!readNumber(&line, &lineLength, &year, lineNo) || year == 0 || lineLength > 0){
         handleError(lineNo);
         return;
     }
@@ -226,7 +237,7 @@ void getParametersAndRepairRoad(char* line, size_t lineLength, Map* map, int lin
     }
 
     int repairYear;
-    if(!readNumber(&line, &lineLength, &repairYear, lineNo) ||  lineLength > 0){
+    if(!readNumber(&line, &lineLength, &repairYear, lineNo) || repairYear == 0 || lineLength > 0){
         handleError(lineNo);
         return;
     }
@@ -243,25 +254,18 @@ void getParametersAndGetRouteDescription(char* line, size_t lineLength, Map* map
     }
 
     unsigned id;
-    if(!readPositiveNumber(&line, &lineLength, &id, lineNo) || lineLength > 0){
+    if(!readPositiveNumber(&line, &lineLength, &id, lineNo) || !correctId(id) || lineLength > 0){
         handleError(lineNo);
         return;
     }
 
-    char* description = NULL;
-
-    if(correctId(id)) {
-        description = (char*)getRouteDescription(map, id);
-    }
-
-    if(strcmp(description, "") != 0){
-        printf("%s\n", description);
-    } else {
-        handleError(lineNo);
-    }
+    char* description = (char*)getRouteDescription(map, id);
 
     if(description != NULL){
+        printf("%s\n", description);
         free(description);
+    } else {
+        handleError(lineNo);
     }
 }
 

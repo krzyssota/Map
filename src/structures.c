@@ -3,6 +3,7 @@
 #include "additionalFunctions.h"
 #include "map.h"
 #include <stdlib.h>
+#include <string.h>
 
 RoadList* newRoadList(){
     RoadList* newRoadList = malloc(sizeof(RoadList));
@@ -103,6 +104,16 @@ RouteParam* newRouteParam(unsigned id){
     return routeParam;
 
 }
+
+bool cityAlreadyInRouteParam(RouteParam* routeParam, char* cityName) {
+    for(int i = 0; i < routeParam->cFilled; i++){
+        if(strcmp(routeParam->cities[i], cityName) == 0){
+            return true;
+        }
+    }
+    return false;
+}
+
 bool addCityToRouteParam(RouteParam* routeParam, char* cityName) {
 
     if(routeParam->cFilled == routeParam->cSize){

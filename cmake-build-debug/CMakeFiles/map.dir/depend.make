@@ -23,9 +23,11 @@ CMakeFiles/map.dir/src/dijkstra.c.o: ../src/routeRelated.h
 CMakeFiles/map.dir/src/dijkstra.c.o: ../src/structures.h
 
 CMakeFiles/map.dir/src/input.c.o: ../src/additionalFunctions.h
+CMakeFiles/map.dir/src/input.c.o: ../src/deleteStructure.h
 CMakeFiles/map.dir/src/input.c.o: ../src/input.c
 CMakeFiles/map.dir/src/input.c.o: ../src/input.h
 CMakeFiles/map.dir/src/input.c.o: ../src/map.h
+CMakeFiles/map.dir/src/input.c.o: ../src/routeRelated.h
 CMakeFiles/map.dir/src/input.c.o: ../src/structures.h
 
 CMakeFiles/map.dir/src/map.c.o: ../src/additionalFunctions.h
@@ -47,6 +49,7 @@ CMakeFiles/map.dir/src/roadsRelated.c.o: ../src/roadsRelated.c
 CMakeFiles/map.dir/src/roadsRelated.c.o: ../src/roadsRelated.h
 CMakeFiles/map.dir/src/roadsRelated.c.o: ../src/structures.h
 
+CMakeFiles/map.dir/src/routeRelated.c.o: ../src/additionalFunctions.h
 CMakeFiles/map.dir/src/routeRelated.c.o: ../src/dijkstra.h
 CMakeFiles/map.dir/src/routeRelated.c.o: ../src/map.h
 CMakeFiles/map.dir/src/routeRelated.c.o: ../src/roadsRelated.h
