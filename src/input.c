@@ -1,9 +1,12 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include "input.h"
 #include "map.h"
 #include <string.h>
+#include <values.h>
+#include <errno.h>
 #include "additionalFunctions.h"
 #include "routeRelated.h"
 #include "deleteStructure.h"
@@ -56,8 +59,9 @@ bool readPositiveNumber(char **line, size_t *lineLength, unsigned *number, int l
 
     char* end = NULL;
 
+    errno = 0;
     *number = (int)strtol(*line, &end, 10); // strtol reads only positive numbers
-    if(*end != 0){
+    if(*end != 0 || errno != 0){
         return false;
     }
 
@@ -69,38 +73,46 @@ bool readPositiveNumber(char **line, size_t *lineLength, unsigned *number, int l
     return true;
 }
 
-bool readNumber(char **line, size_t *lineLength, int *year, int lineNo){
+bool readYear(char **line, size_t *lineLength, int *year, int lineNo){
 
     char* end = NULL;
     
     bool negative = false;
     if(**line == '-'){
         negative = true;
-        (*line)++;
     }
 
-    *year = (int)strtol(*line, &end, 10);
-    if(*end != 0){
+    errno = 0;
+    int64_t number = (int)strtol(*line, &end, 10);
+
+    if(*end != 0) {
         return false;
     }
-    
+    if(errno == ERANGE && (number == LONG_MIN || number == LONG_MAX)){
+        return false;
+    }
+    if(number == 0 || number <  INT_MIN || number > INT_MAX || (negative && number > 0) || (!negative && number < 0)){
+        return false;
+    }
 
-    
-    size_t digitsInYear= digitsInNumber(*year);
+    *year = number;
+
+    size_t digitsInYear;
+    if(negative) {
+        digitsInYear = digitsInNumber(*year * (-1));
+    } else {
+        digitsInYear= digitsInNumber(*year);
+    }
 
     if(negative){
-        *year *= -1;
         digitsInYear++;
     }
 
     *lineLength -= digitsInYear;
     if(*lineLength != 0)  *lineLength -= 1;
 
-    if(negative){
-        *line = &(*line)[(digitsInYear-1) + 1];
-    } else {
-        *line = &(*line)[digitsInYear + 1];
-    }
+
+    *line = &(*line)[digitsInYear + 1];
 
     return true;
 }
@@ -144,7 +156,7 @@ void getParametersAndAddRoute(char* line, size_t lineLength, Map* map, int lineN
         }
 
         int year;
-        if(!readNumber(&line, &lineLength, &year, lineNo) || year == 0 || lineLength == 0){
+        if(!readYear(&line, &lineLength, &year, lineNo) || year == 0 || lineLength == 0){
             handleError(lineNo);
             deleteRouteParam(routeParam);
             return;
@@ -207,7 +219,7 @@ void getParametersAndAddRoad(char* line, size_t lineLength, Map* map, int lineNo
     }
 
     int year;
-    if(!readNumber(&line, &lineLength, &year, lineNo) || year == 0 || lineLength > 0){
+    if(!readYear(&line, &lineLength, &year, lineNo) || year == 0 || lineLength > 0){
         handleError(lineNo);
         return;
     }
@@ -237,7 +249,7 @@ void getParametersAndRepairRoad(char* line, size_t lineLength, Map* map, int lin
     }
 
     int repairYear;
-    if(!readNumber(&line, &lineLength, &repairYear, lineNo) || repairYear == 0 || lineLength > 0){
+    if(!readYear(&line, &lineLength, &repairYear, lineNo) || repairYear == 0 || lineLength > 0){
         handleError(lineNo);
         return;
     }
@@ -324,10 +336,12 @@ bool segmentLine(char *line, size_t lineLength){
     if(line[lineLength - 1] == ';'){
         return false;
     }
+
     int i = 0;
     int ch = line[i];
+    char* tmp = line;
 
-    while (ch != '\n' && ch != EOF && lineLength > 0){
+    while (ch != '\n' && lineLength > 0){
 
         if(ch == ';'){
             line[i] = 0;
@@ -336,6 +350,7 @@ bool segmentLine(char *line, size_t lineLength){
         i++;
         lineLength--;
         ch = line[i];
+        tmp = line+i;
     }
     if(ch == '\n'){
         line[i] = 0;

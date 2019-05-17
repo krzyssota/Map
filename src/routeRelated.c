@@ -260,7 +260,36 @@ bool newRouteFromRouteParam(Map* map, RouteParam* routeParam) {
 
         city2 = routeParam->cities[i];
 
-        addRoad(map, city1, city2, routeParam->lengths[i-1], routeParam->years[i-1]);
+        Road* road = findRoad(findCityByName(map->cityList, city1), findCityByName(map->cityList, city2));
+
+        if(road != NULL){
+
+            if(road->length != routeParam->lengths[i-1] || road->year > routeParam->years[i-1]) {
+                return false;
+            }
+
+        }
+
+        city1 = city2;
+        i++;
+    }
+
+    i = 1;
+    while(i < routeParam->cFilled){
+
+        city2 = routeParam->cities[i];
+
+        Road* road = findRoad(findCityByName(map->cityList, city1), findCityByName(map->cityList, city2));
+
+        if(road != NULL){
+
+            if(!repairRoad(map, city1, city2, routeParam->years[i-1])){
+                return false;
+            }
+
+        } else if(!addRoad(map, city1, city2, routeParam->lengths[i-1], routeParam->years[i-1])){
+            return false;
+        }
 
         if(i == 1) {
             if(!addCityToRoute(findCityByName(map->cityList, city1), newRoute)){
