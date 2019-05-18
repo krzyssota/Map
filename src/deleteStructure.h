@@ -38,14 +38,17 @@ void deleteRoute(Route* route);
  */
 void deleteRoadAndTwoRoadLists(Road *road);
 
+/**@brief Usuwa pomocniczą strukturę routeParam z pamięci.
+ * @param routeParam - wskaźnik na strukturę routeParam
+ */
+void deleteRouteParam(RouteParam* routeParam);
+
 /**@brief Zwalnia pamięc zajmowaną przez obecnie przetwarzany wiersz wejścia, jeśli jest różna od NULL.
  * @param line - wskaźnik na char, od którego zaczyna się wiersz
  */
 void deleteLine(char* line);
-/**@brief Usuwa pomocniczą strukturę z pamięci.
- * @param routeParam - wskaźnik na @struct RouteParam
- */
-void deleteRouteParam(RouteParam* routeParam);
+
+
 
 
 

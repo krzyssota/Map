@@ -141,7 +141,7 @@ QueueElement* findQueueElement(Queue* queue, City* city){ ///<
 }
 /**@brief Zdejmuje konkretny element z kolejki priorytetowej.
  * @param[in, out] queue - wskaźnik na wskaźnik na kolejkę priorytetową
- * @paramp[in] element - wskaźnik na element kolejki
+ * @param[in] element - wskaźnik na element kolejki
  * @return wskaźnik na usunięty element.
  */
 QueueElement* popElement(Queue **queue, QueueElement* element){

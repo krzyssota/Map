@@ -1,3 +1,9 @@
+/**
+ * @file
+ * Moduł zawiera struktury i udostępnia funkcję do ich tworzenia i przetwarzania.
+ * @author Krzysztof Sota
+ * @date 18.05.2019
+ * */
 #ifndef DROGI_STRUCTURES_H
 #define DROGI_STRUCTURES_H
 
@@ -5,63 +11,71 @@
 #include "map.h"
 #include <stdint.h>
 
+/**
+ * Infinity in Dijkstra algorithm.
+ */
 #define INF UINT32_MAX
 
-typedef struct City City;
-typedef struct Road Road;
-typedef struct CityList CityList;
-typedef struct RouteList RouteList;
-typedef struct RoadList RoadList;
-typedef struct Route Route;
-
-
+/**
+ * Struktura przechowująca miasta przez, które przechodzi droga krajowa o podanym numerze id.
+ */
 typedef struct Route{
 
-    CityList* cityList; ///< wskaźnik na listę miast.
+    struct CityList* cityList; ///< wskaźnik na listę miast.
     unsigned routeId; ///< id drogi krajowej.
 
 } Route;
-
+/**
+ * Lista dwukierunkowa przechowująca wskaźniki na drogi.
+ */
 typedef struct RoadList{
 
-    RoadList* prev; ///< wskaźnik na poprzedni element list dróg.
-    RoadList* next; ///< wskaźnik na następny element listy dróg.
-    Road* road; ///< wskaźnik na drogę.
+    struct RoadList* prev; ///< wskaźnik na poprzedni element list dróg.
+    struct RoadList* next; ///< wskaźnik na następny element listy dróg.
+    struct Road* road; ///< wskaźnik na drogę.
 
 } RoadList;
+/**
+ * Struktura określająca parametry drogi, jakie miasta łączy i jakich dróg krajowych jest częścią.
+ */
+typedef struct Road{
 
-struct Road{
-
-    City* cityA; ///< wskaźnik na miasto do którego prowadzi.
-    City* cityB; ///< wskaźnik na drugie miasto do którego prowadzi.
+    struct City* cityA; ///< wskaźnik na miasto do którego prowadzi.
+    struct City* cityB; ///< wskaźnik na drugie miasto do którego prowadzi.
 
     unsigned length; ///< długość drogi.
     int year; ///< rok budowy/remontu drogi.
 
-    Route* routesBelonging[1000]; ///< tablica wskaźników na drogi krajowe, w których zawarta jest droga.
-};
-
+    struct Route* routesBelonging[1000]; ///< tablica wskaźników na drogi krajowe, w których zawarta jest droga.
+} Road;
+/**
+ * Lista dwukierunkowa przechowująca wskaźniki na miasta.
+ */
 typedef struct CityList{
 
     struct CityList* next;  ///< wskaźnik na następny element listy miast.
     struct CityList* prev;  ///< wskaźnik na poprzedni element listy miast.
-    City* city; ///< wskaźnik na miasto
+    struct City* city; ///< wskaźnik na miasto
 
 } CityList;
-
-struct City{
+/**
+ * Struktura przetrzymuję nazwę miasta i listę dróg, które z niego wychodzą.
+ */
+typedef struct City{
 
     char* name;  ///< wskaźnik na nazwę miasta.
-    RoadList* roadList;  ///< wskaźnik na listę dróg.
+    struct RoadList* roadList;  ///< wskaźnik na listę dróg.
 
-};
-
+} City;
+/**
+ * Element kolejki priorytetowej. Zawiera priorytet i informacje potrzebne do odtworzenia drogi po wykorzystaniu algorytmu Dijkstry.
+ */
 typedef struct QueueElement{
 
-    City* city;  ///< wskaźnik na miasto.
+    struct City* city;  ///< wskaźnik na miasto.
     long int distance;  ///< obecna odległość od miasta źródłowego.
     struct QueueElement* predecessor;  ///< poprzednik na ścieżce z miasta źródłowego na miasta wskazywane przez element.
-    Road* oldestRoad;  ///< wskaźnik na najstarsza drogę na tej ścieżce.
+    struct Road* oldestRoad;  ///< wskaźnik na najstarsza drogę na tej ścieżce.
     struct QueueElement* next;  ///< wskaźnik na następny element kolejki priorytetowej.
     struct QueueElement* prev; ///< wskaźnik na poprzedni element kolejki priorytetowej.
     bool ambiguous; ///< flaga czy element jest został jednoznacznie wyznaczony - na dwóch różnych ścieżkach uzyskał taki sam priorytet.
@@ -72,32 +86,58 @@ typedef struct QueueElement{
  */
 typedef struct Queue{
 
-    QueueElement* head; ///< wskaźnik na element z najwyższym priorytetem.
-    City* destination; ///< wskaźnik na miasto źródłowe.
+    struct QueueElement* head; ///< wskaźnik na element z najwyższym priorytetem.
+    struct City* destination; ///< wskaźnik na miasto, do którego szukana będzie najkrótsza droga.
 
 } Queue;
 
+/**
+ * Struktura przechowująca listę nazw miast, które mają zostać zawarte w drodze krajowe,
+ * oraz długości i lata budowy/remontu dróg je łączących.
+ */
 typedef struct RouteParam{
 
-    unsigned id;
+    unsigned id; ///< id potencjalnej drogi krajowej.
 
-    char** cities;
-    int cFilled;
-    int cSize;
+    char** cities; ///< Podwójny wskaźnik na nazwy miast.
+    int cFilled; ///< Ile nazw znajduje się w strukturze.
+    int cSize; ///< Na ile nazw zaalokowano miejsce w pamięci.
 
-    unsigned* lengths;
-    int lFilled;
-    int lSize;
+    unsigned* lengths; ///< Wskaźnik na długości dróg.
+    int lFilled; ///< Ile liczb odpowiadających długości znajduje się w strukturze.
+    int lSize; ///< Na ile liczb odpowiadających długości zaalokowano miejsce w pamięci.
 
-    int* years;
-    int yFilled;
-    int ySize;
+    int* years; ///< Wskaźnik na lata budowy/remontów dróg.
+    int yFilled; ///< Ile liczb odpowiadających rokom budowy/remontu znajduje się w strukturze.
+    int ySize; ///< Na ile odpowiadających rokom budowy/remontu zaalokowano miejsce w pamięci.
 
 } RouteParam;
-
+/** @brief Tworzy nowy wzór drogi krajowej zwarty w routeParam o podanym id.
+ * @param[in] id - liczba całkowita od 1 do 999
+    @return Zwraca wskaźnik na nowy routeParam. NULL jeśli alokacją nie udała się.
+ */
 RouteParam* newRouteParam(unsigned id);
+
+/**@brief Dodaje nazwę miasta do routeParam.
+ * @param[in, out] routeParam - wskaźnik na strukturę routeParam
+ * @param[in] cityName - wskaźnik na nazwę miasta
+ * @return Wartość @p true jeśli udało się dodać miasto. @p false jeśli realokacją nie udała się.
+ */
 bool addCityToRouteParam(RouteParam* routeParam, char* cityName);
+
+/**@brief Dodaje parametry drogi do routeParam.
+ * @param[in, out] routeParam - wskaźnik na strukturę routeParam
+ * @param roadLength - długość drogi
+ * @param year - rok budowy drogi
+ * @return Wartość @p true jeśli udało się dodać parametry drogi. @p false jeśli realokacją nie udała się.
+ */
 bool addRoadToRouteParam(RouteParam* routeParam, unsigned roadLength, int year);
+
+/**@brief Sprawdza czy nazwa miasta podana w argumencie jest już zapisana w routeParam
+ * @param[in, out] routeParam - wskaźnik na strukturę routeParam
+ * @param[in] cityName - wskaźnik na nazwę miasta
+ * @return Wartość @p true występuje, @p false jeśli nie.
+ */
 bool cityAlreadyInRouteParam(RouteParam* routeParam, char* cityName);
 
 /** @brief Tworzy nowy element list dróg.
@@ -131,7 +171,7 @@ Queue* newQueue(City* destination);
  * @param[in] city - wskaźnik na miasto.
  * @param[in] distance - odległość od miasta źródłowego.
  * @param[in] predecessor - poprzednik na ścieżce z miasta źródłowego do miasta.
- * @param[in] road - wskaźnik na najstarszą drogę na powyższej ścieżce.
+ * @param[in] oldestRoad - wskaźnik na najstarszą drogę na powyższej ścieżce.
     @return Zwraca wskaźnik na nowy element kolejki. NULL jeśli alokacją nie udała się.
  */
 QueueElement* newQueueElement(City* city, long int distance, QueueElement* predecessor, Road* oldestRoad);

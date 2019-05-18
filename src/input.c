@@ -46,6 +46,7 @@ void readCity(char** line, ssize_t* lineLength, char** city){
  * @param[in, out] line - wskaźnik na wskaźnik na przetwarzany napis
  * @param[in, out] lineLength - wskaźnik na pozostała do przetworzenia długośc wiersza
  * @param[in, out] number - wskaźnik na liczbę całkowitą
+ * @return Wartość @p true jeśli operacja powiodła się, @p false w przeciwnym przypadku.
  */
 bool readPositiveNumber(char **line, ssize_t *lineLength, unsigned *number){
 
@@ -64,7 +65,13 @@ bool readPositiveNumber(char **line, ssize_t *lineLength, unsigned *number){
     *line = &(*line)[digits + 1];
     return true;
 }
-
+/**@brief Zczytuje liczbę z podanego napisu.
+ * @param[in, out] line - wskaźnik na wskaźnik na przetwarzany napis
+ * @param[in, out] lineLength - wskaźnik na pozostała do przetworzenia długośc wiersza
+ * @param[in, out] year - wskaźnik na liczbę całkowitą
+ * @return Wartość @p true jeśli operacja powiodła się i wartość pod adresem wskazywanym przez year ma dopuszczalną wartość,
+ *          @p false w przeciwnym przypadku.
+ */
 bool readYear(char **line, ssize_t *lineLength, int *year){
 
     char* end = NULL;
@@ -115,7 +122,12 @@ bool readYear(char **line, ssize_t *lineLength, int *year){
 }
 
 
-
+/**@brief Z napisu zczytuje parametry potrzebne do stworzenia drogi krajowej i, jeśli to możliwe, robi to.
+ * @param[in, out] line - wskaźnik na przetwarzany napis
+ * @param[in, out] lineLength - pozostała do przetworzenia długośc wiersza
+ * @param[in,out] map    – wskaźnik na strukturę przechowującą mapę dróg;
+ * @param[in] lineNo - numer przetwarzanego wiersza
+ */
 void getParametersAndAddRoute(char* line, ssize_t lineLength, Map* map, int lineNo){
 
     if(lineLength == 0){
@@ -189,6 +201,12 @@ void getParametersAndAddRoute(char* line, ssize_t lineLength, Map* map, int line
     deleteRouteParam(routeParam);
 
 }
+/**@brief Z napisu zczytuje parametry potrzebne do stworzenia drogi i, jeśli to możliwe, robi to.
+ * @param[in, out] line - wskaźnik na przetwarzany napis
+ * @param[in, out] lineLength - pozostała do przetworzenia długośc wiersza
+ * @param[in,out] map    – wskaźnik na strukturę przechowującą mapę dróg;
+ * @param[in] lineNo - numer przetwarzanego wiersza
+ */
 void getParametersAndAddRoad(char* line, ssize_t lineLength, Map* map, int lineNo){
 
     if(lineLength == 0){
@@ -230,6 +248,12 @@ void getParametersAndAddRoad(char* line, ssize_t lineLength, Map* map, int lineN
         handleError(lineNo);
     }
 }
+/**@brief Z napisu zczytuje parametry potrzebne do remontu drogi i, jeśli to możliwe, robi to.
+ * @param[in, out] line - wskaźnik na przetwarzany napis
+ * @param[in, out] lineLength - pozostała do przetworzenia długośc wiersza
+ * @param[in,out] map    – wskaźnik na strukturę przechowującą mapę dróg;
+ * @param[in] lineNo - numer przetwarzanego wiersza
+ */
 void getParametersAndRepairRoad(char* line, ssize_t lineLength, Map* map, int lineNo){
 
     if(lineLength == 0){
@@ -260,6 +284,12 @@ void getParametersAndRepairRoad(char* line, ssize_t lineLength, Map* map, int li
         handleError(lineNo);
     }
 }
+/**@brief Wyświetla opis drogi krajowej o podanym id.
+ * @param[in, out] line - wskaźnik na przetwarzany napis
+ * @param[in, out] lineLength - pozostała do przetworzenia długośc wiersza
+ * @param[in,out] map    – wskaźnik na strukturę przechowującą mapę dróg;
+ * @param[in] lineNo - numer przetwarzanego wiersza
+ */
 void getParametersAndGetRouteDescription(char* line, ssize_t lineLength, Map* map, int lineNo){
 
     if(lineLength == 0){
@@ -282,8 +312,14 @@ void getParametersAndGetRouteDescription(char* line, ssize_t lineLength, Map* ma
         handleError(lineNo);
     }
 }
-
-void executeCommand(Command command, char* line, ssize_t lineLength, Map* map, int lineNo){
+/**@brief Wykonuje zadaną komendę.
+ * @param[in] command - typ wyliczeniowy komendy
+* @param[in, out] line - wskaźnik na przetwarzany napis
+ * @param[in, out] lineLength - wskaźnik na pozostała do przetworzenia długośc wiersza
+ * @param[in,out] map    – wskaźnik na strukturę przechowującą mapę dróg;
+ * @param[in] lineNo - numer przetwarzanego wiersza
+ */
+ void executeCommand(Command command, char* line, ssize_t lineLength, Map* map, int lineNo){
     switch(command){
 
         case ADD_ROUTE:
@@ -313,7 +349,10 @@ void executeCommand(Command command, char* line, ssize_t lineLength, Map* map, i
             exit(1);
     }
 }
-
+/**@brief Rozpoznaje komendę z napisu.
+* @param[in] line - wskaźnik na przetwarzany napis
+ * @return odpowiedni typ wyliczeniowy.
+*/
 Command getCommand(char* line){
 
     if(line[0] == '#' || line[0] == '\n'){
@@ -333,6 +372,10 @@ Command getCommand(char* line){
     return ERROR;
 
 }
+/**@brief W napisie podmienia ';' i '\n' na '\0'.
+* @param[in] line - wskaźnik na przetwarzany napis
+ * @param[in] lineLength - wskaźnik na pozostała do przetworzenia długośc wiersza
+ * */
 bool segmentLine(char *line, ssize_t lineLength){
 
     if(line[lineLength - 1] == ';'){

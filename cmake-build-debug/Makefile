@@ -139,33 +139,6 @@ doc/fast:
 	$(MAKE) -f CMakeFiles/doc.dir/build.make CMakeFiles/doc.dir/build
 .PHONY : doc/fast
 
-src/additionalFunctions.o: src/additionalFunctions.c.o
-
-.PHONY : src/additionalFunctions.o
-
-# target to build an object file
-src/additionalFunctions.c.o:
-	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/additionalFunctions.c.o
-.PHONY : src/additionalFunctions.c.o
-
-src/additionalFunctions.i: src/additionalFunctions.c.i
-
-.PHONY : src/additionalFunctions.i
-
-# target to preprocess a source file
-src/additionalFunctions.c.i:
-	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/additionalFunctions.c.i
-.PHONY : src/additionalFunctions.c.i
-
-src/additionalFunctions.s: src/additionalFunctions.c.s
-
-.PHONY : src/additionalFunctions.s
-
-# target to generate assembly for a file
-src/additionalFunctions.c.s:
-	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/additionalFunctions.c.s
-.PHONY : src/additionalFunctions.c.s
-
 src/deleteStructure.o: src/deleteStructure.c.o
 
 .PHONY : src/deleteStructure.o
@@ -355,6 +328,33 @@ src/routeRelated.c.s:
 	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/routeRelated.c.s
 .PHONY : src/routeRelated.c.s
 
+src/stringsHandling.o: src/stringsHandling.c.o
+
+.PHONY : src/stringsHandling.o
+
+# target to build an object file
+src/stringsHandling.c.o:
+	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/stringsHandling.c.o
+.PHONY : src/stringsHandling.c.o
+
+src/stringsHandling.i: src/stringsHandling.c.i
+
+.PHONY : src/stringsHandling.i
+
+# target to preprocess a source file
+src/stringsHandling.c.i:
+	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/stringsHandling.c.i
+.PHONY : src/stringsHandling.c.i
+
+src/stringsHandling.s: src/stringsHandling.c.s
+
+.PHONY : src/stringsHandling.s
+
+# target to generate assembly for a file
+src/stringsHandling.c.s:
+	$(MAKE) -f CMakeFiles/map.dir/build.make CMakeFiles/map.dir/src/stringsHandling.c.s
+.PHONY : src/stringsHandling.c.s
+
 src/structures.o: src/structures.c.o
 
 .PHONY : src/structures.o
@@ -392,9 +392,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... map"
 	@echo "... doc"
-	@echo "... src/additionalFunctions.o"
-	@echo "... src/additionalFunctions.i"
-	@echo "... src/additionalFunctions.s"
 	@echo "... src/deleteStructure.o"
 	@echo "... src/deleteStructure.i"
 	@echo "... src/deleteStructure.s"
@@ -416,6 +413,9 @@ help:
 	@echo "... src/routeRelated.o"
 	@echo "... src/routeRelated.i"
 	@echo "... src/routeRelated.s"
+	@echo "... src/stringsHandling.o"
+	@echo "... src/stringsHandling.i"
+	@echo "... src/stringsHandling.s"
 	@echo "... src/structures.o"
 	@echo "... src/structures.i"
 	@echo "... src/structures.s"

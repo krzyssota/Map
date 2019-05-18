@@ -12,21 +12,14 @@
 #include <stdbool.h>
 #include "structures.h"
 
-typedef struct Route Route;
-typedef struct CityList CityList;
-
 /**
  * Struktura przechowująca mapę dróg krajowych.
- * @param cityList - wskażnik na listę przechowująco wskaźniki na miasta
- * @param routes[] - tablica wskaźników na drogi krajowe
- * @param inputLine - wskaźnik na obecnie przetwarzany wiersz wejścia.
- *                    Potrzebny do poprawnej dealokacji pamięci.
  */
 typedef struct Map{
 
-    CityList* cityList;
-    Route* routes[1000];
-    char* inputLine;
+    struct CityList* cityList; ///< Wskażnik na listę przechowująco wskaźniki na miasta.
+    struct Route* routes[1000]; ///< Tablica wskaźników na drogi krajowe.
+    char* inputLine; ///< Wskaźnik na obecnie przetwarzany wiersz wejścia. Potrzebny do poprawnej dealokacji pamięci.
 
 } Map;
 

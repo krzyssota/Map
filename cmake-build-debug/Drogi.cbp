@@ -88,12 +88,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.c">
-			<Option target="map"/>
-		</Unit>
-		<Unit filename="/home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.h">
-			<Option target="map"/>
-		</Unit>
 		<Unit filename="/home/krzubuntu/CLionProjects/IPP-ks406362/src/deleteStructure.c">
 			<Option target="map"/>
 		</Unit>
@@ -131,6 +125,12 @@
 			<Option target="map"/>
 		</Unit>
 		<Unit filename="/home/krzubuntu/CLionProjects/IPP-ks406362/src/routeRelated.h">
+			<Option target="map"/>
+		</Unit>
+		<Unit filename="/home/krzubuntu/CLionProjects/IPP-ks406362/src/stringsHandling.c">
+			<Option target="map"/>
+		</Unit>
+		<Unit filename="/home/krzubuntu/CLionProjects/IPP-ks406362/src/stringsHandling.h">
 			<Option target="map"/>
 		</Unit>
 		<Unit filename="/home/krzubuntu/CLionProjects/IPP-ks406362/src/structures.c">

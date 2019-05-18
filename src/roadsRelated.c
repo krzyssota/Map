@@ -1,3 +1,9 @@
+/**
+ * @file
+ * Moduł udostępnia funcję wykorzystywane przy operacjach na drogach.
+ * @author Krzysztof Sota
+ * @date 18.05.2019
+ * */
 #include "roadsRelated.h"
 #include "map.h"
 #include "map.h"
@@ -28,7 +34,11 @@ City* findCityByName(CityList *cityList, const char *cityName) {
     return cityList->city;
 }
 
-
+/**@brief Sprawdza czy dwie drogi łączą te same miasta.
+ * @param roadA  - wskaźnik na pierwszą drogę
+ * @param roadB - wskaźnik na drugą drogę
+ * @return Wartość @p true jeśli łączą te same miasta, @p false w przeciwnym wypadku.
+ */
 bool sameRoad(Road* roadA, Road* roadB){
     if((roadA->cityA == roadB->cityA && roadA->cityB == roadB->cityB)
         || (roadA->cityA == roadB->cityB && roadA->cityB == roadB->cityA)){
@@ -69,14 +79,6 @@ bool addRoadToCity(City *city, RoadList* roadList, Road *newRoad){
     }
 }
 
-
-
-/** Dodaje miasto do struktury mapy.
- * @param[in] map - wskaznik na mape.
- * @param[in] city - wskaznik na miasto.
- * @return Wartość @p true, jeśli miasto zostalo dodane.
- * Wartość @p false w przypadku nieudanej alokacji pamieci.
- */
 bool addCity(Map* map, City* city){
 
     CityList* tmp = map->cityList;

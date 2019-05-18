@@ -93,17 +93,17 @@ CMakeFiles/map.dir/src/roadsRelated.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/map.dir/src/roadsRelated.c.s"
 	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/krzubuntu/CLionProjects/IPP-ks406362/src/roadsRelated.c -o CMakeFiles/map.dir/src/roadsRelated.c.s
 
-CMakeFiles/map.dir/src/additionalFunctions.c.o: CMakeFiles/map.dir/flags.make
-CMakeFiles/map.dir/src/additionalFunctions.c.o: ../src/additionalFunctions.c
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/map.dir/src/additionalFunctions.c.o   -c /home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.c
+CMakeFiles/map.dir/src/stringsHandling.c.o: CMakeFiles/map.dir/flags.make
+CMakeFiles/map.dir/src/stringsHandling.c.o: ../src/stringsHandling.c
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/map.dir/src/stringsHandling.c.o   -c /home/krzubuntu/CLionProjects/IPP-ks406362/src/stringsHandling.c
 
-CMakeFiles/map.dir/src/additionalFunctions.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/map.dir/src/additionalFunctions.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.c > CMakeFiles/map.dir/src/additionalFunctions.c.i
+CMakeFiles/map.dir/src/stringsHandling.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/map.dir/src/stringsHandling.c.i"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/krzubuntu/CLionProjects/IPP-ks406362/src/stringsHandling.c > CMakeFiles/map.dir/src/stringsHandling.c.i
 
-CMakeFiles/map.dir/src/additionalFunctions.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/map.dir/src/additionalFunctions.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/krzubuntu/CLionProjects/IPP-ks406362/src/additionalFunctions.c -o CMakeFiles/map.dir/src/additionalFunctions.c.s
+CMakeFiles/map.dir/src/stringsHandling.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/map.dir/src/stringsHandling.c.s"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/krzubuntu/CLionProjects/IPP-ks406362/src/stringsHandling.c -o CMakeFiles/map.dir/src/stringsHandling.c.s
 
 CMakeFiles/map.dir/src/deleteStructure.c.o: CMakeFiles/map.dir/flags.make
 CMakeFiles/map.dir/src/deleteStructure.c.o: ../src/deleteStructure.c
@@ -170,7 +170,7 @@ map_OBJECTS = \
 "CMakeFiles/map.dir/src/map.c.o" \
 "CMakeFiles/map.dir/src/map_main.c.o" \
 "CMakeFiles/map.dir/src/roadsRelated.c.o" \
-"CMakeFiles/map.dir/src/additionalFunctions.c.o" \
+"CMakeFiles/map.dir/src/stringsHandling.c.o" \
 "CMakeFiles/map.dir/src/deleteStructure.c.o" \
 "CMakeFiles/map.dir/src/structures.c.o" \
 "CMakeFiles/map.dir/src/routeRelated.c.o" \
@@ -183,7 +183,7 @@ map_EXTERNAL_OBJECTS =
 map: CMakeFiles/map.dir/src/map.c.o
 map: CMakeFiles/map.dir/src/map_main.c.o
 map: CMakeFiles/map.dir/src/roadsRelated.c.o
-map: CMakeFiles/map.dir/src/additionalFunctions.c.o
+map: CMakeFiles/map.dir/src/stringsHandling.c.o
 map: CMakeFiles/map.dir/src/deleteStructure.c.o
 map: CMakeFiles/map.dir/src/structures.c.o
 map: CMakeFiles/map.dir/src/routeRelated.c.o

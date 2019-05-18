@@ -240,7 +240,7 @@ bool newRouteFromRouteParam(Map* map, RouteParam* routeParam) {
         return false;
     }
 
-    if(map->routes[routeParam->id] != NULL){ ///< Droga krajowa o podanym Id juz istnieje.
+    if(map->routes[routeParam->id] != NULL){ ///< Droga krajowa o podanym id juz istnieje.
         return false;
     }
 
@@ -258,7 +258,7 @@ bool newRouteFromRouteParam(Map* map, RouteParam* routeParam) {
     char* city2;
 
     int i = 1;
-    while(i < routeParam->cFilled){
+    while(i < routeParam->cFilled){ ///< Sprawdza czy można dodać drogi o parametrach podanych w routeParam.
 
         city2 = routeParam->cities[i];
 
@@ -278,7 +278,7 @@ bool newRouteFromRouteParam(Map* map, RouteParam* routeParam) {
     }
 
     i = 1;
-    while(i < routeParam->cFilled){
+    while(i < routeParam->cFilled){ ///< Dodaje drogi i miasta o parametrach podanych w routeParam.
 
         city2 = routeParam->cities[i];
 
