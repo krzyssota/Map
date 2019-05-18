@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include "additionalFunctions.h"
+#include "stringsHandling.h"
 #include "map.h"
 #include "roadsRelated.h"
 #include <math.h>

@@ -1,6 +1,6 @@
 #include <stddef.h>
 #include "structures.h"
-#include "additionalFunctions.h"
+#include "stringsHandling.h"
 #include "map.h"
 #include <stdlib.h>
 #include <string.h>

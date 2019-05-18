@@ -1,3 +1,10 @@
+/**
+ * @file
+ * Moduł zawiera funkcję pomocnicze dla algorytmu Dijkstry i funkcję obsługujące kolejkę priorytetową.
+ * @author Krzysztof Sota
+ * @date 18.05.2019
+ * */
+
 #include <stddef.h>
 #include <assert.h>
 #include <values.h>
@@ -8,6 +15,10 @@
 #include "routeRelated.h"
 #include "deleteStructure.h"
 
+/**@brief Dodaje element na kolejkę priorytetową.
+ * @param[in, out] queue - wskaźnik na wskaźnik na kolejkę priorytetową
+ * @param element  - element kolejki
+ */
 void push(Queue** queue, QueueElement* element){
 
     if((*queue)->head == NULL){
@@ -66,7 +77,10 @@ void push(Queue** queue, QueueElement* element){
 
     }
 }
-
+/**@brief Zdejmuje element z najniższym priorytetem z kolejki.
+ * @param[in, out] queue - wskaźnik na wskaźnik na kolejkę priorytetową
+ * @return wskaźnik na element z najniższym priorytetem.
+ */
 QueueElement* pop(Queue** queue){
 
     QueueElement* result = (*queue)->head;
@@ -111,8 +125,12 @@ Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* c
 }
 
 
-
-QueueElement* findQueueElement(Queue* queue, City* city){ ///< Find element pointing to city in the queue.
+/**@brief Znajduję element kolejki wskazujący na miasto.
+ * @param[in, out] queue - wskaźnik na wskaźnik na kolejkę priorytetową
+ * @param[in] city - wskaźnik na miasto
+ * @return wskaźnik na element kolejki wskazujący na miasto, lub NULL jeśli element taki nie istnieje.
+ */
+QueueElement* findQueueElement(Queue* queue, City* city){ ///<
 
     QueueElement* tmp = queue->head;
     while(tmp != NULL && tmp->city != city){
@@ -121,8 +139,12 @@ QueueElement* findQueueElement(Queue* queue, City* city){ ///< Find element poin
 
     return tmp;
 }
-
-QueueElement* popElement(Queue **queue, QueueElement* element){ ///< Take element out of the queue.
+/**@brief Zdejmuje konkretny element z kolejki priorytetowej.
+ * @param[in, out] queue - wskaźnik na wskaźnik na kolejkę priorytetową
+ * @paramp[in] element - wskaźnik na element kolejki
+ * @return wskaźnik na usunięty element.
+ */
+QueueElement* popElement(Queue **queue, QueueElement* element){
 
     if(element == (*queue)->head){
         (*queue)->head = element->next;
@@ -137,9 +159,9 @@ QueueElement* popElement(Queue **queue, QueueElement* element){ ///< Take elemen
     return element;
 }
 
-/** @brief Sprawdza czy da sie zmniejszyc priorytet elementu.
- * @param[in] queue      – wskaźnik na kolejke.
-*  @param[in] alternative   –  element z alternatywnym priorytetem.
+/** @brief Sprawdza czy da sie zmniejszyc priorytet elementu. Jeśli tak to robi to.
+ * @param[in, out] queue - wskaźnik na wskaźnik na kolejkę priorytetową
+*  @param[in] alternative – element z alternatywnym priorytetem.
 */
 void updateElement(Queue **queue, QueueElement* alternative){
 
@@ -166,7 +188,7 @@ void updateElement(Queue **queue, QueueElement* alternative){
 }
 
 /** @brief Sprawdza czy da sie zmniejszyc priorytet sasiadom elementu.
- * @param[in] queue      – wskaźnik na kolejke.
+ * @param[in, out] queue - wskaźnik na wskaźnik na kolejkę priorytetową
  * * @param[in] route      – wskaźnik na droge krajowa.
  * * @param[in] element      – wskaźnik na element kolejki.
 *  @param[in] roadRemoved   –  droga usuwana w funkcji removeRoad. Dla innych wywolan wartosc NULL.

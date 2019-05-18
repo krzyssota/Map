@@ -2,7 +2,7 @@
 #include "map.h"
 #include "map.h"
 #include "structures.h"
-#include "additionalFunctions.h"
+#include "stringsHandling.h"
 #include <string.h>
 #include "stdlib.h"
 #include "stdbool.h"

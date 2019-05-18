@@ -28,8 +28,8 @@ set(SOURCE_FILES
         src/map_main.c
         src/roadsRelated.c
         src/roadsRelated.h
-        src/additionalFunctions.c
-        src/additionalFunctions.h
+        src/stringsHandling.c
+        src/stringsHandling.h
         src/deleteStructure.c
         src/deleteStructure.h
         src/structures.h

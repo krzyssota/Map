@@ -7,8 +7,6 @@ Uwaga: aktualna treść zadania znajduje się w [Moodle'u](https://moodle.mimuw.
 
 ### Opis programu
 
-Tegoroczne duże zadanie polega na zaimplementowaniu operacji na mapach drogowych.
-
-TODO
+Program pozwala wprowadzać miasta i drogi pomiędzy nimi, o określonych parametrach ze standardowego wejścia. Pozwala także wyliczać najkrótsze trasy pomiędzy miastami.
 
 */

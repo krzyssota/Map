@@ -1,5 +1,12 @@
-#ifndef DROGI_ADDITIONALFUNCTIONS_H
-#define DROGI_ADDITIONALFUNCTIONS_H
+/**
+ * @file
+ * Moduł zawiera funkcje przetwarzające napisy.
+ * @author Krzysztof Sota
+ * @date 18.05.2019
+ * */
+
+#ifndef DROGI_STRINGSHANDLING_H
+#define DROGI_STRINGSHANDLING_H
 
 #include <stdbool.h>
 #include "map.h"
@@ -30,10 +37,16 @@ int count(Route* route);
  * @return Wskaźnik na opis drogi krajowej.
  */
 char* getDescription(Route* route, int length);
-
+/** @brief Liczy liczbę cyfr w liczbie
+ * @param[in] number - nieujemna liczba całkowita
+ * @return liczbę cyfr w podanym argumencie.
+ */
 int digitsInNumber(unsigned number); ///< How many digits in the number.
 
+/** @brief Wyświeta informację o błedzie w konkretnej linijce wejścia na standardowy strumień błedów.
+ * @param lineNo - numer linijki
+ */
 void handleError(int lineNo);
 
 
-#endif //DROGI_ADDITIONALFUNCTIONS_H
+#endif //DROGI_STRINGSHANDLING_H

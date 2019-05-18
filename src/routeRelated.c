@@ -7,7 +7,8 @@
 #include "map.h"
 #include "dijkstra.h"
 #include "roadsRelated.h"
-#include "additionalFunctions.h"
+#include "stringsHandling.h"
+#include "deleteStructure.h"
 #include <string.h>
 
 Road* olderRoad(Road* roadA, Road* roadB){
@@ -251,6 +252,7 @@ bool newRouteFromRouteParam(Map* map, RouteParam* routeParam) {
 
     char* city1 = routeParam->cities[0];
     if(!correctName(city1)){
+        deleteRoute(newRoute);
         return false;
     }
     char* city2;
@@ -265,6 +267,7 @@ bool newRouteFromRouteParam(Map* map, RouteParam* routeParam) {
         if(road != NULL){
 
             if(road->length != routeParam->lengths[i-1] || road->year > routeParam->years[i-1]) {
+                deleteRoute(newRoute);
                 return false;
             }
 
@@ -284,19 +287,23 @@ bool newRouteFromRouteParam(Map* map, RouteParam* routeParam) {
         if(road != NULL){
 
             if(!repairRoad(map, city1, city2, routeParam->years[i-1])){
+                deleteRoute(newRoute);
                 return false;
             }
 
         } else if(!addRoad(map, city1, city2, routeParam->lengths[i-1], routeParam->years[i-1])){
+            deleteRoute(newRoute);
             return false;
         }
 
         if(i == 1) {
             if(!addCityToRoute(findCityByName(map->cityList, city1), newRoute)){
+                deleteRoute(newRoute);
                 return false;
             }
         }
         if(!addCityToRoute(findCityByName(map->cityList, city2), newRoute)){
+            deleteRoute(newRoute);
             return false;
         }
 

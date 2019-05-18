@@ -1,3 +1,9 @@
+/**
+ * @file
+ * Moduł zawiera funkcję realizującą algorytm Dijkstry szukania najktótszej ścieżki.
+ * @author Krzysztof Sota
+ * @date 18.05.2019
+ * */
 #ifndef DROGI_DIJKSTRA_H
 #define DROGI_DIJKSTRA_H
 

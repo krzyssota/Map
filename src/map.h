@@ -17,6 +17,10 @@ typedef struct CityList CityList;
 
 /**
  * Struktura przechowująca mapę dróg krajowych.
+ * @param cityList - wskażnik na listę przechowująco wskaźniki na miasta
+ * @param routes[] - tablica wskaźników na drogi krajowe
+ * @param inputLine - wskaźnik na obecnie przetwarzany wiersz wejścia.
+ *                    Potrzebny do poprawnej dealokacji pamięci.
  */
 typedef struct Map{
 
