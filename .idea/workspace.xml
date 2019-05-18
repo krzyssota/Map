@@ -12,12 +12,36 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bd1d48c-e182-4ef4-8396-4267b666b999" name="Default Changelist" comment="Wersja ostateczna.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/deleteStructure.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/deleteStructure.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routeRelated.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/routeRelated.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stringsHandling.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/stringsHandling.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/structures.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/structures.h" afterDir="false" />
+    <list default="true" id="1bd1d48c-e182-4ef4-8396-4267b666b999" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.14.2/CMakeCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.14.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.14.2/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdC/a.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/feature_tests.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/feature_tests.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/C.includecache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/DependInfo.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/build.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/cmake_clean.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/flags.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/link.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/map.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Drogi.cbp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,10 +59,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/input.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-365">
+            <state relative-caret-position="-1055">
               <caret line="130" column="29" selection-start-line="130" selection-start-column="24" selection-end-line="130" selection-end-column="29" />
             </state>
           </provider>
@@ -89,7 +113,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/map_main.c">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120">
@@ -154,8 +178,8 @@
       <find>–</find>
       <find>INF</find>
       <find>param</find>
-      <find>Route</find>
       <find>get</find>
+      <find>Route</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -308,7 +332,7 @@
       <workItem from="1558038546834" duration="6502000" />
       <workItem from="1558124239170" duration="3802000" />
       <workItem from="1558131736674" duration="4821000" />
-      <workItem from="1558173580588" duration="17915000" />
+      <workItem from="1558173580588" duration="19220000" />
     </task>
     <task id="LOCAL-00001" summary="testGit">
       <created>1556363444810</created>
@@ -506,22 +530,28 @@
       <option name="project" value="LOCAL" />
       <updated>1558194546432</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Wersja ostateczna.">
+      <created>1558198669635</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1558198669635</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="194062000" />
+    <option name="totallyTimeSpent" value="195367000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-2" width="1680" height="1052" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49187434" visible="true" weight="0.2876377" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49187434" weight="0.2876377" />
       <window_info id="Structure" order="1" sideWeight="0.50812566" side_tool="true" weight="0.28396574" />
       <window_info id="Favorites" order="2" sideWeight="0.50812566" side_tool="true" weight="0.28396574" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.056338027" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.11809318" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.12351029" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.48862407" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -566,7 +596,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="addRoad, repairRoad, deallocation done" />
     <MESSAGE value="dijkstra beggining" />
     <MESSAGE value="dijkstra maybe done" />
     <MESSAGE value="dijkstra almost done" />
@@ -591,7 +620,8 @@
     <MESSAGE value="zostaly komentarze" />
     <MESSAGE value="costam z valgrindem grzebie" />
     <MESSAGE value="Skończone" />
-    <option name="LAST_COMMIT_MESSAGE" value="Skończone" />
+    <MESSAGE value="Wersja ostateczna." />
+    <option name="LAST_COMMIT_MESSAGE" value="Wersja ostateczna." />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
@@ -766,20 +796,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/input.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-365">
-          <caret line="130" column="29" selection-start-line="130" selection-start-column="24" selection-end-line="130" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/input.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="5" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/stringsHandling.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
@@ -814,6 +830,20 @@
           <folding>
             <element signature="e#74#93#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/input.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/input.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1055">
+          <caret line="130" column="29" selection-start-line="130" selection-start-column="24" selection-end-line="130" selection-end-column="29" />
         </state>
       </provider>
     </entry>
