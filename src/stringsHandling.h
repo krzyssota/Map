@@ -44,7 +44,7 @@ char* getDescription(Route* route, int length);
 int digitsInNumber(unsigned number); ///< How many digits in the number.
 
 /** @brief Wyświeta informację o błedzie w konkretnej linijce wejścia na standardowy strumień błedów.
- * @param lineNo - numer linijki
+ * @param[in] lineNo - numer linijki
  */
 void handleError(int lineNo);
 

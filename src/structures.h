@@ -127,8 +127,8 @@ bool addCityToRouteParam(RouteParam* routeParam, char* cityName);
 
 /**@brief Dodaje parametry drogi do routeParam.
  * @param[in, out] routeParam - wskaźnik na strukturę routeParam
- * @param roadLength - długość drogi
- * @param year - rok budowy drogi
+ * @param[in] roadLength - długość drogi
+ * @param[in] year - rok budowy drogi
  * @return Wartość @p true jeśli udało się dodać parametry drogi. @p false jeśli realokacją nie udała się.
  */
 bool addRoadToRouteParam(RouteParam* routeParam, unsigned roadLength, int year);
@@ -156,7 +156,7 @@ City* newCity(const char *name);
 */
 CityList* newCityList();
 
-/** @brief Tworzy nową drogę krajową o podanym id..
+/** @brief Tworzy nową drogę krajową o podanym id.
  * @param[in] id - id drogi krajowej.
     @return Zwraca wskaźnik na nową drogę krajową. NULL jeśli alokacją nie udała się.
  */

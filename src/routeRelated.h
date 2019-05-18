@@ -70,7 +70,7 @@ void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB)
 
 /**@brief Tworzy drogę krajową na podstawie wzoru routeParam.
  * @param[in,out] map - wskaźnik na strukturę przechowującą mapę dróg;
- * @param routeParam - wskaźnik na strukturę przechowującą
+ * @param[in] routeParam - wskaźnik na strukturę przechowującą
  * @return Wartość @p true jeśli operacją powiodłą się, @p false w przeciwnym razie.
  */
 bool newRouteFromRouteParam(Map* map, RouteParam* routeParam);

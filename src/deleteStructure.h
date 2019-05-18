@@ -39,7 +39,7 @@ void deleteRoute(Route* route);
 void deleteRoadAndTwoRoadLists(Road *road);
 
 /**@brief Usuwa pomocniczą strukturę routeParam z pamięci.
- * @param routeParam - wskaźnik na strukturę routeParam
+ * @param[in, out] routeParam - wskaźnik na strukturę routeParam
  */
 void deleteRouteParam(RouteParam* routeParam);
 
