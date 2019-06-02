@@ -37,6 +37,8 @@ CityList *findShortestPath(Map *map, Route *routeA, Route *routeB, City *cityA, 
  */
 void addRouteInfoToRoads(Route *route);
 
+void deleteRouteInfoFromRoad(Route* route);
+
 /** @brief Czy droga krajowa zawiera drogę.
  * * @param[in] route - wskaźnik na drogę krajową.
  * @param[in] road - wskaźnik na drogę.

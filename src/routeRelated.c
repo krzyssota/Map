@@ -46,6 +46,25 @@ void addRouteInfoToRoads(Route* route){
     }
 }
 
+void deleteRouteInfoFromRoad(Route* route){
+
+    CityList* cityList = route->cityList;
+
+    while(cityList != NULL){
+
+        RoadList* roadList = cityList->city->roadList;
+
+        while(roadList != NULL){
+            if(routeContainsRoad(route, roadList->road)) {
+                roadList->road->routesBelonging[route->routeId] = NULL;
+            }
+            roadList = roadList->next;
+        }
+
+        cityList = cityList->next;
+    }
+}
+
 CityList* findShortestPath(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, int* yearOfOldestRoad, Road* roadRemoved){
 
     QueueElement* destination = Dijkstra(map, routeA, routeB, cityA, cityB, roadRemoved);
