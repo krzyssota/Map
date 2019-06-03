@@ -100,7 +100,7 @@ QueueElement* pop(Queue** queue){
 * @param[in] cityB      – wskaźnik na miasto.
 * @return Wskaznik na kolejke. NULL jesli nie udalo sie zaalokowac pamieci.
 */
-Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB) {
+Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB) { // TODO tutaj zmiana po 23;00
 
     Queue* queue = newQueue(cityB);
     if(queue == NULL){
@@ -123,6 +123,38 @@ Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* c
 
     return queue;
 }
+/** @brief Dodaje odpowiednie elementy do kolejki.
+ * Odpowiednimi miastami sa miasta spoza drogi krajowej A, drogi krajowej B.
+* @param[in,out] map    – wskaźnik na strukturę przechowującą mapę dróg;
+ * @param[in] routeA      – wskaźnik na droge krajowa.
+* @param[in] routeB      – wskaźnik na droge krajowa.
+* @param[in] cityA      – wskaźnik na miasto.
+* @param[in] cityB      – wskaźnik na miasto.
+* @return Wskaznik na kolejke. NULL jesli nie udalo sie zaalokowac pamieci.
+*//*
+Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB) {
+
+    Queue* queue = newQueue(cityB);
+    if(queue == NULL){
+        return NULL;
+    }
+    push(&queue, newQueueElement(cityA, 0, NULL, NULL)); // source
+
+    if(routeA->cityList != NULL && cityB == routeA->cityList->city){ // extending by adding prefix
+        push(&queue, newQueueElement(cityB, INF, NULL, NULL));
+    } // TODO czy pierwszy warunek kiedykolwiek jest fałszywy?  co robi drugi warunek? chyba trzeba zamienic routeA, routeB w pathBToA
+
+    CityList* tmp = map->cityList;
+    while (tmp != NULL) {
+
+        if(tmp->city != cityA && !routeContainsCity(routeA, tmp->city) && !routeContainsCity(routeB, tmp->city)) {
+            push(&queue, newQueueElement(tmp->city, INF, NULL, NULL));
+        }
+        tmp = tmp->next;
+    }
+
+    return queue;
+}*/
 
 
 /**@brief Znajduję element kolejki wskazujący na miasto.
@@ -230,9 +262,12 @@ QueueElement* Dijkstra(Map* map, Route* routeA, Route* routeB, City* cityA, City
     QueueElement* currElement = NULL;
     while(findQueueElement(queue, queue->destination) != NULL) { ///< Destination is still in the queue
 
-        destinationElement = findQueueElement(queue, queue->destination);
+        /*destinationElement = findQueueElement(queue, queue->destination);*/
 
         currElement = pop(&queue);
+        if(currElement->city == queue->destination){
+            destinationElement = currElement;
+        }
         processNeighbours(queue, routeA, currElement, roadRemoved);
     }
     cleanQueue(&queue);

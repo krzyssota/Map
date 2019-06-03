@@ -156,8 +156,8 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
     int dummyYear;
     Route* dummyRoute = NULL;
     Road* dummyRoad = NULL;
-    CityList* shortestPathAToB = findShortestPath(map, newRoute, dummyRoute, cityA, cityB, &dummyYear, dummyRoad);
-    CityList* shortestPathBToA = findShortestPath(map, newRoute, dummyRoute, cityB, cityA, &dummyYear, dummyRoad);
+    CityList* shortestPathAToB = findShortestPath(map, dummyRoute, dummyRoute, cityA, cityB, &dummyYear, dummyRoad);
+    CityList* shortestPathBToA = findShortestPath(map, dummyRoute, dummyRoute, cityB, cityA, &dummyYear, dummyRoad);
     if(shortestPathAToB == NULL || shortestPathBToA == NULL){ ///< Nie udalo sie znalezc najkrotszego polaczenia.
 
         deleteCityList(shortestPathAToB);
@@ -210,6 +210,7 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){
                                               additionalCity, borderCityList->city, &firstOldestRoadYear, dummyRoad);
     CityList* firstPathBToA = findShortestPath(map, map->routes[routeId], dummyRoute,
                                               borderCityList->city, additionalCity, &firstOldestRoadYear, dummyRoad);
+
     if(firstPathAToB == NULL || firstPathBToA == NULL){
         deleteCityList(firstPathAToB);
         deleteCityList(firstPathBToA);
@@ -227,6 +228,7 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){
                                                   borderCityList->city, additionalCity, &secondOldestRoadYear, dummyRoad);
     CityList* secondPathBToA = findShortestPath(map, map->routes[routeId], dummyRoute,
                                                   additionalCity, borderCityList->city, &secondOldestRoadYear, dummyRoad);
+
     if(secondPathAToB == NULL || secondPathBToA == NULL){
         deleteCityList(secondPathAToB);
         deleteCityList(secondPathBToA);
@@ -351,7 +353,7 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
             }
             routeA->cityList = startA;
 
-            cityListToCopy = cityListToCopy->next;
+            cityListToCopy = cityListToCopy->next; // TODO czy to nie jest źle?
 
             Route* routeB = createNewRoute(1000);
 
@@ -390,7 +392,6 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
             CityList* shortestPathAToB = findShortestPath(map, routeA, routeB, cityA, cityB, &dummyY, road);
             CityList* shortestPathBToA = findShortestPath(map, routeA, routeB, cityB, cityA, &dummyY, road);
             if(shortestPathAToB == NULL || shortestPathBToA == NULL){
-
                 deleteCityList(shortestPathAToB);
                 deleteCityList(shortestPathBToA);
 

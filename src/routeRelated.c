@@ -100,16 +100,16 @@ CityList* findShortestPath(Map* map, Route* routeA, Route* routeB, City* cityA, 
     }
     if(flag == 0){
 
-        while(cityList != NULL){
-            CityList* toDelete = cityList;
+        while(cityList != NULL) {
+            CityList *toDelete = cityList;
             cityList = cityList->next;
             free(toDelete);
         }
+
+            //TODO tutaj zamiast null zwracac ze nie znaleziono z takimi i takimi statystykami
         return NULL;
     }
     return cityList;
-
-
 }
 
 City* getOtherCity(Road *road, City *city){
