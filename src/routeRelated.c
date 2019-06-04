@@ -10,14 +10,15 @@
 #include "stringsHandling.h"
 #include "deleteStructure.h"
 #include <string.h>
+#include <values.h>
 
 Road* olderRoad(Road* roadA, Road* roadB){
 
-    int a = INT16_MAX;
+        int a = INT_MAX;
     if(roadA != NULL) {
         a = roadA->year;
     }
-    int b = INT16_MAX;
+    int b = INT_MAX;
     if(roadB != NULL) {
         b = roadB->year;
     }
@@ -134,19 +135,23 @@ bool routeContainsCity(Route* route, City* city){
     return false;
 }
 
-bool routeContainsRoad(Route* route, Road* road){
+bool routeContainsRoad(Route *route, Road *road) {
 
-    CityList* cityList = route->cityList;
-    if(cityList == NULL){ ///< Wywolana w addRoute lub extendRoute. road jako zmienna dummy = NULL
+    if (route == NULL) {
+        return false;
+    }
+
+    CityList *cityList = route->cityList;
+    if (cityList == NULL) {
         return false;
     }
 
     bool contains = false;
 
-    while(cityList->next != NULL && contains == false){
+    while (cityList->next != NULL && contains == false) {
 
-        if((road->cityA == cityList->city && road->cityB == cityList->next->city)
-          ||(road->cityB == cityList->city && road->cityA == cityList->next->city)){
+        if ((road->cityA == cityList->city && road->cityB == cityList->next->city)
+            || (road->cityB == cityList->city && road->cityA == cityList->next->city)) {
             contains = true;
         }
 

@@ -87,7 +87,7 @@ typedef struct QueueElement{
 typedef struct Queue{
 
     struct QueueElement* head; ///< wskaźnik na element z najwyższym priorytetem.
-    struct City* destination; ///< wskaźnik na miasto, do którego szukana będzie najkrótsza droga.
+    struct City* target; ///< wskaźnik na miasto, do którego szukana będzie najkrótsza droga.
 
 } Queue;
 
@@ -162,10 +162,10 @@ CityList* newCityList();
  */
 Route* createNewRoute(unsigned id);
 /** @brief Tworzy kolejkę priorytetową o podanym mieście źródłowym.
- * @param[in] destination - wskaźnik na miasto.
+ * @param[in] target - wskaźnik na miasto.
     @return Zwraca wskaźnik na nową kolejkę. NULL jeśli alokacją nie udała się.
  */
-Queue* newQueue(City* destination);
+Queue* newQueue(City* target);
 
 /** @brief Tworzy nowy element kolejki priorytetowej
  * @param[in] city - wskaźnik na miasto.

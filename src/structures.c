@@ -41,11 +41,11 @@ Route* createNewRoute(unsigned id){
     return newRoute;
 }
 
-Queue* newQueue(City* destination){
+Queue* newQueue(City* target){
     Queue* newQueue = malloc(sizeof(Queue));
     if(newQueue != NULL){
         newQueue->head = NULL;
-        newQueue->destination = destination;
+        newQueue->target = target;
     }
     return newQueue;
 }

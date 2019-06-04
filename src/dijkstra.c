@@ -25,54 +25,84 @@ void push(Queue** queue, QueueElement* element){
         (*queue)->head = element;
     } else {
 
-        QueueElement* tmp = (*queue)->head;
-        QueueElement* tmpPrev = NULL;
+        QueueElement* curr = (*queue)->head;
+        QueueElement* prevCurr = NULL;
 
-        while(tmp != NULL && tmp->distance < element->distance){
-            tmpPrev = tmp;
-            tmp = tmp->next;
+        while(curr != NULL && element->distance > curr->distance){
+            prevCurr = curr;
+            curr = curr->next;
         }
 
-        if(tmp == NULL){
-            assert(tmpPrev != NULL);
-            tmpPrev->next = element;
-            element->prev = tmpPrev;
+        int currOldestRoadYear = INT_MIN;
+        int elementOldestRoadYear = INT_MIN;
+        if(curr != NULL && curr->oldestRoad != NULL ){
+            currOldestRoadYear = curr->oldestRoad->year;
+        }
+        if(element->oldestRoad != NULL){
+            elementOldestRoadYear = element->oldestRoad->year;
+        }
 
-        } else if(tmp == (*queue)->head){
+        if(curr == NULL) { ///< na koniec kolejki
 
-            ((*queue)->head)->prev = element;
-            element->next = (*queue)->head;
+            assert(prevCurr != NULL);
+            prevCurr->next = element;
+            element->prev = prevCurr;
 
-            (*queue)->head = element;
+        } else if(curr == (*queue)->head){ ///< przed lub tuż za wierzchem (tuż za tzn. równe odległości, starsza droga)
 
-        } else {
+            if(element->distance < curr->distance){ ///< krotsza droga niz wierzch
 
-            int tmpOldestRoadYear = INT_MIN;
-            int elementOldestRoadYear = INT_MIN;
-            if(tmp->oldestRoad != NULL ){
-                tmpOldestRoadYear = tmp->oldestRoad->year;
-            }
-            if(element->oldestRoad != NULL){
-                elementOldestRoadYear = element->oldestRoad->year;
-            }
+                curr->prev = element;
+                element->next = curr;
 
-            if (tmp->distance == element->distance && tmpOldestRoadYear > elementOldestRoadYear) {
+                (*queue)->head = element;
 
-                    QueueElement *nextEl = tmp->next;
-                    tmp->next = element;
-                    element->prev = tmp;
-                    element->next = nextEl;
-                    if (nextEl != NULL) {
-                        nextEl->prev = element;
+            } else {
+
+                if (elementOldestRoadYear > currOldestRoadYear) { ///< taka sama droga ale młodsza
+
+                    curr->prev = element;
+                    element->next = curr;
+
+                    (*queue)->head = element;
+
+                } else { ///< taka sama droga ale starsza
+
+                    QueueElement *tmp = curr->next;
+
+                    curr->next = element;
+                    element->prev = curr;
+
+                    element->next = tmp;
+                    if (tmp != NULL) {
+                        tmp->prev = element;
                     }
-
+                }
             }
-            assert(tmpPrev != NULL);
-            tmpPrev->next = element;
-            element->prev = tmpPrev;
 
-            element->next = tmp;
-            tmp->prev = element;
+        } else { ///< w środek kolejki, przed curr lub tuż za (tuż za tzn. równe odległości starsza droga)
+
+            if(elementOldestRoadYear > currOldestRoadYear){ ///< taka sama droga ale młodsza
+
+                curr->prev = element;
+                element->next = curr;
+
+                prevCurr->next = element;
+                element->prev = prevCurr;
+
+
+            } else { ///< taka sama droga ale starsza
+
+                QueueElement* tmp = curr->next;
+
+                curr->next = element;
+                element->prev = curr;
+
+                element->next = tmp;
+                if(tmp != NULL) {
+                    tmp->prev = element;
+                }
+            }
         }
 
     }
@@ -81,12 +111,17 @@ void push(Queue** queue, QueueElement* element){
  * @param[in, out] queue - wskaźnik na wskaźnik na kolejkę priorytetową
  * @return wskaźnik na element z najniższym priorytetem.
  */
-QueueElement* pop(Queue** queue){
+QueueElement *pop(Queue **queue) {
 
-    QueueElement* result = (*queue)->head;
-    (*queue)->head = result->next;
-    if((*queue)->head != NULL) {
-        (*queue)->head->prev = NULL;
+    QueueElement *result = (*queue)->head;
+
+    if (result != NULL) {
+
+        (*queue)->head = (*queue)->head->next;
+
+        if ((*queue)->head != NULL) {
+            (*queue)->head->prev = NULL;
+        }
     }
 
     return result;
@@ -106,19 +141,19 @@ Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* c
     if(queue == NULL){
         return NULL;
     }
-    push(&queue, newQueueElement(cityA, 0, NULL, NULL)); // source
+    push(&queue, newQueueElement(cityA, 0, NULL, NULL)); // origin
 
-    if(routeA->cityList != NULL && cityB == routeA->cityList->city){ // extending by adding prefix
-        push(&queue, newQueueElement(cityB, INF, NULL, NULL));
-    }
+    push(&queue, newQueueElement(cityB, INF, NULL, NULL)); // target
 
-    CityList* tmp = map->cityList;
-    while (tmp != NULL) {
+    CityList* currCityList = map->cityList;
+    while (currCityList != NULL) {
 
-        if(tmp->city != cityA && !routeContainsCity(routeA, tmp->city) && !routeContainsCity(routeB, tmp->city)) {
-            push(&queue, newQueueElement(tmp->city, INF, NULL, NULL));
+        if(!routeContainsCity(routeA, currCityList->city) && !routeContainsCity(routeB, currCityList->city)
+            && currCityList->city != cityA && currCityList->city != cityB) {
+
+            push(&queue, newQueueElement(currCityList->city, INF, NULL, NULL));
         }
-        tmp = tmp->next;
+        currCityList = currCityList->next;
     }
 
     return queue;
@@ -138,7 +173,7 @@ Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* c
     if(queue == NULL){
         return NULL;
     }
-    push(&queue, newQueueElement(cityA, 0, NULL, NULL)); // source
+    push(&queue, newQueueElement(cityA, 0, NULL, NULL)); // target
 
     if(routeA->cityList != NULL && cityB == routeA->cityList->city){ // extending by adding prefix
         push(&queue, newQueueElement(cityB, INF, NULL, NULL));
@@ -164,12 +199,12 @@ Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* c
  */
 QueueElement* findQueueElement(Queue* queue, City* city){ ///<
 
-    QueueElement* tmp = queue->head;
-    while(tmp != NULL && tmp->city != city){
-        tmp = tmp->next;
+    QueueElement* currElement = queue->head;
+    while(currElement != NULL && currElement->city != city){
+        currElement = currElement->next;
     }
 
-    return tmp;
+    return currElement;
 }
 /**@brief Zdejmuje konkretny element z kolejki priorytetowej.
  * @param[in, out] queue - wskaźnik na wskaźnik na kolejkę priorytetową
@@ -195,9 +230,8 @@ QueueElement* popElement(Queue **queue, QueueElement* element){
  * @param[in, out] queue - wskaźnik na wskaźnik na kolejkę priorytetową
 *  @param[in] alternative – element z alternatywnym priorytetem.
 */
-void updateElement(Queue **queue, QueueElement* alternative){
+void updateElement(Queue **queue, QueueElement* original, QueueElement* alternative){
 
-    QueueElement* original = findQueueElement((*queue), alternative->city);
 
     if(original->distance > alternative->distance){
 
@@ -206,11 +240,22 @@ void updateElement(Queue **queue, QueueElement* alternative){
 
     } else if(original->distance == alternative->distance){
 
-        if(original->oldestRoad->year < alternative->oldestRoad->year){
+        int originalOldestRoadYear = INT_MIN;
+        int alternativeOldestRoadYear = INT_MIN;
+        if(original->oldestRoad != NULL ){
+            originalOldestRoadYear = original->oldestRoad->year;
+        }
+        if(alternative->oldestRoad != NULL){
+            alternativeOldestRoadYear = alternative->oldestRoad->year;
+        }
+
+        if(originalOldestRoadYear < alternativeOldestRoadYear){
 
             free(popElement(queue, original));
             push(queue, alternative);
-        } else if(original->oldestRoad->year == alternative->oldestRoad->year) {
+
+        } else if(originalOldestRoadYear == alternativeOldestRoadYear) {
+
             original->ambiguous = true;
             free(alternative);
         }
@@ -225,28 +270,31 @@ void updateElement(Queue **queue, QueueElement* alternative){
  * * @param[in] element      – wskaźnik na element kolejki.
 *  @param[in] roadRemoved   –  droga usuwana w funkcji removeRoad. Dla innych wywolan wartosc NULL.
 */
-void processNeighbours(Queue* queue, Route* route, QueueElement* element, Road* roadRemoved){
+void processNeighbours(Queue* queue, Route* routeA, Route* routeB, QueueElement* element, Road* roadRemoved){
 
-    RoadList* tmp = element->city->roadList;
+    RoadList* currRoadList = element->city->roadList;
 
-    while(tmp != NULL) {
+    while(currRoadList != NULL) {
 
-        if(!routeContainsRoad(route, tmp->road) && tmp->road != roadRemoved) { ///< Do not consider road that is being removed.
+        if(!routeContainsRoad(routeA, currRoadList->road) && !routeContainsRoad(routeB, currRoadList->road) && currRoadList->road != roadRemoved) {
+            ///< Do not consider road that is being removed or roads already used in the route.
 
-            City* neighbour = getOtherCity(tmp->road, element->city);
+            City* neighbour = getOtherCity(currRoadList->road, element->city);
 
-            if (findQueueElement(queue, neighbour) != NULL) { ///< Neighbour still in the queue (can be processed)
+            QueueElement* originalNeighbour = findQueueElement(queue, neighbour);
 
-                long int alternativeDistance = element->distance + (long int) findRoad(neighbour, element->city)->length;
+            if (originalNeighbour != NULL) { ///< Neighbour still in the queue (can be processed)
+
+                long int alternativeDistance = element->distance + (long int) currRoadList->road->length;
 
                 QueueElement* alternativeNeighbour = newQueueElement(neighbour, alternativeDistance, element,
-                                                              olderRoad(element->oldestRoad, tmp->road));
+                                                              olderRoad(element->oldestRoad, currRoadList->road));
 
-                updateElement(&queue, alternativeNeighbour);
+                updateElement(&queue, originalNeighbour, alternativeNeighbour);
             }
         }
 
-        tmp = tmp->next;
+        currRoadList = currRoadList->next;
     }
 }
 
@@ -257,27 +305,27 @@ QueueElement* Dijkstra(Map* map, Route* routeA, Route* routeB, City* cityA, City
         return NULL;
     }
 
-    QueueElement* destinationElement = findQueueElement(queue, queue->destination);
+    QueueElement* targetElement;
 
-    QueueElement* currElement = NULL;
-    while(findQueueElement(queue, queue->destination) != NULL) { ///< Destination is still in the queue
+    QueueElement* currElement = pop(&queue);
 
-        /*destinationElement = findQueueElement(queue, queue->destination);*/
+    while(currElement->city != queue->target) {
+
+        processNeighbours(queue, routeA, routeB, currElement, roadRemoved);
 
         currElement = pop(&queue);
-        if(currElement->city == queue->destination){
-            destinationElement = currElement;
+        if(currElement->city == queue->target){
+            targetElement = currElement;
         }
-        processNeighbours(queue, routeA, currElement, roadRemoved);
     }
     cleanQueue(&queue);
     free(queue);
 
-    if(destinationElement->distance == INF){
+    if(targetElement != NULL && targetElement->distance == INF){
         return NULL;
     }
 
-    return destinationElement;
+    return targetElement;
 }
 
 
