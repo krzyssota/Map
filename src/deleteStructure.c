@@ -131,6 +131,18 @@ void deleteRouteParam(RouteParam* routeParam){
     free(routeParam);
 }
 
+void deleteShortestPathResult(ShortestPathResult* shortestPathResult){
+
+    if(shortestPathResult != NULL) {
+        CityList *curr = shortestPathResult->path;
+        while (curr != NULL) {
+            CityList *toDelete = curr;
+            curr = curr->next;
+            free(toDelete);
+        }
+    }
+}
+
 
 
 

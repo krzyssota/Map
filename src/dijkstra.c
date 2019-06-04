@@ -80,7 +80,7 @@ void push(Queue** queue, QueueElement* element){
                 }
             }
 
-        } else { ///< w środek kolejki, przed curr lub tuż za (tuż za tzn. równe odległości starsza droga)
+        } else { ///< w środek kolejki, przed curr lub tuż za (tuż za tzn. równe odległości, starsza droga)
 
             if(elementOldestRoadYear > currOldestRoadYear){ ///< taka sama droga ale młodsza
 
@@ -141,9 +141,8 @@ Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* c
     if(queue == NULL){
         return NULL;
     }
+    
     push(&queue, newQueueElement(cityA, 0, NULL, NULL)); // origin
-
-    push(&queue, newQueueElement(cityB, INF, NULL, NULL)); // target
 
     CityList* currCityList = map->cityList;
     while (currCityList != NULL) {
@@ -155,6 +154,8 @@ Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* c
         }
         currCityList = currCityList->next;
     }
+
+    push(&queue, newQueueElement(cityB, INF, NULL, NULL)); // target
 
     return queue;
 }
@@ -321,9 +322,9 @@ QueueElement* Dijkstra(Map* map, Route* routeA, Route* routeB, City* cityA, City
     cleanQueue(&queue);
     free(queue);
 
-    if(targetElement != NULL && targetElement->distance == INF){
+   /* if(targetElement != NULL && targetElement->distance == INF){
         return NULL;
-    }
+    }*/
 
     return targetElement;
 }

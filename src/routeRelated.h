@@ -30,7 +30,7 @@ City *getOtherCity(Road *road, City *city);
  * @return Wskaznik na liste miast z ktorych sklada sie sciezka jesli sciezka zostala znaleziona.
  * Wartość NULL, jeśli nie zostala znaleziona.
  */
-CityList *findShortestPath(Map *map, Route *routeA, Route *routeB, City *cityA, City *cityB, int *oldestRoadYear, Road* roadRemoved);
+ShortestPathResult* findShortestPath(Map *map, Route *routeA, Route *routeB, City *cityA, City *cityB, Road* roadRemoved);
 
 /** @brief W drogach skladajacych sie na droge krajowa zapisuje o tym informacje.
  * * @param[in] route - wskaźnik na drogę krajową.
@@ -60,7 +60,8 @@ unsigned calculateLength(CityList *path);
  * @return 1 jeśli pierwsza drogą jest lepsza. 2 jeśli druga jest lepsza. 0 jeśli obie są równie dobre w myśl kryteriów podanych
  * w zadaniu.
  */
-int betterPath(int firstOldestRoadYear, unsigned firstLength, int secondOldestRoadYear, unsigned secondLength);
+ //TODO zmienic opis
+int betterPath(ShortestPathResult* res1, ShortestPathResult* res2);
 
 /** @brief Wklada liste miast ze sciezki do drogi krajowej.
  * @param[in] path      - wskaźnik na sciezke.
@@ -76,5 +77,7 @@ void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB)
  * @return Wartość @p true jeśli operacją powiodłą się, @p false w przeciwnym razie.
  */
 bool newRouteFromRouteParam(Map* map, RouteParam* routeParam);
+
+City* occurenceInRoute(int x, Route *route, City *cityA, City *cityB);
 
 #endif //DROGI_ROUTERELATED_H

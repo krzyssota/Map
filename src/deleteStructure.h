@@ -48,7 +48,7 @@ void deleteRouteParam(RouteParam* routeParam);
  */
 void deleteLine(char* line);
 
-
+void deleteShortestPathResult(ShortestPathResult* shortestPathResult);
 
 
 

@@ -65,52 +65,48 @@ void deleteRouteInfoFromRoad(Route* route){
         cityList = cityList->next;
     }
 }
+ShortestPathResult* findShortestPath(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, Road* roadRemoved){
 
-CityList* findShortestPath(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, int* yearOfOldestRoad, Road* roadRemoved){
+    QueueElement* target = Dijkstra(map, routeA, routeB, cityA, cityB, roadRemoved);
 
-    QueueElement* destination = Dijkstra(map, routeA, routeB, cityA, cityB, roadRemoved);
-
-    if(destination == NULL){ // no optimal path found
+    ShortestPathResult* resultContainer = newShortestPathResult();
+    if(resultContainer == NULL || target == NULL){ // memory error
         return NULL;
     }
 
-    (*yearOfOldestRoad) = destination->oldestRoad->year;
+    if(target->distance == INF){
+        resultContainer->resultEnum = NOT_FOUND;
+    }
+    if(target->oldestRoad != NULL){
+        resultContainer->oldestRoadYear = target->oldestRoad->year;
+    }
 
-    QueueElement* tmp = destination;
-    CityList* cityList = NULL;
-    int flag = 1;
-    while(tmp != NULL && flag == 1) {
+    QueueElement* curr = target;
+    CityList* resultingCityList = NULL;
 
-        if(tmp->ambiguous == true){
-            flag = 0;
+    while(curr != NULL ) {
+
+        if(curr->ambiguous == true){
+            resultContainer->resultEnum = AMBIGUOUS;
         }
+
         CityList* newStartingElement = newCityList();
+        newStartingElement->city = curr->city;
 
-        newStartingElement->city = tmp->city;
-
-        newStartingElement->next = cityList;
-        if(cityList != NULL) {
-            cityList->prev = newStartingElement;
+        newStartingElement->next = resultingCityList;
+        if(resultingCityList != NULL) {
+            resultingCityList->prev = newStartingElement;
         }
 
-        cityList = newStartingElement;
-        QueueElement* toDelete = tmp;
-        tmp = tmp->predecessor;
+        resultingCityList = newStartingElement;
+        QueueElement* toDelete = curr;
+        curr = curr->predecessor;
         free(toDelete);
 
     }
-    if(flag == 0){
-
-        while(cityList != NULL) {
-            CityList *toDelete = cityList;
-            cityList = cityList->next;
-            free(toDelete);
-        }
-
-            //TODO tutaj zamiast null zwracac ze nie znaleziono z takimi i takimi statystykami
-        return NULL;
-    }
-    return cityList;
+    resultContainer->path = resultingCityList;
+    resultContainer->length = calculateLength(resultingCityList);
+    return resultContainer;
 }
 
 City* getOtherCity(Road *road, City *city){
@@ -177,19 +173,51 @@ unsigned calculateLength(CityList* path){
     return length;
 }
 
-int betterPath(int firstOldestRoadYear, unsigned firstLength, int secondOldestRoadYear, unsigned secondLength){
+int betterPath(ShortestPathResult* res1, ShortestPathResult* res2){
 
-    if(firstLength < secondLength) return 1;
-    if(firstLength > secondLength) return 2;
-
-    else {
-
-        if (firstOldestRoadYear > secondOldestRoadYear) return 1;
-        if (firstOldestRoadYear < secondOldestRoadYear) return 2;
-
-        return 0;
+    if(res1->resultEnum == FOUND && res2->resultEnum == FOUND){
+        if(res1->length < res2->length) {
+            return 1;
+        } else if(res1->length > res2->length){
+            return 2;
+        } else {
+            return 0;
+        }
     }
 
+    if(res1->resultEnum == FOUND && res2->resultEnum == NOT_FOUND){
+        return 1;
+    }
+    if(res1->resultEnum == NOT_FOUND && res2->resultEnum == FOUND){
+        return 2;
+    }
+
+    if(res1->resultEnum == AMBIGUOUS){
+        if(res2->resultEnum == FOUND && res2->length < res1->length){
+            return 2;
+        } else {
+            return 0;
+        }
+    }
+    if(res2->resultEnum == AMBIGUOUS){
+        if(res1->resultEnum == FOUND && res1->length < res2->length){
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    if(res1->resultEnum == FOUND && res2->resultEnum == FOUND){
+        if(res1->length < res2->length) {
+            return 1;
+        } else if(res1->length > res2->length){
+            return 2;
+        } else {
+            return 0;
+        }
+    } else { ///< res1->resultEnum == NOT_FOUND && res2->resultEnum == NOT_FOUND
+        return 0;
+    }
 
 }
 
@@ -208,9 +236,11 @@ void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB)
     CityList* otherEnd = cityList->next;
 
     cityList->next = path->next;
+    assert(path->next != NULL); ///< ścieżka jest co najmniej długości 2
     path->next->prev = cityList;
 
     path = path->next;
+    free(toDelete);
 
     while(path != NULL && path->city != cityB){
         path = path->next;
@@ -218,9 +248,9 @@ void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB)
     assert(path != NULL);
 
     path->next = otherEnd->next;
-    otherEnd->next->prev = path;
-
-    free(toDelete);
+    if(otherEnd->next != NULL) {
+        otherEnd->next->prev = path;
+    }
     free(otherEnd);
 }
 
@@ -340,5 +370,33 @@ bool newRouteFromRouteParam(Map* map, RouteParam* routeParam) {
     map->routes[newRoute->routeId] = newRoute;
 
     return true;
+}
+
+City* occurenceInRoute(int x, Route *route, City *cityA, City *cityB){
+
+    CityList* curr = route->cityList;
+
+    while(curr->city != cityA && curr->city != cityB){
+        curr = curr->next;
+    }
+
+    if(curr->city == cityA){
+        if(x == 1) return cityA;
+        if(x == 2) return cityB;
+    } else { ///< curr->city == cityA
+        if(x == 1) return cityB;
+        else return cityA;
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
 

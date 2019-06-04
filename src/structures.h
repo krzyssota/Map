@@ -91,6 +91,20 @@ typedef struct Queue{
 
 } Queue;
 
+typedef enum PathResult{
+    AMBIGUOUS,
+    NOT_FOUND,
+    FOUND
+} PathResult;
+
+typedef struct ShortestPathResult{
+    struct CityList* path;
+    unsigned length;
+    int oldestRoadYear;
+    PathResult resultEnum;
+
+} ShortestPathResult;
+
 /**
  * Struktura przechowująca listę nazw miast, które mają zostać zawarte w drodze krajowe,
  * oraz długości i lata budowy/remontu dróg je łączących.
@@ -179,6 +193,8 @@ QueueElement* newQueueElement(City* city, long int distance, QueueElement* prede
    @return Zwraca wskaźnik na nową drogę. NULL jeśli alokacją nie udała się.
 */
 Road* createNewRoad();
+
+ShortestPathResult* newShortestPathResult();
 
 
 

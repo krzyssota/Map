@@ -62,6 +62,18 @@ QueueElement* newQueueElement(City* city, long int distance, QueueElement* prede
     }
     return newElement;
 }
+
+ShortestPathResult* newShortestPathResult(){
+    ShortestPathResult* structure = malloc(sizeof(struct ShortestPathResult));
+    if(structure != NULL){
+        structure->path = NULL;
+        structure->length = 0;
+        structure->oldestRoadYear = 0;
+        structure->resultEnum = FOUND;
+    }
+    return structure;
+}
+
 Road* createNewRoad(){
 
     Road* newRoad = malloc(sizeof(Road));

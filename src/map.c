@@ -153,23 +153,29 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
         return false;
     }
 
-    int dummyYear;
     Route* dummyRoute = NULL;
     Road* dummyRoad = NULL;
-    CityList* shortestPathAToB = findShortestPath(map, dummyRoute, dummyRoute, cityA, cityB, &dummyYear, dummyRoad);
-    CityList* shortestPathBToA = findShortestPath(map, dummyRoute, dummyRoute, cityB, cityA, &dummyYear, dummyRoad);
-    if(shortestPathAToB == NULL || shortestPathBToA == NULL){ ///< Nie udalo sie znalezc najkrotszego polaczenia.
+    ShortestPathResult* shortestPathAToB = findShortestPath(map, dummyRoute, dummyRoute, cityA, cityB, dummyRoad);
+    ShortestPathResult* shortestPathBToA = findShortestPath(map, dummyRoute, dummyRoute, cityB, cityA, dummyRoad);
 
-        deleteCityList(shortestPathAToB);
-        deleteCityList(shortestPathBToA);
+    if(shortestPathAToB == NULL || shortestPathBToA == NULL){ // memory error
 
-        deleteRoute(newRoute);
+        deleteShortestPathResult(shortestPathAToB);
+        deleteShortestPathResult(shortestPathBToA);
+        free(newRoute);
+        return false;
+
+    } else if(shortestPathAToB->resultEnum == AMBIGUOUS || shortestPathAToB->resultEnum == NOT_FOUND){
+        deleteShortestPathResult(shortestPathAToB);
+        deleteShortestPathResult(shortestPathBToA);
+        free(newRoute);
         return false;
     }
 
-    deleteCityList(shortestPathBToA);
+    deleteShortestPathResult(shortestPathBToA);
 
-    newRoute->cityList = shortestPathAToB;
+    newRoute->cityList = shortestPathAToB->path;
+    free(shortestPathAToB);
 
     addRouteInfoToRoads(newRoute); ///< Drogi maja informacje do jakich drog krajowych naleza.
 
@@ -202,83 +208,102 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){
 
     /** Rozwaza dwie mozliwosci przedluzenia drogi krajowej.
      */
-    int firstOldestRoadYear = INT_MIN;
+
     Route* dummyRoute = NULL;
     Road* dummyRoad = NULL;
 
-    CityList* firstPathAToB = findShortestPath(map, map->routes[routeId], dummyRoute,
-                                              additionalCity, borderCityList->city, &firstOldestRoadYear, dummyRoad);
-    CityList* firstPathBToA = findShortestPath(map, map->routes[routeId], dummyRoute,
-                                              borderCityList->city, additionalCity, &firstOldestRoadYear, dummyRoad);
+    ShortestPathResult* firstResultAToB = findShortestPath(map, map->routes[routeId], dummyRoute,
+                                              additionalCity, borderCityList->city, dummyRoad);
+    ShortestPathResult* firstResultBToA = findShortestPath(map, map->routes[routeId], dummyRoute,
+                                              borderCityList->city, additionalCity, dummyRoad);
 
-    if(firstPathAToB == NULL || firstPathBToA == NULL){
-        deleteCityList(firstPathAToB);
-        deleteCityList(firstPathBToA);
+    if(firstResultAToB == NULL || firstResultBToA == NULL){ // memory error
+        deleteShortestPathResult(firstResultAToB);
+        deleteShortestPathResult(firstResultBToA);
         return false;
+    } else if((firstResultAToB->resultEnum == NOT_FOUND && firstResultBToA->resultEnum == FOUND)
+                 || (firstResultAToB->resultEnum == FOUND && firstResultBToA->resultEnum == NOT_FOUND)){
+        firstResultAToB->resultEnum = NOT_FOUND;
+    } else if((firstResultAToB->resultEnum == AMBIGUOUS && firstResultBToA->resultEnum == FOUND)
+              || (firstResultAToB->resultEnum == FOUND && firstResultBToA->resultEnum == AMBIGUOUS)){
+        firstResultAToB->resultEnum = AMBIGUOUS;
     }
-
-    unsigned firstLength = calculateLength(firstPathAToB);
 
     while(borderCityList->next != NULL){
         borderCityList = borderCityList->next;
     }
     int secondOldestRoadYear = INT_MIN;
 
-    CityList* secondPathAToB = findShortestPath(map, map->routes[routeId], dummyRoute,
-                                                  borderCityList->city, additionalCity, &secondOldestRoadYear, dummyRoad);
-    CityList* secondPathBToA = findShortestPath(map, map->routes[routeId], dummyRoute,
-                                                  additionalCity, borderCityList->city, &secondOldestRoadYear, dummyRoad);
+    ShortestPathResult* secondResultAToB = findShortestPath(map, map->routes[routeId], dummyRoute,
+                                                  borderCityList->city, additionalCity, dummyRoad);
+    ShortestPathResult* secondResultBToA = findShortestPath(map, map->routes[routeId], dummyRoute,
+                                                  additionalCity, borderCityList->city, dummyRoad);
 
-    if(secondPathAToB == NULL || secondPathBToA == NULL){
-        deleteCityList(secondPathAToB);
-        deleteCityList(secondPathBToA);
+    if(secondResultAToB == NULL || secondResultBToA == NULL){ // memory error
+        deleteShortestPathResult(secondResultAToB);
+        deleteShortestPathResult(secondResultBToA);
         return false;
+    } else if((secondResultAToB->resultEnum == NOT_FOUND && secondResultBToA->resultEnum == FOUND)
+             || (secondResultAToB->resultEnum == FOUND && secondResultBToA->resultEnum == NOT_FOUND)){
+        secondResultAToB->resultEnum = NOT_FOUND;
+    } else if((secondResultAToB->resultEnum == AMBIGUOUS && secondResultBToA->resultEnum == FOUND)
+              || (secondResultAToB->resultEnum == FOUND && secondResultBToA->resultEnum == AMBIGUOUS)){
+        secondResultAToB->resultEnum = AMBIGUOUS;
     }
 
-    unsigned secondLength = calculateLength(secondPathAToB);
 
-
-    switch(betterPath(firstOldestRoadYear, firstLength, secondOldestRoadYear, secondLength)){
+    switch(betterPath(firstResultAToB, secondResultAToB)){
         case 1: {
-            CityList *endOfPath = firstPathAToB;
+            CityList *endOfPath = firstResultAToB->path;
             while (endOfPath->next != NULL) {
                 endOfPath = endOfPath->next;
             }
 
+            CityList* tmp = map->routes[routeId]->cityList;
+
             endOfPath->next = map->routes[routeId]->cityList->next;
             (map->routes[routeId]->cityList->next)->prev = endOfPath;
 
-            map->routes[routeId]->cityList = firstPathAToB;
+            map->routes[routeId]->cityList = firstResultAToB->path;
 
-            deleteCityList(firstPathBToA);
+            free(tmp);
 
-            deleteCityList(secondPathAToB);
-            deleteCityList(secondPathBToA);
+            free(firstResultAToB);
+            deleteShortestPathResult(firstResultBToA);
+
+            deleteShortestPathResult(secondResultAToB);
+            deleteShortestPathResult(secondResultBToA);
             break;
         }
         case 2: {
 
-            CityList *endOfRoute = map->routes[routeId]->cityList;
-            while (endOfRoute->next != NULL) {
-                endOfRoute = endOfRoute->next;
+            CityList *endOfTheRoute = map->routes[routeId]->cityList;
+            while (endOfTheRoute->next != NULL) {
+                endOfTheRoute = endOfTheRoute->next;
             }
 
-            endOfRoute->next = secondPathAToB->next;
-            (secondPathAToB->next)->prev = endOfRoute;
+            CityList *tmp = secondResultAToB->path;
 
-            deleteCityList(firstPathAToB);
-            deleteCityList(firstPathBToA);
+            endOfTheRoute->next = secondResultAToB->path->next;
+            (secondResultAToB->path->next)->prev = endOfTheRoute;
 
-            deleteCityList(secondPathBToA);
+            free(tmp);
+
+
+            deleteShortestPathResult(firstResultAToB);
+            deleteShortestPathResult(firstResultBToA);
+
+            free(secondResultAToB);
+            deleteShortestPathResult(secondResultBToA);
             break;
         }
         case 0: {
 
-            deleteCityList(firstPathAToB);
-            deleteCityList(firstPathBToA);
+            deleteShortestPathResult(firstResultAToB);
+            deleteShortestPathResult(firstResultBToA);
 
-            deleteCityList(secondPathAToB);
-            deleteCityList(secondPathBToA);
+            deleteShortestPathResult(secondResultAToB);
+            deleteShortestPathResult(secondResultBToA);
             return false;
         }
         default: {
@@ -353,7 +378,7 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
             }
             routeA->cityList = startA;
 
-            cityListToCopy = cityListToCopy->next; // TODO czy to nie jest źle?
+           /* cityListToCopy = cityListToCopy->next;*/ // TODO czy to nie jest źle?
 
             Route* routeB = createNewRoute(1000);
 
@@ -387,25 +412,40 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
             }
             routeB->cityList = startB;
 
+            ShortestPathResult* shortestPathAToB = findShortestPath(map, routeA, routeB,
+                                                        occurenceInRoute(1, road->routesBelonging[i], cityA, cityB),
+                                                        occurenceInRoute(2, road->routesBelonging[i], cityA, cityB),
+                                                        road);
+            ShortestPathResult* shortestPathBToA = findShortestPath(map, routeA, routeB,
+                                                        occurenceInRoute(2, road->routesBelonging[i], cityA, cityB),
+                                                        occurenceInRoute(1, road->routesBelonging[i], cityA, cityB),
+                                                        road);
 
-            int dummyY;
-            CityList* shortestPathAToB = findShortestPath(map, routeA, routeB, cityA, cityB, &dummyY, road);
-            CityList* shortestPathBToA = findShortestPath(map, routeA, routeB, cityB, cityA, &dummyY, road);
-            if(shortestPathAToB == NULL || shortestPathBToA == NULL){
-                deleteCityList(shortestPathAToB);
-                deleteCityList(shortestPathBToA);
+            if(shortestPathAToB == NULL || shortestPathBToA == NULL){ // memory error
+                deleteShortestPathResult(shortestPathAToB);
+                deleteShortestPathResult(shortestPathBToA);
 
                 deleteRoute(routeA);
                 deleteRoute(routeB);
 
                 return false;
+            } else if(shortestPathAToB->resultEnum == AMBIGUOUS || shortestPathAToB->resultEnum == NOT_FOUND){
+                deleteShortestPathResult(shortestPathAToB);
+                deleteShortestPathResult(shortestPathBToA);
+
+                deleteRoute(routeA);
+                deleteRoute(routeB);
+                return false;
             }
 
-            deleteCityList(shortestPathBToA);
+            deleteShortestPathResult(shortestPathBToA);
             deleteRoute(routeA);
             deleteRoute(routeB);
 
-            insertPathIntoRoute(shortestPathAToB, road->routesBelonging[i], cityA, cityB); ///< Includes found path in rotue.
+            insertPathIntoRoute(shortestPathAToB->path, road->routesBelonging[i],
+                                occurenceInRoute(1, road->routesBelonging[i], cityA, cityB),
+                                occurenceInRoute(2, road->routesBelonging[i], cityA, cityB)); ///< Includes found path in rotue.
+            free(shortestPathAToB);
         }
     }
     deleteRoadAndTwoRoadLists(road);
