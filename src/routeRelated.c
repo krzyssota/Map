@@ -331,6 +331,7 @@ bool newRouteFromRouteParam(Map* map, RouteParam* routeParam) {
         i++;
     }
 
+    city1 = routeParam->cities[0];
     i = 1;
     while(i < routeParam->cFilled){ ///< Dodaje drogi i miasta o parametrach podanych w routeParam.
 

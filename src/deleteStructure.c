@@ -124,11 +124,12 @@ void deleteLine(char* line){
 }
 
 void deleteRouteParam(RouteParam* routeParam){
-
-    free(routeParam->cities);
-    free(routeParam->years);
-    free(routeParam->lengths);
-    free(routeParam);
+    if(routeParam != NULL) {
+        free(routeParam->cities);
+        free(routeParam->years);
+        free(routeParam->lengths);
+        free(routeParam);
+    }
 }
 
 void deleteShortestPathResult(ShortestPathResult* shortestPathResult){

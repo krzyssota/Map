@@ -96,7 +96,7 @@ bool readInt(char **line, ssize_t *lineLength, int *number){
             }
         }
     } else {
-        while ((('0' <= **line && **line <= '9') || **line == 0) && *lineLength > 0) {
+        while (('0' <= **line && **line <= '9') && **line != 0 && *lineLength > 0) {
             if (*number <= (INT_MAX - (**line - '0')) / 10) { // If argument is lesser thank maximal integer.
                 (*number) = (*number) * 10 + (**line - '0');
                 (*line)++;
@@ -224,15 +224,18 @@ void getParametersAndAddRoute(char* line, ssize_t lineLength, Map* map, int line
     }
 
     RouteParam* routeParam = newRouteParam(id);
+    if(routeParam == NULL){
+        return;
+    }
     if(!addCityToRouteParam(routeParam, firstCity)){
         deleteRouteParam(routeParam);
         exit(0);
     }
-
     while(lineLength > 0){
 
         unsigned roadLength = 0;
         if(!readUnsigned(&line, &lineLength, &roadLength) || roadLength <= 0 || lineLength == 0){
+
             handleError(lineNo);
             deleteRouteParam(routeParam);
             return;
@@ -254,6 +257,7 @@ void getParametersAndAddRoute(char* line, ssize_t lineLength, Map* map, int line
         readCity(&line, &lineLength, &city);
 
         if(cityAlreadyInRouteParam(routeParam, city)){
+
             handleError(lineNo);
             deleteRouteParam(routeParam);
             return;
@@ -264,6 +268,7 @@ void getParametersAndAddRoute(char* line, ssize_t lineLength, Map* map, int line
             deleteRouteParam(routeParam);
             exit(0);
         }
+
     }
 
     if(!newRouteFromRouteParam(map, routeParam) || lineLength > 0){
