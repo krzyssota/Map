@@ -11,6 +11,7 @@
 
 
 
+
 Map* newMap(void){
 
     Map* map = malloc(sizeof(Map));
@@ -233,7 +234,7 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){
     while(borderCityList->next != NULL){
         borderCityList = borderCityList->next;
     }
-    int secondOldestRoadYear = INT_MIN;
+    /*int secondOldestRoadYear = INT_MIN;*/
 
     ShortestPathResult* secondResultAToB = findShortestPath(map, map->routes[routeId], dummyRoute,
                                                   borderCityList->city, additionalCity, dummyRoad);
@@ -336,7 +337,7 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
     if(road == NULL){ ///< Nie ma odcinka drogi między podanymi miastami.
         return false;
     }
-    for(int i = 1; i <= 999; ++i) {
+    for(int i = 1; i <= 999; ++i) { // TODO sprawdzenie potem robienie
         if(road->routesBelonging[i] != NULL) { ///< Dla istniejacych drog krajowych.
 
             Route* routeA = createNewRoute(1000);
@@ -379,15 +380,11 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
             }
             routeA->cityList = startA;
 
-           /* cityListToCopy = cityListToCopy->next;*/ // TODO czy to nie jest źle?
-
             Route* routeB = createNewRoute(1000);
 
             CityList* cityListB = NULL;
             CityList* previousB = NULL;
             CityList* startB = NULL;
-
-
 
             while(cityListToCopy != NULL){ ///< Skopiuj miasta z drogi krajowej od konca usunietej drogi.
 
@@ -435,6 +432,124 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
                 deleteRoute(routeB);
 
                 return false;
+
+            } else if(shortestPathAToB->resultEnum == AMBIGUOUS || shortestPathAToB->resultEnum == NOT_FOUND){
+
+                deleteShortestPathResult(shortestPathAToB);
+                deleteShortestPathResult(shortestPathBToA);
+
+                deleteRoute(routeA);
+                deleteRoute(routeB);
+                return false;
+
+            } else {
+                deleteShortestPathResult(shortestPathAToB);
+                deleteShortestPathResult(shortestPathBToA);
+
+                deleteRoute(routeA);
+                deleteRoute(routeB);
+            }
+        }
+    }
+    for(int i = 1; i <= 999; ++i) {
+        if(road->routesBelonging[i] != NULL) { ///< Dla istniejacych drog krajowych.
+
+            Route* routeA = createNewRoute(1000);
+            if(routeA == NULL){
+                return false;
+            }
+
+            CityList* cityListA = NULL;
+            CityList* previous = NULL;
+
+            CityList* startA = NULL;
+
+
+            CityList* cityListToCopy = road->routesBelonging[i]->cityList;
+
+            bool last = false;
+            while(!last){ ///< Skopiuj miasta z drogi krajowej az do poczatku usunietej drogi.
+
+                cityListA = newCityList();
+                if(cityListA == NULL){
+                    deleteRoute(routeA);
+                    return false;
+                }
+
+                cityListA->city = cityListToCopy->city;
+                cityListA->prev = previous;
+                if(previous != NULL){
+                    previous->next = cityListA;
+                } else {
+                    startA = cityListA;
+                }
+
+                previous = cityListA;
+
+                if(cityListToCopy->city == road->cityA || cityListToCopy->city == road->cityB){
+                    last = true;
+                }
+
+                cityListToCopy = cityListToCopy->next;
+            }
+            routeA->cityList = startA;
+
+            /* cityListToCopy = cityListToCopy->next;*/ // TODO czy to nie jest źle?
+
+            Route* routeB = createNewRoute(1000);
+
+            CityList* cityListB = NULL;
+            CityList* previousB = NULL;
+            CityList* startB = NULL;
+
+
+
+            while(cityListToCopy != NULL){ ///< Skopiuj miasta z drogi krajowej od konca usunietej drogi.
+
+                cityListB = newCityList();
+                if(cityListB == NULL){
+                    deleteRoute(routeA);
+                    deleteRoute(routeB);
+                    return false;
+                }
+
+                cityListB->city = cityListToCopy->city;
+
+                cityListB->prev= previousB;
+                if(previousB != NULL) {
+                    previousB->next = cityListB;
+                } else {
+                    startB = cityListB;
+                }
+
+                previousB = cityListB;
+
+                cityListToCopy = cityListToCopy->next;
+            }
+            routeB->cityList = startB;
+
+            ShortestPathResult* shortestPathAToB = findShortestPath(map, routeA, routeB,
+                                                                    occurrenceInRoute(1, road->routesBelonging[i],
+                                                                                      cityA, cityB),
+                                                                    occurrenceInRoute(2, road->routesBelonging[i],
+                                                                                      cityA, cityB),
+                                                                    road);
+            ShortestPathResult* shortestPathBToA = findShortestPath(map, routeA, routeB,
+                                                                    occurrenceInRoute(2, road->routesBelonging[i],
+                                                                                      cityA, cityB),
+                                                                    occurrenceInRoute(1, road->routesBelonging[i],
+                                                                                      cityA, cityB),
+                                                                    road);
+
+            if(shortestPathAToB == NULL || shortestPathBToA == NULL){ // memory error
+
+                deleteShortestPathResult(shortestPathAToB);
+                deleteShortestPathResult(shortestPathBToA);
+
+                deleteRoute(routeA);
+                deleteRoute(routeB);
+
+                return false;
             } else if(shortestPathAToB->resultEnum == AMBIGUOUS || shortestPathAToB->resultEnum == NOT_FOUND){
 
                 deleteShortestPathResult(shortestPathAToB);
@@ -462,7 +577,7 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
 
 char const* getRouteDescription(Map *map, unsigned routeId){
 
-    if(map->routes[routeId] == NULL){
+    if(!correctId(routeId) || map->routes[routeId] == NULL){
         char* str = malloc(sizeof(char));
         if(str == NULL){
             return NULL;
@@ -488,10 +603,4 @@ bool removeRoute(Map *map, unsigned routeId){
 
     return true;
 }
-
-/*Usuwa z mapy dróg drogę krajową o podanym numerze,
-jeśli taka istnieje, dając wynik true,
-a w przeciwnym przypadku, tzn. gdy podana droga krajowa nie istnieje lub podany numer jest niepoprawny,
-niczego nie zmienia w mapie dróg, dając wynik false.
-Nie usuwa odcinków dróg ani miast.*/
 

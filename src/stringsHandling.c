@@ -9,6 +9,7 @@
 #include "roadsRelated.h"
 #include <math.h>
 
+
 void handleError(int lineNo){
     fprintf(stderr, "ERROR %d\n", lineNo);
 }

@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
+
 RoadList* newRoadList(){
     RoadList* newRoadList = malloc(sizeof(RoadList));
     if(newRoadList != NULL) {

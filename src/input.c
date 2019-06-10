@@ -53,10 +53,10 @@ void readCity(char** line, ssize_t* lineLength, char** city){
  * @param[in, out] number - wskaźnik na liczbę całkowitą
  * @return Wartość @p true jeśli operacja powiodła się, @p false w przeciwnym przypadku.
  */
-bool readUnsigned(char **line, ssize_t *lineLength, unsigned *number){ // id 1 do 999, dlugosc 1 do unsigned max
+bool readUnsigned(char **line, ssize_t *lineLength, unsigned *number){ ///< id 1 do 999, dlugosc 1 do unsigned max
 
     while (('0' <= **line && **line <= '9') && *lineLength > 0) {
-        if (*number <= (UINT_MAX - (**line - '0')) / 10) { // If argument does not exceed limit value of unsigned
+        if (*number <= (UINT_MAX - (**line - '0')) / 10) { ///< If argument does not exceed limit value of unsigned
             (*number) = (*number) * 10 + (**line - '0');
             (*line)++;
             (*lineLength)--;
@@ -87,22 +87,22 @@ bool readInt(char **line, ssize_t *lineLength, int *number){
         (*line)++;
         (*lineLength)--;
         while ((('0' <= **line && **line <= '9') || **line == 0) && *lineLength > 0) {
-            if (*number >= (INT_MIN + (**line - '0')) / 10) { // If argument is greater than minimal integer.
+            if (*number >= (INT_MIN + (**line - '0')) / 10) { ///< If argument is greater than minimal integer.
                 (*number) = (*number) * 10 - (**line - '0');
                 (*line)++;
                 (*lineLength)--;
             } else {
-                return false; // Exceeds limit or character other than digit
+                return false; ///< Exceeds limit or character other than digit
             }
         }
     } else {
         while (('0' <= **line && **line <= '9') && **line != 0 && *lineLength > 0) {
-            if (*number <= (INT_MAX - (**line - '0')) / 10) { // If argument is lesser thank maximal integer.
+            if (*number <= (INT_MAX - (**line - '0')) / 10) { ///< If argument is lesser thank maximal integer.
                 (*number) = (*number) * 10 + (**line - '0');
                 (*line)++;
                 (*lineLength)--;
             } else {
-                return false; // Exceeds limit or character other than digit
+                return false; ///< Exceeds limit or character other than digit
             }
         }
     }
@@ -216,7 +216,7 @@ void getParametersAndAddRoute(char* line, ssize_t lineLength, Map* map, int line
         return;
     }
 
-    char* firstCity;
+    char* firstCity = NULL;
     readCity(&line, &lineLength, &firstCity);
     if(lineLength == 0){
         handleError(lineNo);
@@ -227,9 +227,9 @@ void getParametersAndAddRoute(char* line, ssize_t lineLength, Map* map, int line
     if(routeParam == NULL){
         return;
     }
-    if(!addCityToRouteParam(routeParam, firstCity)){
+    if(!addCityToRouteParam(routeParam, firstCity)){ ///< memory error
         deleteRouteParam(routeParam);
-        exit(0);
+        exit(0); // TODO czy przy bledzie pamieci nic, error czy exit(0)
     }
     while(lineLength > 0){
 
@@ -253,7 +253,7 @@ void getParametersAndAddRoute(char* line, ssize_t lineLength, Map* map, int line
             exit(0);
         }
 
-        char* city;
+        char* city = NULL;
         readCity(&line, &lineLength, &city);
 
         if(cityAlreadyInRouteParam(routeParam, city)){
@@ -271,7 +271,7 @@ void getParametersAndAddRoute(char* line, ssize_t lineLength, Map* map, int line
 
     }
 
-    if(!newRouteFromRouteParam(map, routeParam) || lineLength > 0){
+    if(!newRouteFromRouteParam(map, routeParam)|| lineLength > 0){
         handleError(lineNo);
         deleteRouteParam(routeParam);
         return;
@@ -290,16 +290,17 @@ void getParametersAndAddRoad(char* line, ssize_t lineLength, Map* map, int lineN
 
     if(lineLength == 0){
         handleError(lineNo);
+        return;
     }
 
-    char* cityA;
+    char* cityA = NULL;
     readCity(&line, &lineLength, &cityA);
     if(lineLength == 0){
         handleError(lineNo);
         return;
     }
 
-    char* cityB;
+    char* cityB = NULL;
     readCity(&line, &lineLength, &cityB);
     if(lineLength == 0){
         handleError(lineNo);
@@ -334,21 +335,21 @@ void getParametersAndRepairRoad(char* line, ssize_t lineLength, Map* map, int li
         handleError(lineNo);
     }
 
-    char* cityA;
+    char* cityA = NULL;
     readCity(&line, &lineLength, &cityA);
     if(lineLength == 0){
         handleError(lineNo);
         return;
     }
 
-    char* cityB;
+    char* cityB = NULL;
     readCity(&line, &lineLength, &cityB);
     if(lineLength == 0){
         handleError(lineNo);
         return;
     }
 
-    int repairYear;
+    int repairYear = 0;
     if(!readInt(&line, &lineLength, &repairYear) || repairYear == 0 || lineLength > 0){
         handleError(lineNo);
         return;
@@ -356,6 +357,7 @@ void getParametersAndRepairRoad(char* line, ssize_t lineLength, Map* map, int li
 
     if(!repairRoad(map, (const char*) cityA, (const char*) cityB, repairYear)){
         handleError(lineNo);
+        return;
     }
 }
 
@@ -363,6 +365,7 @@ void getParametersAndNewRoute(char* line, ssize_t lineLength, Map* map, int line
 
     if(lineLength == 0){
         handleError(lineNo);
+        return;
     }
 
     unsigned id = 0;
@@ -371,14 +374,14 @@ void getParametersAndNewRoute(char* line, ssize_t lineLength, Map* map, int line
         return;
     }
 
-    char* cityA;
+    char* cityA = NULL;
     readCity(&line, &lineLength, &cityA);
     if(lineLength == 0){
         handleError(lineNo);
         return;
     }
 
-    char* cityB;
+    char* cityB = NULL;
     readCity(&line, &lineLength, &cityB);
     if(lineLength != 0){
         handleError(lineNo);
@@ -386,6 +389,7 @@ void getParametersAndNewRoute(char* line, ssize_t lineLength, Map* map, int line
     }
     if(!newRoute(map, id, cityA, cityB)){
         handleError(lineNo);
+        return;
     }
 }
 
@@ -393,6 +397,7 @@ void getParametersAndExtendRoute(char* line, ssize_t lineLength, Map* map, int l
 
     if(lineLength == 0){
         handleError(lineNo);
+        return;
     }
 
     unsigned id = 0;
@@ -401,7 +406,7 @@ void getParametersAndExtendRoute(char* line, ssize_t lineLength, Map* map, int l
         return;
     }
 
-    char* city;
+    char* city = NULL;
     readCity(&line, &lineLength, &city);
     if(lineLength != 0){
         handleError(lineNo);
@@ -410,6 +415,7 @@ void getParametersAndExtendRoute(char* line, ssize_t lineLength, Map* map, int l
 
     if(!extendRoute(map, id, city)){
         handleError(lineNo);
+        return;
     }
 }
 
@@ -417,16 +423,17 @@ void getParametersAndRemoveRoad(char* line, ssize_t lineLength, Map* map, int li
 
     if(lineLength == 0){
         handleError(lineNo);
+        return;
     }
 
-    char* cityA;
+    char* cityA = NULL;
     readCity(&line, &lineLength, &cityA);
     if(lineLength == 0){
         handleError(lineNo);
         return;
     }
 
-    char* cityB;
+    char* cityB = NULL;
     readCity(&line, &lineLength, &cityB);
     if(lineLength != 0){
         handleError(lineNo);
@@ -434,6 +441,7 @@ void getParametersAndRemoveRoad(char* line, ssize_t lineLength, Map* map, int li
     }
     if(!removeRoad(map, cityA, cityB)){
         handleError(lineNo);
+        return;
     }
 }
 
@@ -451,6 +459,7 @@ void getParametersAndRemoveRoute(char* line, ssize_t lineLength, Map* map, int l
     }
     if(!removeRoute(map, id)){
         handleError(lineNo);
+        return;
     }
 }
 
@@ -468,7 +477,7 @@ void getParametersAndGetRouteDescription(char* line, ssize_t lineLength, Map* ma
     }
 
     unsigned id = 0;
-    if(!readUnsigned(&line, &lineLength, &id) || !correctId(id) || lineLength > 0){
+    if(!readUnsigned(&line, &lineLength, &id) || lineLength > 0){
         handleError(lineNo);
         return;
     }
@@ -566,7 +575,7 @@ Command getCommand(char* line){
  * */
 bool segmentLine(char *line, ssize_t lineLength){
 
-    if(line[lineLength - 1] == ';'){
+    if(line[lineLength - 2] == ';'){
         return false;
     }
 
@@ -603,6 +612,7 @@ void readExecuteInput(Map *map) {
 
         lineLength = getline(&line, &dummy, stdin);
         lineNo++;
+
         
         map->inputLine = line;
 

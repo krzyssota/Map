@@ -133,14 +133,14 @@ typedef struct RouteParam{
 RouteParam* newRouteParam(unsigned id);
 
 /**@brief Dodaje nazwę miasta do routeParam.
- * @param[in, out] routeParam - wskaźnik na strukturę routeParam
+ * @param[in, out] routeParam - wskaźnik na wskaźnik strukturę routeParam
  * @param[in] cityName - wskaźnik na nazwę miasta
  * @return Wartość @p true jeśli udało się dodać miasto. @p false jeśli realokacją nie udała się.
  */
 bool addCityToRouteParam(RouteParam* routeParam, char* cityName);
 
 /**@brief Dodaje parametry drogi do routeParam.
- * @param[in, out] routeParam - wskaźnik na strukturę routeParam
+ * @param[in, out] routeParam - wskaźnik na wskaźnik na strukturę routeParam
  * @param[in] roadLength - długość drogi
  * @param[in] year - rok budowy drogi
  * @return Wartość @p true jeśli udało się dodać parametry drogi. @p false jeśli realokacją nie udała się.
