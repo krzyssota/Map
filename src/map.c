@@ -427,6 +427,7 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
                                                         road);
 
             if(shortestPathAToB == NULL || shortestPathBToA == NULL){ // memory error
+
                 deleteShortestPathResult(shortestPathAToB);
                 deleteShortestPathResult(shortestPathBToA);
 
@@ -435,6 +436,7 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
 
                 return false;
             } else if(shortestPathAToB->resultEnum == AMBIGUOUS || shortestPathAToB->resultEnum == NOT_FOUND){
+
                 deleteShortestPathResult(shortestPathAToB);
                 deleteShortestPathResult(shortestPathBToA);
 
