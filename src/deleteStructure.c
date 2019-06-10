@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "deleteStructure.h"
 #include "structures.h"
 #include "roadsRelated.h"
@@ -72,7 +73,6 @@ void cleanQueue(Queue **queue){
     while((*queue)->head != NULL){
         free(pop(queue));
     }
-    (*queue)->head = NULL;
 }
 
 void deleteRoutes(Route **routeList){
@@ -141,6 +141,7 @@ void deleteShortestPathResult(ShortestPathResult* shortestPathResult){
             curr = curr->next;
             free(toDelete);
         }
+        free(shortestPathResult);
     }
 }
 

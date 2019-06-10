@@ -78,6 +78,6 @@ void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB)
  */
 bool newRouteFromRouteParam(Map* map, RouteParam* routeParam);
 
-City* occurenceInRoute(int x, Route *route, City *cityA, City *cityB);
+City* occurrenceInRoute(int x, Route *route, City *cityA, City *cityB);
 
 #endif //DROGI_ROUTERELATED_H

@@ -175,7 +175,8 @@ bool newRoute(Map *map, unsigned routeId, const char *city1, const char *city2){
     deleteShortestPathResult(shortestPathBToA);
 
     newRoute->cityList = shortestPathAToB->path;
-    free(shortestPathAToB);
+    shortestPathAToB->path = NULL;
+    deleteShortestPathResult(shortestPathAToB);
 
     addRouteInfoToRoads(newRoute); ///< Drogi maja informacje do jakich drog krajowych naleza.
 
@@ -413,12 +414,16 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
             routeB->cityList = startB;
 
             ShortestPathResult* shortestPathAToB = findShortestPath(map, routeA, routeB,
-                                                        occurenceInRoute(1, road->routesBelonging[i], cityA, cityB),
-                                                        occurenceInRoute(2, road->routesBelonging[i], cityA, cityB),
+                                                                    occurrenceInRoute(1, road->routesBelonging[i],
+                                                                                      cityA, cityB),
+                                                                    occurrenceInRoute(2, road->routesBelonging[i],
+                                                                                      cityA, cityB),
                                                         road);
             ShortestPathResult* shortestPathBToA = findShortestPath(map, routeA, routeB,
-                                                        occurenceInRoute(2, road->routesBelonging[i], cityA, cityB),
-                                                        occurenceInRoute(1, road->routesBelonging[i], cityA, cityB),
+                                                                    occurrenceInRoute(2, road->routesBelonging[i],
+                                                                                      cityA, cityB),
+                                                                    occurrenceInRoute(1, road->routesBelonging[i],
+                                                                                      cityA, cityB),
                                                         road);
 
             if(shortestPathAToB == NULL || shortestPathBToA == NULL){ // memory error
@@ -443,8 +448,8 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
             deleteRoute(routeB);
 
             insertPathIntoRoute(shortestPathAToB->path, road->routesBelonging[i],
-                                occurenceInRoute(1, road->routesBelonging[i], cityA, cityB),
-                                occurenceInRoute(2, road->routesBelonging[i], cityA, cityB)); ///< Includes found path in rotue.
+                                occurrenceInRoute(1, road->routesBelonging[i], cityA, cityB),
+                                occurrenceInRoute(2, road->routesBelonging[i], cityA, cityB)); ///< Includes found path in rotue.
             free(shortestPathAToB);
         }
     }

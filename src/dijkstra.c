@@ -119,6 +119,8 @@ QueueElement *pop(Queue **queue) {
 
         (*queue)->head = (*queue)->head->next;
 
+        result->prev = result->next = NULL;
+
         if ((*queue)->head != NULL) {
             (*queue)->head->prev = NULL;
         }
@@ -141,8 +143,9 @@ Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* c
     if(queue == NULL){
         return NULL;
     }
-    
+
     push(&queue, newQueueElement(cityA, 0, NULL, NULL)); // origin
+
 
     CityList* currCityList = map->cityList;
     while (currCityList != NULL) {
@@ -154,8 +157,8 @@ Queue* prepareQueue(Map* map, Route* routeA, Route* routeB, City* cityA, City* c
         }
         currCityList = currCityList->next;
     }
-
     push(&queue, newQueueElement(cityB, INF, NULL, NULL)); // target
+
 
     return queue;
 }
@@ -224,6 +227,9 @@ QueueElement* popElement(Queue **queue, QueueElement* element){
     if(element->next != NULL) {
         (element->next)->prev = element->prev;
     }
+
+    element->prev = element->next = NULL;
+
     return element;
 }
 
@@ -231,37 +237,47 @@ QueueElement* popElement(Queue **queue, QueueElement* element){
  * @param[in, out] queue - wskaźnik na wskaźnik na kolejkę priorytetową
 *  @param[in] alternative – element z alternatywnym priorytetem.
 */
-void updateElement(Queue **queue, QueueElement* original, QueueElement* alternative){
+void updateElement(Queue** queue, QueueElement* original, long int alternativeDistance, QueueElement* alternativePredecessor, Road* alternativeOldestRoad){
 
 
-    if(original->distance > alternative->distance){
+    if(original->distance > alternativeDistance){
 
-        free(popElement(queue, original));
-        push(queue, alternative);
+        original->distance = alternativeDistance;
+        original->oldestRoad = alternativeOldestRoad;
+        original->predecessor = alternativePredecessor;
+        if(original->ambiguous == true){
+            original->ambiguous = false;
+        }
+        popElement(queue, original);
+        push(queue, original);
 
-    } else if(original->distance == alternative->distance){
+    } else if(original->distance == alternativeDistance){
 
         int originalOldestRoadYear = INT_MIN;
         int alternativeOldestRoadYear = INT_MIN;
         if(original->oldestRoad != NULL ){
             originalOldestRoadYear = original->oldestRoad->year;
         }
-        if(alternative->oldestRoad != NULL){
-            alternativeOldestRoadYear = alternative->oldestRoad->year;
+        if(alternativeOldestRoad != NULL){
+            alternativeOldestRoadYear = alternativeOldestRoad->year;
         }
 
         if(originalOldestRoadYear < alternativeOldestRoadYear){
 
-            free(popElement(queue, original));
-            push(queue, alternative);
+            original->distance = alternativeDistance;
+            original->oldestRoad = alternativeOldestRoad;
+            original->predecessor = alternativePredecessor;
+            if(original->ambiguous == true){
+                original->ambiguous = false;
+            }
+            popElement(queue, original);
+            push(queue, original);
 
-        } else if(originalOldestRoadYear == alternativeOldestRoadYear) {
+        } else if(originalOldestRoadYear == alternativeOldestRoadYear){ ///< && original->distance == alternativeDistance
 
             original->ambiguous = true;
-            free(alternative);
+
         }
-    } else {
-        free(alternative);
     }
 }
 
@@ -280,18 +296,15 @@ void processNeighbours(Queue* queue, Route* routeA, Route* routeB, QueueElement*
         if(!routeContainsRoad(routeA, currRoadList->road) && !routeContainsRoad(routeB, currRoadList->road) && currRoadList->road != roadRemoved) {
             ///< Do not consider road that is being removed or roads already used in the route.
 
-            City* neighbour = getOtherCity(currRoadList->road, element->city);
+            City* neighbourCity = getOtherCity(currRoadList->road, element->city);
 
-            QueueElement* originalNeighbour = findQueueElement(queue, neighbour);
+            QueueElement* originalNeighbour = findQueueElement(queue, neighbourCity);
 
             if (originalNeighbour != NULL) { ///< Neighbour still in the queue (can be processed)
 
                 long int alternativeDistance = element->distance + (long int) currRoadList->road->length;
 
-                QueueElement* alternativeNeighbour = newQueueElement(neighbour, alternativeDistance, element,
-                                                              olderRoad(element->oldestRoad, currRoadList->road));
-
-                updateElement(&queue, originalNeighbour, alternativeNeighbour);
+                updateElement(&queue, originalNeighbour, alternativeDistance, element, olderRoad(element->oldestRoad, currRoadList->road));
             }
         }
 
@@ -299,33 +312,35 @@ void processNeighbours(Queue* queue, Route* routeA, Route* routeB, QueueElement*
     }
 }
 
-QueueElement* Dijkstra(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, Road* roadRemoved){
+QueueElement* Dijkstra(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, Road* roadRemoved, Queue** storage){
 
     Queue* queue = prepareQueue(map, routeA, routeB, cityA, cityB); ///< Prepare priority queue.
     if(queue == NULL){
         return NULL;
     }
 
-    QueueElement* targetElement;
+    QueueElement* targetElement = NULL;
 
-    QueueElement* currElement = pop(&queue);
+    QueueElement* currElement = NULL;
 
-    while(currElement->city != queue->target) {
+    do {
 
-        processNeighbours(queue, routeA, routeB, currElement, roadRemoved);
-
-        currElement = pop(&queue);
+        currElement = popElement(&queue, queue->head);
         if(currElement->city == queue->target){
             targetElement = currElement;
         }
+        push(storage, currElement);
+
+        processNeighbours(queue, routeA, routeB, currElement, roadRemoved);
+
+    } while(currElement->city != queue->target);
+
+    while(queue->head != NULL){
+        push(storage, popElement(&queue, queue->head));
     }
-    cleanQueue(&queue);
     free(queue);
 
-   /* if(targetElement != NULL && targetElement->distance == INF){
-        return NULL;
-    }*/
-
+    assert(targetElement != NULL);
     return targetElement;
 }
 

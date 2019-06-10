@@ -20,11 +20,18 @@
  * @param[in] roadRemoved – wskaźnik na usuwaną drogę. Jeśli funkcja została wywołana poza removeRoad, zmienna dummy == NULL
  * @return Wartość @p true, jeśli odcinek drogi został usunięty.
  */
-QueueElement* Dijkstra(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, Road* roadRemoved);
+QueueElement* Dijkstra(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, Road* roadRemoved, Queue** storage);
 /** @brief Zwraca element kolejki z najwyższym priorytetem.
  * @param[in] queue - wskaźnik na wskaźnik na kolejkę priorytetową.
  * @return Element kolejki z najwyższym priorytetem.
  */
 QueueElement* pop(Queue** queue);
+
+/**@brief Zdejmuje konkretny element z kolejki priorytetowej.
+ * @param[in, out] queue - wskaźnik na wskaźnik na kolejkę priorytetową
+ * @param[in] element - wskaźnik na element kolejki
+ * @return wskaźnik na usunięty element.
+ */
+QueueElement* popElement(Queue **queue, QueueElement* element);
 
 #endif //DROGI_DIJKSTRA_H

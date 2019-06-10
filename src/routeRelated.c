@@ -65,47 +65,72 @@ void deleteRouteInfoFromRoad(Route* route){
         cityList = cityList->next;
     }
 }
+
+CityList* recoverPath(QueueElement* target, ShortestPathResult* resultContainer) {
+
+    QueueElement *curr = target;
+    CityList *resultingCityList = NULL;
+
+    while (curr != NULL) {
+
+        if (curr->ambiguous == true && resultContainer->resultEnum == FOUND) {
+            resultContainer->resultEnum = AMBIGUOUS;
+        }
+
+        CityList *newStartingElement = newCityList();
+        newStartingElement->city = curr->city;
+
+        newStartingElement->next = resultingCityList;
+        if (resultingCityList != NULL) {
+            resultingCityList->prev = newStartingElement;
+        }
+
+        resultingCityList = newStartingElement;
+
+        curr = curr->predecessor;
+
+    }
+
+    return resultingCityList;
+}
+
 ShortestPathResult* findShortestPath(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, Road* roadRemoved){
 
-    QueueElement* target = Dijkstra(map, routeA, routeB, cityA, cityB, roadRemoved);
+    Queue* storage = newQueue(NULL); ///< błąd pamięci
+    if(storage == NULL){
+        return NULL;
+    }
+    QueueElement* target = Dijkstra(map, routeA, routeB, cityA, cityB, roadRemoved, &storage);
 
     ShortestPathResult* resultContainer = newShortestPathResult();
-    if(resultContainer == NULL || target == NULL){ // memory error
+    if(resultContainer == NULL){ ///< błąd pamięci
+        cleanQueue(&storage);
+        free(storage);
+        return NULL;
+    }
+    if(target == NULL){
+        deleteShortestPathResult(resultContainer); ///< błąd pamięci w Dijkstrze
+        free(resultContainer);
+        cleanQueue(&storage);
+        free(storage);
         return NULL;
     }
 
-    if(target->distance == INF){
+    if(target->distance == INF || target->oldestRoad == NULL){
         resultContainer->resultEnum = NOT_FOUND;
     }
     if(target->oldestRoad != NULL){
         resultContainer->oldestRoadYear = target->oldestRoad->year;
     }
+    resultContainer->length = target->distance;
 
-    QueueElement* curr = target;
-    CityList* resultingCityList = NULL;
+    CityList* resultingCityList = recoverPath(target, resultContainer);
 
-    while(curr != NULL ) {
+    cleanQueue(&storage);
+    free(storage);
 
-        if(curr->ambiguous == true){
-            resultContainer->resultEnum = AMBIGUOUS;
-        }
-
-        CityList* newStartingElement = newCityList();
-        newStartingElement->city = curr->city;
-
-        newStartingElement->next = resultingCityList;
-        if(resultingCityList != NULL) {
-            resultingCityList->prev = newStartingElement;
-        }
-
-        resultingCityList = newStartingElement;
-        QueueElement* toDelete = curr;
-        curr = curr->predecessor;
-        free(toDelete);
-
-    }
     resultContainer->path = resultingCityList;
-    resultContainer->length = calculateLength(resultingCityList);
+
     return resultContainer;
 }
 
@@ -180,7 +205,7 @@ int betterPath(ShortestPathResult* res1, ShortestPathResult* res2){
             return 1;
         } else if(res1->length > res2->length){
             return 2;
-        } else {
+        } else { // TODO tutaj trzeba jeszcze porównywać najstarsze drogi
             return 0;
         }
     }
@@ -252,6 +277,8 @@ void insertPathIntoRoute(CityList* path, Route* route, City* cityA, City* cityB)
         otherEnd->next->prev = path;
     }
     free(otherEnd);
+
+    addRouteInfoToRoads(route);
 }
 
 bool addCityToRoute(City* city, Route* route){
@@ -373,11 +400,11 @@ bool newRouteFromRouteParam(Map* map, RouteParam* routeParam) {
     return true;
 }
 
-City* occurenceInRoute(int x, Route *route, City *cityA, City *cityB){
+City* occurrenceInRoute(int x, Route *route, City *cityA, City *cityB){
 
     CityList* curr = route->cityList;
 
-    while(curr->city != cityA && curr->city != cityB){
+    while(assert(curr != NULL), curr->city != cityA && curr->city != cityB){
         curr = curr->next;
     }
 
@@ -388,16 +415,8 @@ City* occurenceInRoute(int x, Route *route, City *cityA, City *cityB){
         if(x == 1) return cityB;
         else return cityA;
     }
-
-
-
-
-
-
-
-
-
-
-
+    return NULL;
 }
+
+
 

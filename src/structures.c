@@ -3,6 +3,7 @@
 #include "stringsHandling.h"
 #include "map.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 RoadList* newRoadList(){
@@ -64,7 +65,7 @@ QueueElement* newQueueElement(City* city, long int distance, QueueElement* prede
 }
 
 ShortestPathResult* newShortestPathResult(){
-    ShortestPathResult* structure = malloc(sizeof(struct ShortestPathResult));
+    ShortestPathResult* structure = malloc(sizeof(ShortestPathResult));
     if(structure != NULL){
         structure->path = NULL;
         structure->length = 0;
