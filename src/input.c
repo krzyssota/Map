@@ -28,8 +28,8 @@ typedef enum Command {
     EXTEND_ROUTE,
     REMOVE_ROAD,
     REMOVE_ROUTE,
-    IGNORE, ///< komentarz, lub pusta linijki
-    ERROR
+    IGNORE, ///< komentarz, lub pusta linijka
+    ERROR ///< nierozpoznana komenda
 } Command;
 
 /**@brief Zczytuje nazwę miasta z podanego napisu.
@@ -74,10 +74,10 @@ bool readUnsigned(char **line, ssize_t *lineLength, unsigned *number){ ///< id 1
 
 
 }
-/**@brief Zczytuje liczbę z podanego napisu.
+/**@brief Zczytuje liczbę całkowitą z podanego napisu.
  * @param[in, out] line - wskaźnik na wskaźnik na przetwarzany napis
  * @param[in, out] lineLength - wskaźnik na pozostała do przetworzenia długośc wiersza
- * @param[in, out] integer - wskaźnik na liczbę całkowitą
+ * @param[in, out] number - wskaźnik na liczbę całkowitą
  * @return Wartość @p true jeśli operacja powiodła się i wartość pod adresem wskazywanym przez year ma dopuszczalną wartość,
  *          @p false w przeciwnym przypadku.
  */
@@ -86,8 +86,8 @@ bool readInt(char **line, ssize_t *lineLength, int *number){
     if(**line == '-') {
         (*line)++;
         (*lineLength)--;
-        while ((('0' <= **line && **line <= '9') || **line == 0) && *lineLength > 0) {
-            if (*number >= (INT_MIN + (**line - '0')) / 10) { ///< If argument is greater than minimal integer.
+        while (('0' <= **line && **line <= '9') && *lineLength > 0) {
+            if (*number >= (INT_MIN + (**line - '0'))/10) { ///< If argument is greater than minimal integer.
                 (*number) = (*number) * 10 - (**line - '0');
                 (*line)++;
                 (*lineLength)--;
@@ -96,7 +96,7 @@ bool readInt(char **line, ssize_t *lineLength, int *number){
             }
         }
     } else {
-        while (('0' <= **line && **line <= '9') && **line != 0 && *lineLength > 0) {
+        while (('0' <= **line && **line <= '9') && *lineLength > 0) {
             if (*number <= (INT_MAX - (**line - '0')) / 10) { ///< If argument is lesser thank maximal integer.
                 (*number) = (*number) * 10 + (**line - '0');
                 (*line)++;
@@ -115,86 +115,6 @@ bool readInt(char **line, ssize_t *lineLength, int *number){
         return false;
     }
 }
-
-/**@brief Zczytuje dodatnią liczbę z podanego napisu.
- * @param[in, out] line - wskaźnik na wskaźnik na przetwarzany napis
- * @param[in, out] lineLength - wskaźnik na pozostała do przetworzenia długośc wiersza
- * @param[in, out] number - wskaźnik na liczbę całkowitą
- * @return Wartość @p true jeśli operacja powiodła się, @p false w przeciwnym przypadku.
- *//*
-bool readUnsigned(char **line, ssize_t *lineLength, unsigned *number){
-
-    char* end = NULL;
-
-    errno = 0;
-    *number = (int)strtol(*line, &end, 10);
-    if(*end != 0 || errno != 0){
-        return false;
-    }
-
-    size_t digits = digitsInNumber(*number);
-
-    *lineLength -= digits;
-    if(*lineLength != 0)  *lineLength -= 1;
-    *line = &(*line)[digits + 1];
-    return true;
-}
-*//**@brief Zczytuje liczbę z podanego napisu.
- * @param[in, out] line - wskaźnik na wskaźnik na przetwarzany napis
- * @param[in, out] lineLength - wskaźnik na pozostała do przetworzenia długośc wiersza
- * @param[in, out] year - wskaźnik na liczbę całkowitą
- * @return Wartość @p true jeśli operacja powiodła się i wartość pod adresem wskazywanym przez year ma dopuszczalną wartość,
- *          @p false w przeciwnym przypadku.
- *//*
-bool readInt(char **line, ssize_t *lineLength, int *year){
-
-    char* end = NULL;
-    
-    bool negative = false;
-    if(**line == '-'){
-        negative = true;
-    }
-
-    errno = 0;
-    int64_t number = 0;
-    number =
-            (int)strtol(
-            *line,
-            &end,
-            10);
-
-    if(*end != 0) {
-        return false;
-    }
-    if(errno == ERANGE && (number == LONG_MIN || number == LONG_MAX)){
-        return false;
-    }
-    if(number == 0 || number <  INT_MIN || number > INT_MAX || (negative && number > 0) || (!negative && number < 0)){
-        return false;
-    }
-
-    *year = number;
-
-    size_t digitsInYear;
-    if(negative) {
-        digitsInYear = digitsInNumber(*year * (-1));
-    } else {
-        digitsInYear= digitsInNumber(*year);
-    }
-
-    if(negative){
-        digitsInYear++;
-    }
-
-    *lineLength -= digitsInYear;
-    if(*lineLength != 0)  *lineLength -= 1;
-
-
-    *line = &(*line)[digitsInYear + 1];
-
-    return true;
-}*/
-
 
 /**@brief Z napisu zczytuje parametry potrzebne do stworzenia drogi krajowej i, jeśli to możliwe, robi to.
  * @param[in, out] line - wskaźnik na przetwarzany napis
@@ -229,7 +149,7 @@ void getParametersAndAddRoute(char* line, ssize_t lineLength, Map* map, int line
     }
     if(!addCityToRouteParam(routeParam, firstCity)){ ///< memory error
         deleteRouteParam(routeParam);
-        exit(0); // TODO czy przy bledzie pamieci nic, error czy exit(0)
+        exit(0);
     }
     while(lineLength > 0){
 
@@ -360,7 +280,12 @@ void getParametersAndRepairRoad(char* line, ssize_t lineLength, Map* map, int li
         return;
     }
 }
-
+/**@brief Z napisu zczytuje parametry opisujące nową drogę krajową i wywołuję funkcję newRoute.
+ * @param[in, out] line - wskaźnik na przetwarzany napis
+ * @param[in, out] lineLength - pozostała do przetworzenia długośc wiersza
+ * @param[in,out] map    – wskaźnik na strukturę przechowującą mapę dróg;
+ * @param[in] lineNo - numer przetwarzanego wiersza
+ */
 void getParametersAndNewRoute(char* line, ssize_t lineLength, Map* map, int lineNo) {
 
     if(lineLength == 0){
@@ -383,7 +308,7 @@ void getParametersAndNewRoute(char* line, ssize_t lineLength, Map* map, int line
 
     char* cityB = NULL;
     readCity(&line, &lineLength, &cityB);
-    if(lineLength != 0){
+    if(lineLength > 0){
         handleError(lineNo);
         return;
     }
@@ -392,7 +317,12 @@ void getParametersAndNewRoute(char* line, ssize_t lineLength, Map* map, int line
         return;
     }
 }
-
+/**@brief Z napisu zczytuje id drogi krajowej i miasto o które ma ona zostać przedłużona. Wywołuje funkcję extendRoute.
+ * @param[in, out] line - wskaźnik na przetwarzany napis
+ * @param[in, out] lineLength - pozostała do przetworzenia długośc wiersza
+ * @param[in,out] map    – wskaźnik na strukturę przechowującą mapę dróg;
+ * @param[in] lineNo - numer przetwarzanego wiersza
+ */
 void getParametersAndExtendRoute(char* line, ssize_t lineLength, Map* map, int lineNo) {
 
     if(lineLength == 0){
@@ -408,7 +338,7 @@ void getParametersAndExtendRoute(char* line, ssize_t lineLength, Map* map, int l
 
     char* city = NULL;
     readCity(&line, &lineLength, &city);
-    if(lineLength != 0){
+    if(lineLength > 0){
         handleError(lineNo);
         return;
     }
@@ -418,7 +348,12 @@ void getParametersAndExtendRoute(char* line, ssize_t lineLength, Map* map, int l
         return;
     }
 }
-
+/**@brief Z napisu zczytuje parametry opisujące drogę i wywołuje funkcję removeRoad.
+ * @param[in, out] line - wskaźnik na przetwarzany napis
+ * @param[in, out] lineLength - pozostała do przetworzenia długośc wiersza
+ * @param[in,out] map    – wskaźnik na strukturę przechowującą mapę dróg;
+ * @param[in] lineNo - numer przetwarzanego wiersza
+ */
 void getParametersAndRemoveRoad(char* line, ssize_t lineLength, Map* map, int lineNo) {
 
     if(lineLength == 0){
@@ -435,7 +370,7 @@ void getParametersAndRemoveRoad(char* line, ssize_t lineLength, Map* map, int li
 
     char* cityB = NULL;
     readCity(&line, &lineLength, &cityB);
-    if(lineLength != 0){
+    if(lineLength > 0){
         handleError(lineNo);
         return;
     }
@@ -444,7 +379,12 @@ void getParametersAndRemoveRoad(char* line, ssize_t lineLength, Map* map, int li
         return;
     }
 }
-
+/**@brief Z napisu zczytuje id drogi krajowej i wywołuje funkcję removeRoute.
+ * @param[in, out] line - wskaźnik na przetwarzany napis
+ * @param[in, out] lineLength - pozostała do przetworzenia długośc wiersza
+ * @param[in,out] map    – wskaźnik na strukturę przechowującą mapę dróg;
+ * @param[in] lineNo - numer przetwarzanego wiersza
+ */
 void getParametersAndRemoveRoute(char* line, ssize_t lineLength, Map* map, int lineNo) {
 
     if(lineLength == 0){
@@ -553,7 +493,7 @@ Command getCommand(char* line){
     if(line[0] == '#' || line[0] == '\n'){
         return IGNORE;
     }
-    
+
     if(strcmp(line, "addRoad") == 0) return ADD_ROAD;
     if(strcmp(line, "repairRoad") == 0) return REPAIR_ROAD;
     if(strcmp(line, "getRouteDescription") == 0) return DESCRIBE_ROUTE;
@@ -613,7 +553,7 @@ void readExecuteInput(Map *map) {
         lineLength = getline(&line, &dummy, stdin);
         lineNo++;
 
-        
+
         map->inputLine = line;
 
         if(lineLength == -1){

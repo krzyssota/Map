@@ -18,6 +18,7 @@
  * @param[in] cityA – wskaźnik na miasto;
  * @param[in] cityB – wskaźnik na miasto.
  * @param[in] roadRemoved – wskaźnik na usuwaną drogę. Jeśli funkcja została wywołana poza removeRoad, zmienna dummy == NULL
+ * @param[in,out] storage - wskaźnik na kolejkę przechowującą elementy zdjęte z właściwej kolejki wykorzystywanej w algorytmie Dijkstry
  * @return Wartość @p true, jeśli odcinek drogi został usunięty.
  */
 QueueElement* Dijkstra(Map* map, Route* routeA, Route* routeB, City* cityA, City* cityB, Road* roadRemoved, Queue** storage);

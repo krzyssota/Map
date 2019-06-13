@@ -234,23 +234,28 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){
     while(borderCityList->next != NULL){
         borderCityList = borderCityList->next;
     }
-    /*int secondOldestRoadYear = INT_MIN;*/
 
     ShortestPathResult* secondResultAToB = findShortestPath(map, map->routes[routeId], dummyRoute,
                                                   borderCityList->city, additionalCity, dummyRoad);
     ShortestPathResult* secondResultBToA = findShortestPath(map, map->routes[routeId], dummyRoute,
                                                   additionalCity, borderCityList->city, dummyRoad);
 
-    if(secondResultAToB == NULL || secondResultBToA == NULL){ // memory error
+    if(secondResultAToB == NULL || secondResultBToA == NULL){ ///< memory error
+
         deleteShortestPathResult(secondResultAToB);
         deleteShortestPathResult(secondResultBToA);
         return false;
+
     } else if((secondResultAToB->resultEnum == NOT_FOUND && secondResultBToA->resultEnum == FOUND)
              || (secondResultAToB->resultEnum == FOUND && secondResultBToA->resultEnum == NOT_FOUND)){
+
         secondResultAToB->resultEnum = NOT_FOUND;
+
     } else if((secondResultAToB->resultEnum == AMBIGUOUS && secondResultBToA->resultEnum == FOUND)
               || (secondResultAToB->resultEnum == FOUND && secondResultBToA->resultEnum == AMBIGUOUS)){
+
         secondResultAToB->resultEnum = AMBIGUOUS;
+
     }
 
 
@@ -308,7 +313,7 @@ bool extendRoute(Map *map, unsigned routeId, const char *city){
             deleteShortestPathResult(secondResultBToA);
             return false;
         }
-        default: {
+        default: { ///< UB
             exit(1);
         }
     }
@@ -337,7 +342,7 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
     if(road == NULL){ ///< Nie ma odcinka drogi między podanymi miastami.
         return false;
     }
-    for(int i = 1; i <= 999; ++i) { // TODO sprawdzenie potem robienie
+    for(int i = 1; i <= 999; ++i) { ///< Dla każdej drogi krajowej sprawdź czy możliwe będzie jej uzupełnienie.
         if(road->routesBelonging[i] != NULL) { ///< Dla istniejacych drog krajowych.
 
             Route* routeA = createNewRoute(1000);
@@ -451,7 +456,7 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
             }
         }
     }
-    for(int i = 1; i <= 999; ++i) {
+    for(int i = 1; i <= 999; ++i) { ///< Uzupełnij drogi krajowe.
         if(road->routesBelonging[i] != NULL) { ///< Dla istniejacych drog krajowych.
 
             Route* routeA = createNewRoute(1000);
@@ -493,8 +498,6 @@ bool removeRoad(Map *map, const char *city1, const char *city2){
                 cityListToCopy = cityListToCopy->next;
             }
             routeA->cityList = startA;
-
-            /* cityListToCopy = cityListToCopy->next;*/ // TODO czy to nie jest źle?
 
             Route* routeB = createNewRoute(1000);
 

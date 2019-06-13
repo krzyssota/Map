@@ -90,18 +90,22 @@ typedef struct Queue{
     struct City* target; ///< wskaźnik na miasto, do którego szukana będzie najkrótsza droga.
 
 } Queue;
-
+/**
+ * Typ wyliczeniowy służący oznaczeniu wyniku szukania optymalnej drogi krajowej.
+ */
 typedef enum PathResult{
-    AMBIGUOUS,
-    NOT_FOUND,
-    FOUND
+    AMBIGUOUS, ///< droga krajowa wyznaczona niejednoznacznie.
+    NOT_FOUND, ///< droga krajowa nieznaleziona.
+    FOUND ///< droga krajowa znaleziona i jednoznaczna.
 } PathResult;
-
+ /**
+  * Struktura opakowująca znaleziona drogę krajową.
+  */
 typedef struct ShortestPathResult{
-    struct CityList* path;
-    unsigned length;
-    int oldestRoadYear;
-    PathResult resultEnum;
+    struct CityList* path; ///< lista wskaźników na miasta przez które przebiega droga krajowa.
+    unsigned length; ///< długość znalezionej drogi.
+    int oldestRoadYear; ///< wiek najstarszej drogi.
+    PathResult resultEnum; ///< znalezienie i jednoznaczość drogi krajowej.
 
 } ShortestPathResult;
 
@@ -189,11 +193,14 @@ Queue* newQueue(City* target);
     @return Zwraca wskaźnik na nowy element kolejki. NULL jeśli alokacją nie udała się.
  */
 QueueElement* newQueueElement(City* city, long int distance, QueueElement* predecessor, Road* oldestRoad);
+
 /** @brief Tworzy nową drogę.
    @return Zwraca wskaźnik na nową drogę. NULL jeśli alokacją nie udała się.
 */
 Road* createNewRoad();
-
+/**Tworzy nową instancje struktury ShortestPathResult.
+ * @return Wskaźnik na nową strukturę. NULL jeśli alokacja nie udała się.
+ */
 ShortestPathResult* newShortestPathResult();
 
 

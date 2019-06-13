@@ -181,23 +181,6 @@ bool routeContainsRoad(Route *route, Road *road) {
     return contains;
 }
 
-unsigned calculateLength(CityList* path){
-
-    unsigned length = 0;
-
-    while(path->next != NULL){
-
-        Road* road = findRoad(path->city, path->next->city);
-        assert(road != NULL);
-
-        length += road->length;
-
-        path = path->next;
-    }
-
-    return length;
-}
-
 int betterPath(ShortestPathResult* res1, ShortestPathResult* res2){
 
     if(res1->resultEnum == FOUND && res2->resultEnum == FOUND){
@@ -205,8 +188,14 @@ int betterPath(ShortestPathResult* res1, ShortestPathResult* res2){
             return 1;
         } else if(res1->length > res2->length){
             return 2;
-        } else { // TODO tutaj trzeba jeszcze porównywać najstarsze drogi
-            return 0;
+        } else { ///< res1->length == res2->length
+            if(res1->oldestRoadYear > res2->oldestRoadYear){
+                return 1;
+            } else if(res1->oldestRoadYear < res2->oldestRoadYear){
+                return 2;
+            } else {
+                return 0;
+            }
         }
     }
 
@@ -232,17 +221,8 @@ int betterPath(ShortestPathResult* res1, ShortestPathResult* res2){
         }
     }
 
-    if(res1->resultEnum == FOUND && res2->resultEnum == FOUND){
-        if(res1->length < res2->length) {
-            return 1;
-        } else if(res1->length > res2->length){
-            return 2;
-        } else {
-            return 0;
-        }
-    } else { ///< res1->resultEnum == NOT_FOUND && res2->resultEnum == NOT_FOUND
-        return 0;
-    }
+    ///< res1->resultEnum == NOT_FOUND && res2->resultEnum == NOT_FOUND
+    return 0;
 
 }
 

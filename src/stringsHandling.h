@@ -41,7 +41,7 @@ char* getDescription(Route* route, int length);
  * @param[in] number - nieujemna liczba całkowita
  * @return liczbę cyfr w podanym argumencie.
  */
-int digitsInNumber(unsigned number); ///< How many digits in the number.
+int digitsInNonNegativeNumber(unsigned number); ///< How many digits in the number.
 
 /** @brief Wyświeta informację o błedzie w konkretnej linijce wejścia na standardowy strumień błedów.
  * @param[in] lineNo - numer linijki

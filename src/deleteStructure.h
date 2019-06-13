@@ -47,7 +47,9 @@ void deleteRouteParam(RouteParam* routeParam);
  * @param line - wskaźnik na char, od którego zaczyna się wiersz
  */
 void deleteLine(char* line);
-
+/**@brief Zwalnia pamięc zajmowaną przez strukturę ShortestPathResult
+ * @param shortestPathResult - wskaźnik na strukturę ShortestPathResult
+ */
 void deleteShortestPathResult(ShortestPathResult* shortestPathResult);
 
 

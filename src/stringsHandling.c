@@ -8,6 +8,7 @@
 #include "map.h"
 #include "roadsRelated.h"
 #include <math.h>
+#include <values.h>
 
 
 void handleError(int lineNo){
@@ -39,9 +40,9 @@ bool correctName(const char* cityName){
 
 }
 
-int digitsInNumber(unsigned number){
+int digitsInNonNegativeNumber(unsigned number){
     unsigned div = 1;
-    unsigned digitCount = 1;
+    int digitCount = 1;
 
     while(div <= number / 10){
         digitCount++;
@@ -50,10 +51,21 @@ int digitsInNumber(unsigned number){
     return digitCount;
 }
 
-int count(Route* route){ ///< How many characters description needs.
+int digitsInNegativeNumber(int number){
+    int div = -1;
+    int digitCount = 1;
+
+    while(div >= number / 10){
+        digitCount++;
+        div *= 10;
+    }
+    return digitCount;
+}
+
+int count(Route* route){ ///< How many needed for description.
 
     int length = 0;
-    length += digitsInNumber((int) route->routeId);
+    length += digitsInNonNegativeNumber((int) route->routeId);
 
 
     CityList* cityList = route->cityList;
@@ -65,13 +77,15 @@ int count(Route* route){ ///< How many characters description needs.
 
         length += 1;
         Road* road = findRoad(cityList->city, cityList->next->city);
-        length += digitsInNumber(road->length);
+        length += digitsInNonNegativeNumber(road->length);
 
         length += 1;
         if(road->year < 0){
             length += 1;
+            length += digitsInNegativeNumber(road->year);
+        } else {
+            length += digitsInNonNegativeNumber(road->year);
         }
-        length += digitsInNumber(road->year);
 
         cityList = cityList->next;
     }
@@ -83,19 +97,47 @@ int count(Route* route){ ///< How many characters description needs.
     return length;
 }
 
-void writeNumber(int* i, char* str, unsigned number) { ///< Put integer in description.
+void writeNonNegativeNumber(int* i, char* str, unsigned number) { ///< Put integer in description.
 
     unsigned div = 1;
-    unsigned digitCount = 1;
+    int digitCount = digitsInNonNegativeNumber(number);
 
-    while(div <= number / 10){
-        digitCount++;
+    for(int j = 1; j < digitCount; j++){
         div *= 10;
     }
     while(digitCount > 0){
-        str[(*i)] = number/div + '0';
+        str[(*i)] =  number/div + '0';
         (*i)++;
         number %= div;
+        div /= 10;
+        digitCount--;
+    }
+}
+
+void writeNegativeNumber(int* i, char* str, int number) { ///< Put integer in description.
+
+    unsigned div = 1;
+    int digitCount = digitsInNegativeNumber(number);
+
+    for(int j = 1; j < digitCount; j++){
+        div *= 10;
+    }
+
+    str[(*i)] = '-';
+    (*i)++;
+
+    bool first = true;
+
+    while(digitCount > 0){
+        if(first && number == INT_MIN){
+            str[(*i)] =  2 + '0';
+            (*i)++;
+            first = false;
+        } else {
+            str[(*i)] = (-number)/div + '0';
+            (*i)++;
+        }
+        number = -((-number)%div);
         div /= 10;
         digitCount--;
     }
@@ -110,7 +152,7 @@ char* getDescription(Route* route, int length){
 
     int i = 0;
 
-    writeNumber(&i, str, route->routeId);
+    writeNonNegativeNumber(&i, str, route->routeId);
 
     CityList* cityList = route->cityList;
 
@@ -126,28 +168,29 @@ char* getDescription(Route* route, int length){
         str[i] = ';';
         i++;
         Road* road = findRoad(cityList->city, cityList->next->city);
-        writeNumber(&i, str, road->length);
+        writeNonNegativeNumber(&i, str, road->length);
 
         str[i] = ';';
         i++;
         int year = road->year;
         if(road->year < 0){
-            str[i] = '-';
-            i++;
-            year = -year;
+            writeNegativeNumber(&i, str, year);
+        } else {
+            writeNonNegativeNumber(&i, str, year);
         }
-        writeNumber(&i, str, year);
-
-
 
         cityList = cityList->next;
+
     }
+
     str[i] = ';';
     i++;
+
     for(unsigned j = 0; j < strlen(cityList->city->name); j++){
         str[i] = cityList->city->name[j];
         i++;
     }
+
     str[i] = 0;
 
     return str;

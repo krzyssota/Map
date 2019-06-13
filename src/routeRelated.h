@@ -25,7 +25,6 @@ City *getOtherCity(Road *road, City *city);
  * @param[in] routeB      - wskaźnik na droge krajowa.
  * @param[in] cityA      - wskaźnik na miasto.
  * @param[in] cityB      - wskaźnik na miasto.
- * @param[in] oldestRoadYear      - wskaznik na wiek najstarszej drogi ze znalezionej sciezki.
  * @param[in] roadRemoved   -  droga usuwana w funkcji removeRoad. Dla innych wywolan wartosc NULL.
  * @return Wskaznik na liste miast z ktorych sklada sie sciezka jesli sciezka zostala znaleziona.
  * Wartość NULL, jeśli nie zostala znaleziona.
@@ -37,6 +36,9 @@ ShortestPathResult* findShortestPath(Map *map, Route *routeA, Route *routeB, Cit
  */
 void addRouteInfoToRoads(Route *route);
 
+/** @brief W drogach skladajacych sie na droge krajowa usuwa o tym informacje.
+ * * @param[in] route - wskaźnik na drogę krajową.
+ */
 void deleteRouteInfoFromRoad(Route* route);
 
 /** @brief Czy droga krajowa zawiera drogę.
@@ -46,21 +48,12 @@ void deleteRouteInfoFromRoad(Route* route);
  */
 bool routeContainsRoad(Route *route, Road *road);
 
-/** @brief Liczy długość ścieżki.
- * * @param[in] path - wskaźnik na listę miast.
- * @return Długość ścieżki prowadzącej przez miasta.
+/**@brief Rozważa, która ścieżka jest lepsza. Wywołanie w extendRoute.
+ * @param res1 - wskaźnik na opakowanie najlepszej proponowanej drogi krajowej od miasta do początku oryginalnej drogi krajowej.
+ * @param res2 - wskaźnik na opakowanie najlepszej proponowanej drogi krajowej od końca oryginalnej drogi krajowej do miasta.
+* @return 1 jeśli pierwsza drogą jest lepsza. 2 jeśli druga jest lepsza. 0 jeśli obie są równie dobre w myśl kryteriów podanych
+        * w zadaniu.
  */
-unsigned calculateLength(CityList *path);
-
-/** @brief Rozważa, która ścieżka jest lepsza.
- * @param[in] firstOldestRoadYear - rok budowy/remontu najstarszej drogi krajowej z pierwszej ścieżki.
- * @param[in] firstLength - długość pierwszej ścieżki.
- * @param[in] secondOldestRoadYear - rok budowy/remontu najstarszej drogi krajowej z drugiej ścieżki.
- * @param[in] secondLength - długość drugiej ścieżki.
- * @return 1 jeśli pierwsza drogą jest lepsza. 2 jeśli druga jest lepsza. 0 jeśli obie są równie dobre w myśl kryteriów podanych
- * w zadaniu.
- */
- //TODO zmienic opis
 int betterPath(ShortestPathResult* res1, ShortestPathResult* res2);
 
 /** @brief Wklada liste miast ze sciezki do drogi krajowej.
